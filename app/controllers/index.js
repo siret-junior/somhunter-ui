@@ -8,8 +8,6 @@ export default class IndexController extends Controller {
   // Will load the service defined in: app/services/shopping-cart.js
   @service coreApi;
 
-  @tracked sss;
-
   @action
   createBoardGame() {
     //const res = await this.coreApi.fetchRequest("/user/context", "GET");

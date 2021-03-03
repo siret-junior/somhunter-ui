@@ -1,4 +1,3 @@
-import ENV from "somhunter-ui/config/environment";
 import Route from "@ember/routing/route";
 import { action } from "@ember/object";
 import { inject as service } from "@ember/service";
@@ -7,89 +6,29 @@ export default class IndexRoute extends Route {
   @service coreApi;
 
   activate() {
-    console.log(" => init()");
+    console.log("=> init()");
+
+    const succCb = () => {
+      const dispType = this.coreApi.settings().strings.displayTypes.topn;
+      this.coreApi.fetchTopDispFrames(
+        dispType,
+        0,
+        0,
+        null,
+        () => {
+          console.log("Initial Top N loaded!");
+        },
+        () => {
+          console.log("Initial Top N load failed!");
+        }
+      );
+
+      this.refresh();
+    };
     // Get settings from the core
-    this.coreApi
-      .get(ENV.settingsEndpoint)
-      .then((res) => {
-        // One time setup here
-        this.store.push({
-          data: [
-            {
-              id: 0,
-              type: "core-settings",
-              attributes: {
-                generated: res.generated,
-                strings: res.strings,
-                core: res.core,
-                server: res.server,
-                ui: res.ui,
-                api: res.api,
-                url: `${ENV.coreUrl}${ENV.settingsEndpoint}`,
-              },
-              relationships: {},
-            },
-          ],
-        });
-        console.log(" Core settings loaded...");
+    this.coreApi.fetchInitial(succCb, () => this.refresh());
 
-        this.coreApi
-          .get(res.api.endpoints.userContext.get.url)
-          .then((res2) => {
-            this.store.push({
-              data: [
-                {
-                  id: 0,
-                  type: "user-context",
-                  attributes: {
-                    search: res2.search,
-                    history: res2.history,
-                    bookmarkedFrames: res2.bookmarkedFrames,
-                    url: `${ENV.coreUrl}${res.api.endpoints.userContext.get.url}`,
-                  },
-                  relationships: {},
-                },
-              ],
-            });
-            console.log(" User context loaded...");
-
-            this.refresh();
-          })
-          .catch(() => {
-            this.store.push({
-              data: [
-                {
-                  id: 0,
-                  type: "user-context",
-                  attributes: {
-                    error: true,
-                    url: `${ENV.coreUrl}${res.api.endpoints.userContext.get.url}`,
-                  },
-                  relationships: {},
-                },
-              ],
-            });
-            this.refresh();
-          });
-      })
-      .catch(() => {
-        this.store.push({
-          data: [
-            {
-              id: 0,
-              type: "core-settings",
-              attributes: {
-                error: true,
-                url: `${ENV.coreUrl}${ENV.settingsEndpoint}`,
-              },
-              relationships: {},
-            },
-          ],
-        });
-        this.refresh();
-      });
-
-    console.log(" <= init()");
+    console.log("<= init()");
   }
 
   @action
