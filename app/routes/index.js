@@ -17,13 +17,15 @@ export default class IndexRoute extends Route {
         null,
         () => {
           console.log("Initial Top N loaded!");
+          this.refresh();
         },
         () => {
           console.log("Initial Top N load failed!");
+          this.refresh();
         }
       );
 
-      this.refresh();
+      
     };
     // Get settings from the core
     this.coreApi.fetchInitial(succCb, () => this.refresh());
@@ -40,10 +42,12 @@ export default class IndexRoute extends Route {
   model() {
     const coreSettings = this.store.peekRecord("core-settings", 0);
     const userContext = this.store.peekRecord("user-context", 0);
+    const mainDisplay = this.store.peekRecord("main-display", 0);
     console.warn(`userContext: ${userContext}`);
     return {
       coreSettings,
       userContext,
+      mainDisplay
     };
   }
 
