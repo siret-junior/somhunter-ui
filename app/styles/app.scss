@@ -1,18 +1,20 @@
-body {
-    
-}
-
 * {
     box-sizing: border-box;
 }
 
 .main-grid-row {
     position: relative;
+    height: 100vh;
 }
 
 .frame {
     position: relative;
-    padding-top: 12%;
+    height: calc(100% / 7);
+    min-height: 100px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
 
     .frame-overlay {
         border: 4px solid transparent;
@@ -38,6 +40,24 @@ body {
             position: absolute;
             right: 0;
             bottom: 0;
+        }
+    }
+}
+
+.text-suggestions-list {
+    margin: 0;
+    padding: 1rem;
+    background: #999;
+    list-style: none;
+    .text-suggestions-item {
+        padding: 0.3rem 0.6rem 0.3rem 0.6rem; 
+
+        &.selected {
+            background: rgb(191, 76, 76);
+        }
+        &:hover {
+            background: #aaa;
+            cursor: pointer;
         }
     }
 }

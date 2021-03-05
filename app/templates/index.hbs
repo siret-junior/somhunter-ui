@@ -2,25 +2,23 @@
 
 
 {{#if (and @model.userContext @model.coreSettings) }}
+  <div class="container-fluid">
 
-
-<div class="container-fluid">
-
-  <div class="row justify-content-center">
-    <div class="col-4">
-      
-      <!-- Main grid -->
-      --Main Panel--
-
-    </div>
-    <div class="col-8">
-        <div class="main-grid-row row">
+    <div class="row justify-content-center">
+      <div id="mainPanel" class="col-3">
+        
         <!-- Main grid -->
-        <MainGrid @frames={{@model.mainDisplay.frames}} />
+        <MainPanel @title="Main Panel"/>
+        
+      </div>
+      <div id="mainWindow" class="col-9">
+          <div class="main-grid-row row">
+          <!-- Main grid -->
+          <MainGrid @frames={{@model.mainDisplay.frames}} />
+        </div>
       </div>
     </div>
   </div>
-</div>
 
 {{else}}
 
