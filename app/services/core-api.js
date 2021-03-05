@@ -29,14 +29,11 @@ export default class CoreApiService extends Service {
         cbSucc = () => null,
         cbFail = (e) => null
     ) {
-        console.log("=> fetchTopDispFrames()");
-
         const reqData = {
             pageId: pageId,
             type: type,
             frameId: frameId,
         };
-        console.log(reqData);
 
         const coreSettings = this.settings();
         const requestSettings = coreSettings.api.endpoints.screenTop;
@@ -52,10 +49,7 @@ export default class CoreApiService extends Service {
                     currentPage: pageId,
                     frames: res.viewData.somhunter.screen.frames,
                 };
-                console.warn(resData);
                 const data = toMainDisplayModel(resData);
-
-                console.warn(data);
                 this.store.push(data);
 
                 cbSucc();
@@ -63,7 +57,6 @@ export default class CoreApiService extends Service {
             .catch((e) => {
                 cbFail(e);
             });
-        console.log("<= fetchTopDispFrames()");
     }
 
     fetchInitial(cbSucc = () => null, cbFail = () => null) {
@@ -88,7 +81,7 @@ export default class CoreApiService extends Service {
                         },
                     ],
                 });
-                console.log(" Core settings loaded...");
+                console.debug(" Core settings loaded...");
 
                 this.get(res.api.endpoints.userContext.get.url)
                     .then((res2) => {
@@ -107,7 +100,7 @@ export default class CoreApiService extends Service {
                                 },
                             ],
                         });
-                        console.log(" User context loaded...");
+                        console.debug(" User context loaded...");
 
                         cbSucc();
                     })
@@ -152,13 +145,11 @@ export default class CoreApiService extends Service {
             method,
         };
 
-        console.log(body);
         if (method == "GET" && body) {
             url = url + "?";
             for (const key of Object.keys(body)) {
                 url += `${key}=${body[key]}`;
             }
-            console.warn(url);
         } else {
             if (body) {
                 fetchOptions["body"] = body;
@@ -171,7 +162,7 @@ export default class CoreApiService extends Service {
         );
 
         if (!response.ok) {
-            console.warn("RES NOK");
+            console.error("RES NOK");
             return;
         }
         const { "content-type": resContentType = "" } = response.headers.map;

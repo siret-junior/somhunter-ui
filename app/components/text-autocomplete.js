@@ -16,13 +16,11 @@ export default class TextAutocompleteComponent extends Component {
     onKeyDown(e) {
         switch (e.which) {
             case 38: // up
-                console.log("UP");
                 this.selIdx = Math.max(0, --this.selIdx);
                 console.log(this.selIdx);
                 break;
 
             case 40: // down
-                console.log("DOWN");
                 this.selIdx = Math.min(
                     this.suggestions.length - 1,
                     ++this.selIdx
@@ -31,13 +29,11 @@ export default class TextAutocompleteComponent extends Component {
                 break;
 
             case 13: // enter
-                console.log("ENTER");
                 this.setChosenWord(this.suggestions[this.selIdx].wordString);
                 console.log(this.suggestions[this.selIdx].wordString);
                 break;
 
             case 27: // ESC
-                console.log("ESC");
                 this.suggestions = [];
                 document.activeElement.blur();
                 break;
@@ -51,7 +47,7 @@ export default class TextAutocompleteComponent extends Component {
 
         const currValue = getCurrSubString(this.inputValue, this.lastCurrPos);
 
-        this.actionManager.fetchTextSuggestions(
+        this.actionManager.getTextAutocompleteSuggestions(
             currValue,
             (suggs) => {
                 this.suggestions = suggs;
