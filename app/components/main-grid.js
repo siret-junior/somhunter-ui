@@ -12,22 +12,16 @@ export default class MainGridComponent extends Component {
         super(...arguments);
 
         // Register the reload hook to `changeView` event
-        this.actionManager.registerEventHook(
-            CS.EVENT_NAME_VIEW_CHANGE,
-            this.refresh
+        this.actionManager.registerEventHook(CS.EVENT_NAME_VIEW_CHANGE, () =>
+            this.modelReload()
         );
 
         this.modelReload();
     }
 
-    @action
-    refresh() {
-        console.debug("Doing the `main-grid.js` component controller refresh!");
-        this.modelReload();
-    }
-
     modelReload() {
         this.frames = this.modelLoader.mainDisplayFrames();
+        this.viewType = this.modelLoader.mainDisplayType();
     }
 
     /* Member variables */
@@ -35,4 +29,5 @@ export default class MainGridComponent extends Component {
     @service modelLoader;
 
     @tracked frames = undefined;
+    @tracked viewType = undefined;
 }

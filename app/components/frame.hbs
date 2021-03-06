@@ -1,0 +1,15 @@
+
+<div class="frame col-2" style={{thumb "http://127.0.0.1:8888/frames/" @frame.src}}>
+    <div class="frame-overlay">
+        <button type="button" class="btn-submit btn btn-success"
+            data-id={{@frame.id}} {{on "click" this.onSubmitBtnClick}}><i class="fa fa-check" aria-hidden="true"></i></button>            
+
+        <button type="button" data-id={{@frame.id}} class="btn-detail btn btn-primary"
+            {{on "click" this.onDetailBtnClick}}>Detail</button>            
+
+        <button type="button" data-id={{frame.id}} class="btn-knn btn btn-primary"
+            {{on "click" this.onKnnBtnClick}}>Neighbours</button>            
+
+    </div>
+    
+</div>

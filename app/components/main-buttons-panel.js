@@ -14,11 +14,23 @@ export default class MainButtonsPanelComponent extends Component {
 
     @action
     onClickTopScoredBtn(e) {
-        this.actionManager.gotoTopScoredView();
+        this.actionManager.gotoTopScoredView(0);
     }
 
     @action
     onClickSomBtn(e) {
+        this.actionManager.gotoSomView();
+    }
+
+    @action
+    onClickRescoreTopScoredBtn(e) {
+        this.actionManager.rescore();
+        this.actionManager.gotoTopScoredView(0);
+    }
+
+    @action
+    onClickRescoreSomScoredBtn(e) {
+        this.actionManager.rescore();
         this.actionManager.gotoSomView();
     }
 

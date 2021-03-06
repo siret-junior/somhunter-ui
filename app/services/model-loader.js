@@ -8,10 +8,49 @@ export default class ModelLoaderService extends Service {
         super(...arguments);
     }
 
+    get settings() {
+        return this.store.peekRecord("core-settings", 0);
+    }
+
+    get userContext() {
+        return this.store.peekRecord("user-context", 0);
+    }
+
+    getDetailFrames() {
+        const detail = this.store.peekRecord("detail-window", 0);
+        return detail?.frames;
+    }
+
+    getShowDetailView() {
+        const detail = this.store.peekRecord("detail-window", 0);
+        return detail?.show;
+    }
+
+    setShowDetailView(val) {
+        const detail = this.store.peekRecord("detail-window", 0);
+        detail.show = val;
+    }
+
+    getShowReplaylView() {
+        const detail = this.store.peekRecord("replay-window", 0);
+        return detail?.show;
+    }
+
+    setShowReplayView(val) {
+        const detail = this.store.peekRecord("replay-window", 0);
+        detail.show = val;
+    }
+
     mainDisplayFrames() {
         const mainDisplay = this.store.peekRecord("main-display", 0);
 
         return mainDisplay?.frames;
+    }
+
+    mainDisplayType() {
+        const mainDisplay = this.store.peekRecord("main-display", 0);
+
+        return mainDisplay?.activeDisplay;
     }
 
     /* Member variables */

@@ -8,8 +8,14 @@ module.exports = function (defaults) {
         sassOptions: {
             extension: "scss",
         },
+
         fingerprint: {
             exclude: ["assets/frames"],
+        },
+
+        "ember-bootstrap": {
+            bootstrapVersion: 4,
+            importBootstrapCSS: false,
         },
     });
 

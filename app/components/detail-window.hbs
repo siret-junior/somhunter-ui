@@ -1,0 +1,21 @@
+<!-- Modal -->
+
+<BsModalSimple 
+    @open={{this.show}} 
+    @title="Detail"
+    @size="lg"
+    
+    @onHide={{this.onHide}}
+>
+    <div class="main-grid row">
+
+        {{#if this.frames}}
+            {{#each this.frames as |frame|}}
+
+            <Frame @frame={{frame}} />
+
+            {{/each}}
+        {{/if}}
+
+    </div>
+</BsModalSimple>

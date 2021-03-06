@@ -1,7 +1,7 @@
 
 
 <div {{on "keydown" this.onKeyDown}} class="text autocomplete md-form">
-  <input value={{this.inputValue}} type="search" id="form-autocomplete" {{on "input" this.updateInputValue}} class="form-control mdb-autocomplete">
+  <input value={{this.inputValue}} type="search" id="textQueryInput{{@id}}" {{on "input" this.updateInputValue}} class="form-control mdb-autocomplete">
   {{#if this.suggestions}}
     <ul class="text-suggestions-list">
         {{#each this.suggestions as |s index|}}

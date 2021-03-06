@@ -1,20 +1,12 @@
 
+<div class="{{this.viewType}} main-grid row">
+
 {{#if this.frames}}
-    
+    {{#each this.frames as |frame|}}
 
-{{#each this.frames as |frame|}}
-
-    <div class="frame col-2" style={{thumb "http://127.0.0.1:8888/frames/" frame.src}}>
-        <div class="frame-overlay">
-            <button type="button" class="btn-submit btn btn-success"><i class="fa fa-check" aria-hidden="true"></i></button>            
-
-            <button type="button" class="btn-detail btn btn-primary">Detail</button>            
-
-        </div>
+        <Frame @frame={{frame}} />    
         
-    </div>
-{{/each}}
-
-
-
+    {{/each}}
 {{/if}}
+
+</div>

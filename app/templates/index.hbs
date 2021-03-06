@@ -1,7 +1,7 @@
 {{page-title "Index"}}
 
 
-{{#if (and @model.userContext @model.coreSettings) }}
+{{#if (and (and @model.userContext @model.coreSettings) (and (not @model.userContext.error) (not @model.coreSettings.error)) ) }}
   <div class="container-fluid">
 
     <div class="row justify-content-center">
@@ -12,12 +12,18 @@
         
       </div>
       <div id="mainWindow" class="col-9">
-          <div class="main-grid-row row">
-          <!-- Main grid -->
-          <MainGrid />
-        </div>
+          
+        <!-- Main grid -->
+        <MainGrid />
+      
       </div>
     </div>
+  </div>
+
+
+  <div class="modals">
+    <DetailWindow />
+    <ReplayWindow />
   </div>
 
 {{else}}

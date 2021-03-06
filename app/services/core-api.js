@@ -4,13 +4,15 @@ import { inject as service } from "@ember/service";
 import { delay, resetMainGridScroll } from "../utils";
 
 import { toMainDisplayModel } from "../models/main-display";
+import { toDetailWindowModel } from "../models/detail-window";
 
 import ENV from "somhunter-ui/config/environment";
 
 export default class CoreApiService extends Service {
     @service store;
+    @service modelLoader;
 
-    settings() {
+    get settings() {
         return this.store.peekRecord("core-settings", 0);
     }
 
@@ -23,7 +25,7 @@ export default class CoreApiService extends Service {
     }
 
     async fetchSomViewFrames(cbSucc = () => null, cbFail = (e) => null) {
-        const coreSettings = this.settings();
+        const coreSettings = this.settings;
         const requestSettings = coreSettings.api.endpoints.screenSom;
 
         // << Core API >>
@@ -35,11 +37,13 @@ export default class CoreApiService extends Service {
 
             // 222 means that SOM not ready
             if (res.status === 222) {
+                console.warn("SOM not ready!");
                 await delay(500);
+                continue;
             }
 
             const resData = {
-                activeDisplay: this.settings().strings.displayTypes.som,
+                activeDisplay: this.settings.strings.displayTypes.som,
                 currentPage: 0,
                 frames: res.viewData.somhunter.screen.frames,
             };
@@ -63,7 +67,7 @@ export default class CoreApiService extends Service {
             frameId: frameId,
         };
 
-        const coreSettings = this.settings();
+        const coreSettings = this.settings;
         const requestSettings = coreSettings.api.endpoints.screenTop;
 
         // << Core API >>
@@ -84,6 +88,86 @@ export default class CoreApiService extends Service {
             })
             .catch((e) => {
                 cbFail(e);
+            });
+    }
+
+    fetchDetailFrames(
+        type,
+        pageId,
+        frameId,
+        cbSucc = () => null,
+        cbFail = (e) => null
+    ) {
+        const reqData = {
+            pageId: pageId,
+            type: type,
+            frameId: Number(frameId),
+        };
+
+        const coreSettings = this.settings;
+        const requestSettings = coreSettings.api.endpoints.frameDetail;
+
+        // << Core API >>
+        this.get(requestSettings.get.url, reqData)
+            .then((res) => {
+                if (res === null) return;
+
+                // If empty array returned
+                if (res.frames.length === 0) return;
+
+                const resData = {
+                    activeDisplay: type,
+                    currentPage: pageId,
+                    frames: res.frames,
+                };
+                const data = toDetailWindowModel(frameId, resData);
+                this.store.push(data);
+
+                cbSucc();
+            })
+            .catch((e) => {
+                cbFail(e);
+            });
+    }
+
+    fetchUserContext(cbSucc = () => null, cbFail = () => null) {
+        const url = this.settings.api.endpoints.userContext.get.url;
+        this.get(url)
+            .then((res2) => {
+                this.store.push({
+                    data: [
+                        {
+                            id: 0,
+                            type: "user-context",
+                            attributes: {
+                                search: res2.search,
+                                history: res2.history,
+                                bookmarkedFrames: res2.bookmarkedFrames,
+                                url: `${ENV.coreUrl}${url}`,
+                            },
+                            relationships: {},
+                        },
+                    ],
+                });
+                console.debug(" User context loaded...");
+
+                cbSucc();
+            })
+            .catch(() => {
+                this.store.push({
+                    data: [
+                        {
+                            id: 0,
+                            type: "user-context",
+                            attributes: {
+                                error: true,
+                                url: `${ENV.coreUrl}${url}`,
+                            },
+                            relationships: {},
+                        },
+                    ],
+                });
+                cbFail();
             });
     }
 
@@ -111,43 +195,7 @@ export default class CoreApiService extends Service {
                 });
                 console.debug(" Core settings loaded...");
 
-                this.get(res.api.endpoints.userContext.get.url)
-                    .then((res2) => {
-                        this.store.push({
-                            data: [
-                                {
-                                    id: 0,
-                                    type: "user-context",
-                                    attributes: {
-                                        search: res2.search,
-                                        history: res2.history,
-                                        bookmarkedFrames: res2.bookmarkedFrames,
-                                        url: `${ENV.coreUrl}${res.api.endpoints.userContext.get.url}`,
-                                    },
-                                    relationships: {},
-                                },
-                            ],
-                        });
-                        console.debug(" User context loaded...");
-
-                        cbSucc();
-                    })
-                    .catch(() => {
-                        this.store.push({
-                            data: [
-                                {
-                                    id: 0,
-                                    type: "user-context",
-                                    attributes: {
-                                        error: true,
-                                        url: `${ENV.coreUrl}${res.api.endpoints.userContext.get.url}`,
-                                    },
-                                    relationships: {},
-                                },
-                            ],
-                        });
-                        cbFail();
-                    });
+                this.fetchUserContext(cbSucc, cbFail);
             })
             .catch(() => {
                 this.store.push({
@@ -169,18 +217,18 @@ export default class CoreApiService extends Service {
 
     async fetchRequest(url, method, body) {
         const fetchOptions = {
-            headers: { "Content-type": "Content-Type: application/json" },
+            headers: { "Content-Type": "application/json" },
             method,
         };
 
         if (method == "GET" && body) {
             url = url + "?";
             for (const key of Object.keys(body)) {
-                url += `${key}=${body[key]}`;
+                url += `${key}=${body[key]}&`;
             }
         } else {
             if (body) {
-                fetchOptions["body"] = body;
+                fetchOptions["body"] = JSON.stringify(body);
             }
         }
 
@@ -201,6 +249,8 @@ export default class CoreApiService extends Service {
         } else {
             resContent = await response.text();
         }
+
+        resContent.status = response.status;
 
         return resContent;
     }

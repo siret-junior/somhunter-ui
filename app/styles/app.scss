@@ -1,10 +1,20 @@
+@import "ember-bootstrap/bootstrap";
+
 * {
     box-sizing: border-box;
 }
 
-.main-grid-row {
+.main-grid {
     position: relative;
     height: 100vh;
+    &.SOM_display {
+        .frame {
+            width: 12.5%;
+            flex: 0 0 12.5%;
+            max-width: 12.5%;
+            height: calc(100% / 8);
+        }
+    }
 }
 
 .frame {
@@ -60,4 +70,13 @@
             cursor: pointer;
         }
     }
+}
+
+.modal.fade .modal-dialog {
+    transition: none;
+    transform: translate(0, -50px);
+}
+
+.modal-lg, .modal-xl {
+    max-width: 75%;
 }
