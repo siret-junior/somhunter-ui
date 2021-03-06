@@ -18,7 +18,9 @@ export default class MainButtonsPanelComponent extends Component {
     }
 
     @action
-    onClickSomBtn(e) {}
+    onClickSomBtn(e) {
+        this.actionManager.gotoSomView();
+    }
 
     /* Member variables */
     @service actionManager;

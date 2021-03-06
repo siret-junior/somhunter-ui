@@ -4,28 +4,31 @@ import { tracked } from "@glimmer/tracking";
 
 import { inject as service } from "@ember/service";
 
+import CS from "../constants";
+
 export default class ActionManagerService extends Service {
     /* Member methods */
     constructor() {
         super(...arguments);
+
+        this.eventHooks[CS.EVENT_NAME_VIEW_CHANGE] = [];
     }
 
     /* ==================================
      *      Events & event hooks
      * ================================== */
-    eventHooks = {
-        changeView: [],
-    };
+    eventHooks = {};
 
     registerEventHook(name, fn) {
-        if (name in this.eventHooks) return;
+        // If this event name does not exist
+        if (!(name in this.eventHooks)) return;
 
-        console.warn(`Registering function for the "${name}" event...`);
+        console.debug(`<!> Registering function for the "${name}" event...`);
         this.eventHooks[name].push(fn);
     }
 
     triggerEvent(name) {
-        console.warn(`Triggering the "${name}" event...`);
+        console.debug(`<!> Triggering the "${name}" event...`);
         this.eventHooks[name].forEach((fn) => {
             fn();
         });
@@ -56,6 +59,11 @@ export default class ActionManagerService extends Service {
             });
     }
 
+    initialize(cbSucc = () => null, cbFail = () => null) {
+        // Load the initial things
+        this.coreApi.fetchInitial(cbSucc, cbFail);
+    }
+
     gotoTopScoredView(cbSucc = () => null, cbFail = () => null) {
         const dispType = this.coreApi.settings().strings.displayTypes.topn;
 
@@ -65,12 +73,21 @@ export default class ActionManagerService extends Service {
             0,
             null,
             () => {
-                this.triggerEvent("changeView");
+                this.triggerEvent(CS.EVENT_NAME_VIEW_CHANGE);
                 cbSucc();
             },
+            () => cbFail()
+        );
+    }
+
+    gotoSomView(cbSucc = () => null, cbFail = () => null) {
+        const dispType = this.coreApi.settings().strings.displayTypes.som;
+        this.coreApi.fetchSomViewFrames(
             () => {
-                cbFail();
-            }
+                this.triggerEvent(CS.EVENT_NAME_VIEW_CHANGE);
+                cbSucc();
+            },
+            () => cbFail()
         );
     }
 

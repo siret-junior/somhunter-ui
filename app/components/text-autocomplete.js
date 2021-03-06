@@ -17,7 +17,6 @@ export default class TextAutocompleteComponent extends Component {
         switch (e.which) {
             case 38: // up
                 this.selIdx = Math.max(0, --this.selIdx);
-                console.log(this.selIdx);
                 break;
 
             case 40: // down
@@ -25,12 +24,10 @@ export default class TextAutocompleteComponent extends Component {
                     this.suggestions.length - 1,
                     ++this.selIdx
                 );
-                console.log(this.selIdx);
                 break;
 
             case 13: // enter
                 this.setChosenWord(this.suggestions[this.selIdx].wordString);
-                console.log(this.suggestions[this.selIdx].wordString);
                 break;
 
             case 27: // ESC
@@ -51,7 +48,6 @@ export default class TextAutocompleteComponent extends Component {
             currValue,
             (suggs) => {
                 this.suggestions = suggs;
-                console.log(this.suggestions);
             },
             (e) => {
                 alert(e.message);

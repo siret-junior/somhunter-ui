@@ -1,7 +1,7 @@
 import Service from "@ember/service";
 import fetch from "fetch";
 import { inject as service } from "@ember/service";
-import { resetMainGridScroll } from "../utils";
+import { delay, resetMainGridScroll } from "../utils";
 
 import { toMainDisplayModel } from "../models/main-display";
 
@@ -20,6 +20,34 @@ export default class CoreApiService extends Service {
 
     get(url, data) {
         return this.fetchRequest(url, "GET", data);
+    }
+
+    async fetchSomViewFrames(cbSucc = () => null, cbFail = (e) => null) {
+        const coreSettings = this.settings();
+        const requestSettings = coreSettings.api.endpoints.screenSom;
+
+        // << Core API >>
+        let res = null;
+        do {
+            res = await this.post(requestSettings.post.url);
+
+            if (res === null) return;
+
+            // 222 means that SOM not ready
+            if (res.status === 222) {
+                await delay(500);
+            }
+
+            const resData = {
+                activeDisplay: this.settings().strings.displayTypes.som,
+                currentPage: 0,
+                frames: res.viewData.somhunter.screen.frames,
+            };
+            const data = toMainDisplayModel(resData);
+            this.store.push(data);
+
+            cbSucc();
+        } while (res.status === 222);
     }
 
     fetchTopDispFrames(

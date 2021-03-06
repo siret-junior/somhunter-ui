@@ -3,6 +3,8 @@ export function resetMainGridScroll() {
     if (el) el.scrollTop = 0;
 }
 
+export const delay = (ms) => new Promise((res) => setTimeout(res, ms));
+
 /**
  *
  * @param {string} str Original string.
@@ -20,6 +22,7 @@ export function getCurrSubString(str, currIdx) {
  * @param {int} currIdx Index of the cursor.
  */
 export function subCurrWord(str, currIdx, word) {
+    // \todo Fix!
     let i = currIdx - 1;
     for (; i >= 0 && str[i] != " "; --i);
     const prefix = str.substr(0, i + 1);
