@@ -1,11 +1,23 @@
 
 
 <div {{on "keydown" this.onKeyDown}} class="text autocomplete md-form">
-  <input value={{this.inputValue}} type="search" id="textQueryInput{{@id}}" {{on "input" this.updateInputValue}} class="form-control mdb-autocomplete">
+  
+  <input 
+    id="textQueryInput{{@id}}" 
+    class="form-control mdb-autocomplete" 
+    type="search" 
+    value={{this.inputValue}} 
+    selectionStart={{this.cursorIdx}}
+    
+    {{on "input" this.updateInputValue}}
+  />
+
   {{#if this.suggestions}}
     <ul class="text-suggestions-list">
         {{#each this.suggestions as |s index|}}
-            <li  class="{{if (eq this.selIdx index) 'selected' }} text-suggestions-item" {{on "click" (fn this.setChosenWord s.wordString) }}>
+            <li  class="{{if (eq this.selIdx index) 'selected' }} text-suggestions-item" 
+            {{on "click" (fn this.setChosenWord s.wordString) }}
+          >
             {{s.wordString}}
             </li>      
         {{/each}}

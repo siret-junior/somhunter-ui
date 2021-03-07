@@ -1,5 +1,6 @@
 {{page-title "Index"}}
 
+<section class="somhunter-ui">
 
 {{#if (and (and @model.userContext @model.coreSettings) (and (not @model.userContext.error) (not @model.coreSettings.error)) ) }}
   <div class="container-fluid">
@@ -56,5 +57,8 @@
     {{/if}}
   {{/if}}
 {{/if}}
+
+
+</section>
 
 {{outlet}}

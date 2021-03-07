@@ -21,9 +21,24 @@ export default class ModelLoaderService extends Service {
         return detail?.frames;
     }
 
+    getReplayFrames() {
+        const detail = this.store.peekRecord("replay-window", 0);
+        return detail?.frames;
+    }
+
     getShowDetailView() {
         const detail = this.store.peekRecord("detail-window", 0);
         return detail?.show;
+    }
+
+    getShowReplayView() {
+        const detail = this.store.peekRecord("replay-window", 0);
+        return detail?.show;
+    }
+
+    setShowReplayView(val) {
+        const detail = this.store.peekRecord("replay-window", 0);
+        detail.show = val;
     }
 
     setShowDetailView(val) {

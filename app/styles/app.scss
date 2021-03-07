@@ -1,5 +1,23 @@
 @import "ember-bootstrap/bootstrap";
 
+// Theme #2
+$theme-colors: (
+  "primary": #043540,
+  "secondary": #0d0d0d,
+  "third": #1f6373,
+  "fourth": #6d96a6,
+  "fifth": #bacbd9,
+  "white": #fff,
+  "black": #222,
+  "success": #4bb543,
+  "danger": #ff0000,
+  "warning": #fa7500,
+  "green": #00ff00,
+);
+
+body {
+    overflow: hidden;
+}
 * {
     box-sizing: border-box;
 }
@@ -7,6 +25,7 @@
 .main-grid {
     position: relative;
     height: 100vh;
+    overflow-y: scroll;
     &.SOM_display {
         .frame {
             width: 12.5%;
@@ -79,4 +98,27 @@
 
 .modal-lg, .modal-xl {
     max-width: 75%;
+}
+
+.replay-window {
+    position: absolute;
+    left:0;
+    top: 0;
+    background:  map-get($theme-colors, "primary");
+    overflow-x: scroll;
+    overflow-y: hidden;
+    display: block;
+    max-width: 100%;
+
+    .slider-row {
+
+        height: 100%;
+        width: max-content;
+        .frame {
+            width: 160px;
+            height: 90px;
+            display: inline-block;
+            max-width: none;
+        }
+    }
 }

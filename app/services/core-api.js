@@ -5,6 +5,7 @@ import { delay, resetMainGridScroll } from "../utils";
 
 import { toMainDisplayModel } from "../models/main-display";
 import { toDetailWindowModel } from "../models/detail-window";
+import { toReplaylWindowModel } from "../models/replay-window";
 
 import ENV from "somhunter-ui/config/environment";
 
@@ -82,6 +83,45 @@ export default class CoreApiService extends Service {
                     frames: res.viewData.somhunter.screen.frames,
                 };
                 const data = toMainDisplayModel(resData);
+                this.store.push(data);
+
+                cbSucc();
+            })
+            .catch((e) => {
+                cbFail(e);
+            });
+    }
+
+    fetchReplayFrames(
+        type,
+        pageId,
+        frameId,
+        cbSucc = () => null,
+        cbFail = (e) => null
+    ) {
+        const reqData = {
+            pageId: pageId,
+            type: type,
+            frameId: Number(frameId),
+        };
+
+        const coreSettings = this.settings;
+        const requestSettings = coreSettings.api.endpoints.frameDetail;
+
+        // << Core API >>
+        this.get(requestSettings.get.url, reqData)
+            .then((res) => {
+                if (res === null) return;
+
+                // If empty array returned
+                if (res.frames.length === 0) return;
+
+                const resData = {
+                    activeDisplay: type,
+                    currentPage: pageId,
+                    frames: res.frames,
+                };
+                const data = toReplaylWindowModel(frameId, resData);
                 this.store.push(data);
 
                 cbSucc();

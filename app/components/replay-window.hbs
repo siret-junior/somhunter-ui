@@ -1,1 +1,17 @@
-{{yield}}
+
+
+{{#if this.show}}
+    <div class="replay-window">
+        <div class="slider-row">
+
+            {{#if this.frames}}
+                {{#each this.frames as |frame|}}
+
+                <Frame @frame={{frame}} />
+
+                {{/each}}
+            {{/if}}
+
+        </div>
+    </div>
+{{/if}}

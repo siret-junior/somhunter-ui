@@ -17,6 +17,8 @@ export default class TextAutocompleteComponent extends Component {
         switch (e.which) {
             case 38: // up
                 this.selIdx = Math.max(0, --this.selIdx);
+                e.stopPropagation();
+                e.preventDefault(); // Do not move the cursor
                 break;
 
             case 40: // down
@@ -24,15 +26,21 @@ export default class TextAutocompleteComponent extends Component {
                     this.suggestions.length - 1,
                     ++this.selIdx
                 );
+                e.preventDefault(); // Do not move the cursor
+                e.stopPropagation();
                 break;
 
             case 13: // enter
+                if (this.suggestions.length <= 0) return;
+
                 this.setChosenWord(this.suggestions[this.selIdx].wordString);
+                e.stopPropagation();
                 break;
 
             case 27: // ESC
                 this.suggestions = [];
                 document.activeElement.blur();
+                e.stopPropagation();
                 break;
         }
     }
@@ -40,9 +48,9 @@ export default class TextAutocompleteComponent extends Component {
     @action
     updateInputValue(e) {
         this.inputValue = e.target.value;
-        this.lastCurrPos = e.target.selectionStart;
+        this.cursorIdx = e.target.selectionStart;
 
-        const currValue = getCurrSubString(this.inputValue, this.lastCurrPos);
+        const currValue = getCurrSubString(this.inputValue, this.cursorIdx);
 
         this.actionManager.getTextAutocompleteSuggestions(
             currValue,
@@ -57,7 +65,13 @@ export default class TextAutocompleteComponent extends Component {
 
     @action
     setChosenWord(word) {
-        this.inputValue = subCurrWord(this.inputValue, this.lastCurrPos, word);
+        const [newInputValue, newCursorIndex] = subCurrWord(
+            this.inputValue,
+            this.cursorIdx,
+            word
+        );
+        this.inputValue = newInputValue;
+        this.cursorIdx = newCursorIndex;
     }
 
     /* Member variables */
@@ -65,6 +79,7 @@ export default class TextAutocompleteComponent extends Component {
 
     @tracked suggestions = [];
     @tracked inputValue = "";
+    @tracked cursorIdx = 0; //el.selectionStart
     @tracked selIdx = 0;
     lastCurrPos = 0;
 }

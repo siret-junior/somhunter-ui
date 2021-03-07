@@ -25,9 +25,18 @@ export function subCurrWord(str, currIdx, word) {
     // \todo Fix!
     let i = currIdx - 1;
     for (; i >= 0 && str[i] != " "; --i);
+
     const prefix = str.substr(0, i + 1);
-    const postfix = str.substr(currIdx);
-    return `${prefix}${word}${postfix}`;
+    let postfix = str.substr(currIdx);
+    // If end of the input
+    if (postfix.length <= 0) {
+        postfix = " ";
+    }
+
+    const newString = `${prefix}${word}${postfix}`;
+    const cursorIdxDiff = newString.length - str.length;
+
+    return [newString, currIdx + cursorIdxDiff];
 }
 
 export function getTextQueryInput(idx) {

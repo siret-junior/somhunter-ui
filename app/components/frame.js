@@ -19,6 +19,19 @@ export default class FrameComponent extends Component {
     }
 
     @action
+    onWheel(e) {
+        if (e.shiftKey) {
+            console.log("DeltaY: ", e.target);
+            const frameId = e.target.dataset.id;
+            const deltaY = e.deltaY;
+
+            console.log("DeltaY: ", deltaY);
+            console.log("frameId: ", frameId);
+            this.actionManager.scrollReplay(frameId, deltaY);
+        }
+    }
+
+    @action
     onDetailBtnClick(e) {
         this.actionManager.showDetailView(e.target.dataset.id, 0);
     }

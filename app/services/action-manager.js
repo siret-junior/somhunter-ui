@@ -15,6 +15,13 @@ export default class ActionManagerService extends Service {
         this.eventHooks[CS.EVENT_NAME_VIEW_CHANGE] = [];
         this.eventHooks[CS.EVENT_NAME_DETAIL_VIEW_CHANGE] = [];
         this.eventHooks[CS.EVENT_SHOW_DETAIL] = [];
+        this.eventHooks[CS.EVENT_SHOW_REPLAY] = [];
+        this.eventHooks[CS.EVENT_CHANGE_REPLAY] = [];
+
+        /** Global keys events */
+        this.eventHooks[CS.EVENT_GLOBAL_ESC_KEY_DOWN] = [];
+        this.eventHooks[CS.EVENT_GLOBAL_ENTER_KEY_DOWN] = [];
+        this.eventHooks[CS.EVENT_GLOBAL_TAB_KEY_DOWN] = [];
     }
 
     /* ==================================
@@ -37,6 +44,16 @@ export default class ActionManagerService extends Service {
         });
     }
     /* ================================== */
+
+    scrollReplay(frameId, deltaY) {
+        const dispType = this.coreApi.settings.strings.displayTypes.replay;
+
+        this.coreApi.fetchReplayFrames(dispType, 0, frameId, null, () => {
+            this.modelLoader.setShowReplayView(true);
+            this.triggerEvent(CS.EVENT_SHOW_REPLAY);
+            this.triggerEvent(CS.EVENT_CHANGE_REPLAY);
+        });
+    }
 
     getTextAutocompleteSuggestions(
         prefix,
@@ -200,6 +217,12 @@ export default class ActionManagerService extends Service {
 
             console.warn("Rescored & fetches user context...");
         });
+    }
+
+    globalKeyHandler(eventName) {
+        console.debug(`Global event '${eventName}' hit!`);
+
+        this.triggerEvent(eventName);
     }
 
     /* Member variables */
