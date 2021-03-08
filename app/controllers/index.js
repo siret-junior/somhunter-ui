@@ -10,12 +10,19 @@ export default class IndexController extends Controller {
     /* Member methods */
     constructor() {
         super(...arguments);
+
+        /** Add the global event listeners. */
+        this.addGlobalEventListeners();
+    }
+
+    addGlobalEventListeners() {
+        // When pressing some keyboard key
         document.addEventListener("keydown", this.onGlobalKeyDown);
     }
 
     @action
     onGlobalKeyDown(e) {
-        console.debug("Event 'keydown':", e);
+        //console.debug("Event 'keydown':", e);
 
         switch (e.which) {
             case 27: // ESC

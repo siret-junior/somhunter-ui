@@ -15,8 +15,11 @@ export default class ActionManagerService extends Service {
         this.eventHooks[CS.EVENT_NAME_VIEW_CHANGE] = [];
         this.eventHooks[CS.EVENT_NAME_DETAIL_VIEW_CHANGE] = [];
         this.eventHooks[CS.EVENT_SHOW_DETAIL] = [];
+
         this.eventHooks[CS.EVENT_SHOW_REPLAY] = [];
-        this.eventHooks[CS.EVENT_CHANGE_REPLAY] = [];
+        this.eventHooks[CS.EVENT_HIDE_REPLAY] = [];
+        this.eventHooks[CS.EVENT_LOAD_REPLAY] = [];
+        this.eventHooks[CS.EVENT_SLIDE_REPLAY] = [];
 
         /** Global keys events */
         this.eventHooks[CS.EVENT_GLOBAL_ESC_KEY_DOWN] = [];
@@ -40,19 +43,35 @@ export default class ActionManagerService extends Service {
     triggerEvent(name) {
         console.debug(`<!> Triggering the "${name}" event...`);
         this.eventHooks[name].forEach((fn) => {
-            fn();
+            fn(arguments[1], arguments[2], arguments[3]);
         });
     }
     /* ================================== */
 
-    scrollReplay(frameId, deltaY) {
-        const dispType = this.coreApi.settings.strings.displayTypes.replay;
+    fetchReplayFrames(frameId) {
+        const dispType = this.dataLoader.stringSettings.displayTypes.replay;
 
         this.coreApi.fetchReplayFrames(dispType, 0, frameId, null, () => {
-            this.modelLoader.setShowReplayView(true);
-            this.triggerEvent(CS.EVENT_SHOW_REPLAY);
-            this.triggerEvent(CS.EVENT_CHANGE_REPLAY);
+            this.triggerEvent(CS.EVENT_LOAD_REPLAY);
+            this.triggerEvent(CS.EVENT_SHOW_REPLAY, frameId);
         });
+    }
+
+    onSlideReplay(frameId, deltaY) {
+        const prevPivotId = this.dataLoader.getReplayPivotId();
+
+        if (frameId !== prevPivotId) {
+            console.debug("Loading replay data...");
+            this.fetchReplayFrames(frameId);
+            return;
+        }
+
+        const show = this.dataLoader.getShowReplayView();
+        if (!show) {
+            this.triggerEvent(CS.EVENT_SHOW_REPLAY, frameId);
+        } else {
+            this.triggerEvent(CS.EVENT_SLIDE_REPLAY, deltaY);
+        }
     }
 
     getTextAutocompleteSuggestions(
@@ -108,7 +127,7 @@ export default class ActionManagerService extends Service {
     }
 
     hideDetailView() {
-        this.modelLoader.setShowDetailView(false);
+        this.dataLoader.setShowDetailView(false);
         this.triggerEvent(CS.EVENT_NAME_DETAIL_VIEW_CHANGE);
     }
 
@@ -165,7 +184,7 @@ export default class ActionManagerService extends Service {
 
         // this.showNotification("Working...");
 
-        const srcSearchCtxId = this.modelLoader.userContext.search.id;
+        const srcSearchCtxId = this.dataLoader.userContext.search.id;
 
         // Take a screenshot
         let screenData = "";
@@ -201,7 +220,7 @@ export default class ActionManagerService extends Service {
             collages: collagesData,
         };
 
-        const requestSettings = this.modelLoader.settings.api.endpoints
+        const requestSettings = this.dataLoader.settings.api.endpoints
             .searchRescore;
         // << Core API >>
         const res = await this.coreApi.post(requestSettings.post.url, reqData);
@@ -213,7 +232,7 @@ export default class ActionManagerService extends Service {
         this.coreApi.fetchUserContext(() => {
             // this.hideNotification();
 
-            //this.modelLoader.unsetQueryChangedFlag();
+            //this.dataLoader.unsetQueryChangedFlag();
 
             console.warn("Rescored & fetches user context...");
         });
@@ -228,5 +247,5 @@ export default class ActionManagerService extends Service {
     /* Member variables */
     @service coreApi;
     @service actionManager;
-    @service modelLoader;
+    @service dataLoader;
 }

@@ -13,12 +13,6 @@ export default class IndexRoute extends Route {
         // Initialize the app
         const cb = () => this.refresh();
         this.actionManager.initialize(cb, cb);
-
-        // Register the reload hook to `changeView` event
-        // this.actionManager.registerEventHook(
-        //     CS.EVENT_NAME_VIEW_CHANGE,
-        //     this.forceRefresh
-        // );
     }
 
     model() {

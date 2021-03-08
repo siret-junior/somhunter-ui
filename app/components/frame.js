@@ -21,13 +21,10 @@ export default class FrameComponent extends Component {
     @action
     onWheel(e) {
         if (e.shiftKey) {
-            console.log("DeltaY: ", e.target);
-            const frameId = e.target.dataset.id;
+            const frameId = Number(e.target.dataset.id);
             const deltaY = e.deltaY;
 
-            console.log("DeltaY: ", deltaY);
-            console.log("frameId: ", frameId);
-            this.actionManager.scrollReplay(frameId, deltaY);
+            this.actionManager.onSlideReplay(frameId, deltaY);
         }
     }
 

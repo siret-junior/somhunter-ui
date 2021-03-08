@@ -3,10 +3,11 @@ import Model, { attr } from "@ember-data/model";
 export default class ReplayWindowModel extends Model {
     @attr show;
     @attr pivotFrameId;
+    @attr videoId;
     @attr frames;
 }
 
-export function toReplaylWindowModel(pivotId, data) {
+export function toReplaylWindowModel(pivotId, videoId, data) {
     return {
         data: [
             {
@@ -14,7 +15,8 @@ export function toReplaylWindowModel(pivotId, data) {
                 type: "replay-window",
                 attributes: {
                     show: true,
-                    pivotFrameId: pivotId,
+                    pivotFrameId: Number(pivotId),
+                    videoId,
                     frames: data.frames,
                 },
                 relationships: {},

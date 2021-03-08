@@ -3,10 +3,11 @@ import Model, { attr } from "@ember-data/model";
 export default class DetailWindowModel extends Model {
     @attr show;
     @attr pivotFrameId;
+    @attr videoId;
     @attr frames;
 }
 
-export function toDetailWindowModel(pivotId, data) {
+export function toDetailWindowModel(pivotId, videoId, data) {
     return {
         data: [
             {
@@ -14,7 +15,8 @@ export function toDetailWindowModel(pivotId, data) {
                 type: "detail-window",
                 attributes: {
                     show: true,
-                    pivotFrameId: pivotId,
+                    pivotFrameId: Number(pivotId),
+                    videoId,
                     frames: data.frames,
                 },
                 relationships: {},

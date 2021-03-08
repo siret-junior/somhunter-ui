@@ -20,13 +20,13 @@ export default class MainGridComponent extends Component {
     }
 
     modelReload() {
-        this.frames = this.modelLoader.mainDisplayFrames();
-        this.viewType = this.modelLoader.mainDisplayType();
+        this.frames = this.dataLoader.mainDisplayFrames();
+        this.viewType = this.dataLoader.mainDisplayType();
     }
 
     /* Member variables */
     @service actionManager;
-    @service modelLoader;
+    @service dataLoader;
 
     @tracked frames = undefined;
     @tracked viewType = undefined;

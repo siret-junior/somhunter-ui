@@ -1,17 +1,19 @@
 
 
-{{#if this.show}}
-    <div class="replay-window">
-        <div class="slider-row">
 
-            {{#if this.frames}}
-                {{#each this.frames as |frame|}}
+<div id={{this.CS.ELEM_ID_REPLAY_WINDOW}} class="replay-window">
+    <div id={{this.CS.ELEM_ID_REPLAY_WINDOW_SLIDER}} class="slider-row">
 
+        {{#if this.windowVisible}}
+
+            {{#if this.displayedFrames}}
+                {{#each this.displayedFrames as |frame|}}
                 <Frame @frame={{frame}} />
-
                 {{/each}}
             {{/if}}
 
-        </div>
+        {{/if}}
+
     </div>
-{{/if}}
+</div>
+    

@@ -30,18 +30,20 @@ export default class DetailWindowComponent extends Component {
     }
 
     @action modelReload() {
-        this.show = this.modelLoader.getShowDetailView();
-        this.frames = this.modelLoader.getDetailFrames();
+        this.show = this.dataLoader.getShowDetailView();
+        this.allFrames = this.dataLoader.getDetailFrames();
+        this.frames = this.allFrames.slice(0, 20);
     }
 
     @action showReload() {
-        this.show = this.modelLoader.getShowDetailView();
+        this.show = this.dataLoader.getShowDetailView();
     }
 
     /* Member variables */
     @service actionManager;
-    @service modelLoader;
+    @service dataLoader;
 
     @tracked show = false;
     @tracked frames = undefined;
+    @tracked allFrames = undefined;
 }

@@ -11,7 +11,7 @@ import ENV from "somhunter-ui/config/environment";
 
 export default class CoreApiService extends Service {
     @service store;
-    @service modelLoader;
+    @service dataLoader;
 
     get settings() {
         return this.store.peekRecord("core-settings", 0);
@@ -116,12 +116,14 @@ export default class CoreApiService extends Service {
                 // If empty array returned
                 if (res.frames.length === 0) return;
 
+                const videoId = res.frames[0].vId;
+
                 const resData = {
                     activeDisplay: type,
                     currentPage: pageId,
                     frames: res.frames,
                 };
-                const data = toReplaylWindowModel(frameId, resData);
+                const data = toReplaylWindowModel(frameId, videoId, resData);
                 this.store.push(data);
 
                 cbSucc();
@@ -155,12 +157,14 @@ export default class CoreApiService extends Service {
                 // If empty array returned
                 if (res.frames.length === 0) return;
 
+                const videoId = res.frames[0].vId;
+
                 const resData = {
                     activeDisplay: type,
                     currentPage: pageId,
                     frames: res.frames,
                 };
-                const data = toDetailWindowModel(frameId, resData);
+                const data = toDetailWindowModel(frameId, videoId, resData);
                 this.store.push(data);
 
                 cbSucc();

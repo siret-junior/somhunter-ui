@@ -2,7 +2,7 @@ import Service from "@ember/service";
 
 import { inject as service } from "@ember/service";
 
-export default class ModelLoaderService extends Service {
+export default class DataLoaderService extends Service {
     /* Member methods */
     constructor() {
         super(...arguments);
@@ -10,6 +10,17 @@ export default class ModelLoaderService extends Service {
 
     get settings() {
         return this.store.peekRecord("core-settings", 0);
+    }
+
+    get uiSettings() {
+        return this.settings.ui;
+    }
+
+    get apiSettings() {
+        return this.settings.api;
+    }
+    get stringSettings() {
+        return this.settings.strings;
     }
 
     get userContext() {
@@ -24,6 +35,11 @@ export default class ModelLoaderService extends Service {
     getReplayFrames() {
         const detail = this.store.peekRecord("replay-window", 0);
         return detail?.frames;
+    }
+
+    getReplayPivotId() {
+        const detail = this.store.peekRecord("replay-window", 0);
+        return detail?.pivotFrameId;
     }
 
     getShowDetailView() {
