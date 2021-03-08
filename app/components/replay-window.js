@@ -111,14 +111,29 @@ export default class ReplayWindowComponent extends Component {
     @action
     slideReplayWindow(deltaY) {
         const deltaYFrames = deltaY > 0 ? 1 : -1;
-        const prevScrollLeft = this.sliderEl.scrollLeft;
+        const prevScrollLeft = this.windowEl.scrollLeft;
         const newScrollLeft = prevScrollLeft + deltaYFrames * this.thumbWidth;
 
         console.debug("deltaYFrames: ", deltaYFrames);
         console.debug("newScrollLeft: ", newScrollLeft);
 
-        // \todo dynamic loading...
-        this.frames = this.allFrames?.slice(from, to);
+        this.windowEl.scrollLeft = newScrollLeft;
+        if (deltaYFrames < 0) {
+            this.displayedFrom = Math.max(0, this.displayedFrom + deltaYFrames);
+            let prevPadd = this.sliderEl.style.paddingLeft;
+            prevPadd = Number(prevPadd.substr(0, prevPadd.length - 2));
+            this.sliderEl.style.paddingLeft = `${prevPadd - this.thumbWidth}px`;
+        } else {
+            this.displayedTo = Math.min(
+                this.allFrames.length,
+                this.displayedTo + deltaYFrames
+            );
+        }
+
+        this.displayedFrames = this.allFrames.slice(
+            this.displayedFrom,
+            this.displayedTo
+        );
     }
 
     /* Member variables */

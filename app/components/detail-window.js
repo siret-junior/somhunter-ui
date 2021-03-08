@@ -32,7 +32,7 @@ export default class DetailWindowComponent extends Component {
     @action modelReload() {
         this.show = this.dataLoader.getShowDetailView();
         this.allFrames = this.dataLoader.getDetailFrames();
-        this.frames = this.allFrames.slice(0, 20);
+        this.frames = this.allFrames;
     }
 
     @action showReload() {
