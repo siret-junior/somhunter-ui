@@ -1,21 +1,42 @@
-<!-- Modal -->
 
-<BsModalSimple 
-    @open={{this.show}} 
-    @title="Detail"
-    @size="lg"
-    
-    @onHide={{this.onHide}}
->
-    <div class="main-grid row">
+<div class="custom-modal-window detail-window-modal {{if this.windowVisible "visible"}}">
+    <div id={{this.CS.ELEM_ID_DETAIL_WINDOW}} 
+        class="detail-window"
+        style="width:{{this.modalSliderW}}px; height:{{this.modalSliderH}}px"    
+    >
+        <div id={{this.CS.ELEM_ID_DETAIL_WINDOW_SLIDER}} 
+            class="slider-row"
+        >
 
-        {{#if this.frames}}
-            {{#each this.frames as |frame|}}
+            {{#if this.windowVisible}}
 
-            <Frame @frame={{frame}} />
+                {{#if this.displayedFrames}}
+                    {{#each this.displayedFrames as |frame|}}
+                        <Frame 
+                            @frame={{frame}} 
+                        />
+                    {{/each}}
+                {{/if}}
 
-            {{/each}}
-        {{/if}}
+            {{/if}}
 
+        </div>
     </div>
-</BsModalSimple>
+
+
+    <!-- We need to enforce the frame sizes so our calculations match! -->
+    {{#if (and this.cssFrameWidth this.cssFrameHeight)}}
+        <style>
+            #{{this.CS.ELEM_ID_DETAIL_WINDOW}} .frame {
+                width: {{this.cssFrameWidth}} !important;
+                height: {{this.cssFrameHeight}} !important;
+                
+            }
+            /* So button sizes scale propperly. */
+            #{{this.CS.ELEM_ID_DETAIL_WINDOW}} .frame * { 
+                font-size: 10px; 
+            }
+        </style>
+    {{/if}}
+
+</div>

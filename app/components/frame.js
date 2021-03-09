@@ -30,12 +30,12 @@ export default class FrameComponent extends Component {
 
     @action
     onDetailBtnClick(e) {
-        this.actionManager.showDetailView(e.target.dataset.id, 0);
+        this.actionManager.showDetailView(Number(e.target.dataset.id), 0);
     }
 
     @action
     onKnnBtnClick(e) {
-        this.actionManager.gotoKnnView(e.target.dataset.id, 0);
+        this.actionManager.gotoKnnView(Number(e.target.dataset.id), 0);
     }
 
     @action

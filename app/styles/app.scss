@@ -39,10 +39,15 @@ body {
 .frame {
     position: relative;
     height: calc(100% / 7);
-    min-height: 100px;
+    min-height: 1px;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+
+    .btn {
+        font-size: 1rem;
+        padding: 0.4rem 0.4rem 0.4rem 0.4rem;
+    }
 
     &.highlighted {
         .frame-overlay {
@@ -92,7 +97,7 @@ body {
     background: #999;
     list-style: none;
     .text-suggestions-item {
-        padding: 0.3rem 0.6rem 0.3rem 0.6rem; 
+        padding: 0.1rem 0.3rem 0.1rem 0.3rem; 
 
         &.selected {
             background: rgb(191, 76, 76);
@@ -137,3 +142,45 @@ body {
         }
     }
 }
+
+.custom-modal-window {
+    position:absolute;
+    width: max-content;
+    height: max-content;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    padding: 1rem;
+    background-color: map-get($theme-colors, "third");
+}
+
+.slider-row {
+    display: block;
+    font-size: 0;
+    .frame {
+        display: inline-block;
+    }
+}
+
+.detail-window-modal {
+    z-index: -1;
+    opacity: 0;
+    &.visible {
+        opacity: 1;
+        z-index: 20;
+    }
+    padding: 2em;
+}
+
+#detailWindow {
+    padding: 0;
+    
+    overflow-y: scroll;
+    
+    #detailWindowSlider {
+        background-color: map-get($theme-colors, "fifth");
+        display: relative;
+        
+    }
+}
+

@@ -13,7 +13,9 @@ export default class ActionManagerService extends Service {
         super(...arguments);
 
         this.eventHooks[CS.EVENT_NAME_VIEW_CHANGE] = [];
-        this.eventHooks[CS.EVENT_NAME_DETAIL_VIEW_CHANGE] = [];
+
+        this.eventHooks[CS.EVENT_LOAD_DETAIL] = [];
+        this.eventHooks[CS.EVENT_HIDE_DETAIL] = [];
         this.eventHooks[CS.EVENT_SHOW_DETAIL] = [];
 
         this.eventHooks[CS.EVENT_SHOW_REPLAY] = [];
@@ -109,8 +111,6 @@ export default class ActionManagerService extends Service {
         cbSucc = () => null,
         cbFail = () => null
     ) {
-        this.triggerEvent(CS.EVENT_SHOW_DETAIL);
-
         const dispType = this.coreApi.settings.strings.displayTypes.detail;
 
         this.coreApi.fetchDetailFrames(
@@ -119,7 +119,8 @@ export default class ActionManagerService extends Service {
             frameId,
             null,
             () => {
-                this.triggerEvent(CS.EVENT_NAME_DETAIL_VIEW_CHANGE);
+                this.triggerEvent(CS.EVENT_LOAD_DETAIL);
+                this.triggerEvent(CS.EVENT_SHOW_DETAIL, frameId);
                 cbSucc();
             },
             () => cbFail()
