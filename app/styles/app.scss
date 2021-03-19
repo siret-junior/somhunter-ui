@@ -128,11 +128,16 @@ body {
     overflow-y: hidden;
     display: block;
     max-width: 100%;
+    visibility: hidden;
+    &.visible {
+        visibility: visible;
+    }
 
     .slider-row {
         font-size: 0;
         height: 100%;
         width: max-content;
+        padding: 1rem 0 1rem 0;
         .frame {
             width: 200px;
             height: 112px;
@@ -155,7 +160,7 @@ body {
 }
 
 .slider-row {
-    display: block;
+    display: table;
     font-size: 0;
     .frame {
         display: inline-block;

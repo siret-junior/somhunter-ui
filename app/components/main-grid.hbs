@@ -1,12 +1,15 @@
 
-<div class="{{this.viewType}} main-grid row">
+<div 
+    class="{{this.viewType}} main-grid row"
+    {{on "scroll" this.onScroll}}    
+>
 
-{{#if this.frames}}
-    {{#each this.frames as |frame|}}
+    {{#if this.frames}}
+        {{#each this.frames as |frame|}}
 
-        <Frame @frame={{frame}} />    
-        
-    {{/each}}
-{{/if}}
+            <Frame @frame={{frame}} />    
+            
+        {{/each}}
+    {{/if}}
 
 </div>

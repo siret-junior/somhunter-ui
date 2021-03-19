@@ -12,10 +12,16 @@ export default class ReplayWindowComponent extends Component {
     constructor() {
         super(...arguments);
 
+        // On global ESC keydown
+        this.actionManager.registerEventHook(
+            CS.EVENT_GLOBAL_ESC_KEY_DOWN,
+            this.hideReplayWindow
+        );
+
         this.actionManager.registerEventHook(
             CS.EVENT_SHOW_REPLAY,
-            (frameId) => {
-                this.showReplayWindow(frameId);
+            (frameId, yNorm) => {
+                this.showReplayWindow(frameId, yNorm);
             }
         );
 
@@ -54,7 +60,7 @@ export default class ReplayWindowComponent extends Component {
      * to the frame of interest (pivot frame).
      */
     @action
-    showReplayWindow(frameId) {
+    showReplayWindow(frameId, yNorm) {
         // Make sure we have the HTML element handle
         if (!this.windowEl || !this.sliderEl) {
             this.windowEl = document.getElementById(CS.ELEM_ID_REPLAY_WINDOW);
@@ -74,6 +80,11 @@ export default class ReplayWindowComponent extends Component {
         const totW = (this.allFrames.length + neighRadius) * this.thumbWidth;
         this.sliderEl.style.width = `${totW}px`;
         this.sliderEl.style.overflowX = "scroll";
+        console.warn(".");
+
+        let topPos = yNorm * 100 + (yNorm > 0.5 ? -25 : 15);
+
+        this.windowEl.style.top = `${topPos}vh`;
 
         const pivodIdx = this.allFrames.findIndex((x) => {
             return x.id == frameId;
@@ -102,6 +113,7 @@ export default class ReplayWindowComponent extends Component {
 
     @action
     hideReplayWindow() {
+        this.dataLoader.setShowReplayView(false);
         this.windowVisible = false;
         this.displayedFrames = undefined;
         this.displayedFrom = 0;

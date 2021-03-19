@@ -24,7 +24,10 @@ export default class FrameComponent extends Component {
             const frameId = Number(e.target.dataset.id);
             const deltaY = e.deltaY;
 
-            this.actionManager.onSlideReplay(frameId, deltaY);
+            const wndH = window.innerHeight;
+            const yNorm = e.y / wndH;
+
+            this.actionManager.onSlideReplay(frameId, deltaY, yNorm);
         }
     }
 

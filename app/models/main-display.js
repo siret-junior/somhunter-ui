@@ -6,13 +6,28 @@ export default class MainDisplayModel extends Model {
     @attr frames;
 }
 
-export function toMainDisplayModel(data) {
+const defVal = {
+    activeDisplay: null,
+    currentPage: null,
+    frames: [],
+};
+
+export function toMainDisplayModel(newData, prev = defVal) {
+    console.log("a");
+    if (!prev) {
+        prev = defVal;
+    }
+
     return {
         data: [
             {
                 id: 0,
                 type: "main-display",
-                attributes: data,
+                attributes: {
+                    activeDisplay: newData.activeDisplay,
+                    currentPage: newData.currentPage,
+                    frames: prev.frames.concat(newData.frames),
+                },
                 relationships: {},
             },
         ],

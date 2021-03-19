@@ -3,7 +3,7 @@ import fetch from "fetch";
 import { inject as service } from "@ember/service";
 import { delay, resetMainGridScroll } from "../utils";
 
-import { toMainDisplayModel } from "../models/main-display";
+import { toMainDisplayModel, mergeDisplayModel } from "../models/main-display";
 import { toDetailWindowModel } from "../models/detail-window";
 import { toReplaylWindowModel } from "../models/replay-window";
 
@@ -71,6 +71,8 @@ export default class CoreApiService extends Service {
         const coreSettings = this.settings;
         const requestSettings = coreSettings.api.endpoints.screenTop;
 
+        console.log("...");
+
         // << Core API >>
         this.post(requestSettings.post.url, reqData)
             .then((res) => {
@@ -82,7 +84,14 @@ export default class CoreApiService extends Service {
                     currentPage: pageId,
                     frames: res.viewData.somhunter.screen.frames,
                 };
-                const data = toMainDisplayModel(resData);
+                let currData = this.store.peekRecord("main-display", 0);
+
+                if (pageId == 0) {
+                    currData = null;
+                }
+                //const data = toMainDisplayModel(resData);
+
+                const data = toMainDisplayModel(resData, currData);
                 this.store.push(data);
 
                 cbSucc();

@@ -50,27 +50,29 @@ export default class ActionManagerService extends Service {
     }
     /* ================================== */
 
-    fetchReplayFrames(frameId) {
+    fetchReplayFrames(frameId, yNorm) {
         const dispType = this.dataLoader.stringSettings.displayTypes.replay;
 
         this.coreApi.fetchReplayFrames(dispType, 0, frameId, null, () => {
+            this.dataLoader.setShowReplayView(true);
             this.triggerEvent(CS.EVENT_LOAD_REPLAY);
-            this.triggerEvent(CS.EVENT_SHOW_REPLAY, frameId);
+            this.triggerEvent(CS.EVENT_SHOW_REPLAY, frameId, yNorm);
         });
     }
 
-    onSlideReplay(frameId, deltaY) {
+    onSlideReplay(frameId, deltaY, yNorm) {
         const prevPivotId = this.dataLoader.getReplayPivotId();
 
         if (frameId !== prevPivotId) {
             console.debug("Loading replay data...");
-            this.fetchReplayFrames(frameId);
+            this.fetchReplayFrames(frameId, yNorm);
             return;
         }
 
         const show = this.dataLoader.getShowReplayView();
         if (!show) {
-            this.triggerEvent(CS.EVENT_SHOW_REPLAY, frameId);
+            this.dataLoader.setShowReplayView(true);
+            this.triggerEvent(CS.EVENT_SHOW_REPLAY, frameId, yNorm);
         } else {
             this.triggerEvent(CS.EVENT_SLIDE_REPLAY, deltaY);
         }
@@ -102,7 +104,10 @@ export default class ActionManagerService extends Service {
 
     initialize(cbSucc = () => null, cbFail = () => null) {
         // Load the initial things
-        this.coreApi.fetchInitial(cbSucc, cbFail);
+        this.coreApi.fetchInitial(() => {
+            this.gotoTopScoredView(0);
+            cbSucc();
+        }, cbFail);
     }
 
     showDetailView(
@@ -144,6 +149,26 @@ export default class ActionManagerService extends Service {
             dispType,
             pageIdx,
             frameId,
+            null,
+            () => {
+                this.triggerEvent(CS.EVENT_NAME_VIEW_CHANGE);
+                cbSucc();
+            },
+            () => cbFail()
+        );
+    }
+
+    loadTopViewPage(
+        dispType,
+        pageIdx,
+        cbSucc = () => null,
+        cbFail = () => null
+    ) {
+        console.log("pageIdx: ", pageIdx);
+        this.coreApi.fetchTopDispFrames(
+            dispType,
+            pageIdx,
+            null,
             null,
             () => {
                 this.triggerEvent(CS.EVENT_NAME_VIEW_CHANGE);
