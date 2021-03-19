@@ -10,6 +10,10 @@ export default class TextAutocompleteComponent extends Component {
     /* Member methods */
     constructor() {
         super(...arguments);
+
+        this.inputValue = this.args.model.userContext.search.textQueries[
+            this.args.id
+        ];
     }
 
     @action

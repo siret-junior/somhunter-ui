@@ -13,6 +13,10 @@ export const EVENT_GLOBAL_ESC_KEY_DOWN = "globalEscKeyDown";
 export const EVENT_GLOBAL_ENTER_KEY_DOWN = "globalEnterKeyDown";
 export const EVENT_GLOBAL_TAB_KEY_DOWN = "globalTabKeyDown";
 
+export const EVENT_PUSH_NOTIFICATION = "pushNotification";
+export const EVENT_BLOCK_WITH_NOTIFICATION = "blockWithNotification";
+export const EVENT_UNBLOCK_WITH_NOTIFICATION = "unblockWithNotification";
+
 /**
  * Class/ID name strings.
  */

@@ -13,7 +13,6 @@ const defVal = {
 };
 
 export function toMainDisplayModel(newData, prev = defVal) {
-    console.log("a");
     if (!prev) {
         prev = defVal;
     }

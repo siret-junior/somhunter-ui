@@ -1,0 +1,7 @@
+
+
+    <button class="btn-secondary btn" type="button" {{on "click" this.block}}>Block</button>
+    <button class="btn-secondary btn" type="button" {{on "click" this.unblock}}>Unblock</button>
+    <button class="btn-secondary btn" type="button" {{on "click" (fn this.toast "success")}}>Push not succ</button>
+    <button class="btn-secondary btn" type="button" {{on "click" (fn this.toast "warning")}}>Push not warn</button>
+    <button class="btn-secondary btn" type="button" {{on "click" (fn this.toast "error") }}>Push not err</button>

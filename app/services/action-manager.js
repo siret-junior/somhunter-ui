@@ -23,6 +23,10 @@ export default class ActionManagerService extends Service {
         this.eventHooks[CS.EVENT_LOAD_REPLAY] = [];
         this.eventHooks[CS.EVENT_SLIDE_REPLAY] = [];
 
+        this.eventHooks[CS.EVENT_PUSH_NOTIFICATION] = [];
+        this.eventHooks[CS.EVENT_BLOCK_WITH_NOTIFICATION] = [];
+        this.eventHooks[CS.EVENT_UNBLOCK_WITH_NOTIFICATION] = [];
+
         /** Global keys events */
         this.eventHooks[CS.EVENT_GLOBAL_ESC_KEY_DOWN] = [];
         this.eventHooks[CS.EVENT_GLOBAL_ENTER_KEY_DOWN] = [];
@@ -45,7 +49,7 @@ export default class ActionManagerService extends Service {
     triggerEvent(name) {
         console.debug(`<!> Triggering the "${name}" event...`);
         this.eventHooks[name].forEach((fn) => {
-            fn(arguments[1], arguments[2], arguments[3]);
+            fn(...Array.prototype.slice.call(arguments, 1));
         });
     }
     /* ================================== */

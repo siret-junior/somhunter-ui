@@ -5,11 +5,17 @@ import { action } from "@ember/object";
 import { getCurrSubString, subCurrWord } from "../utils";
 
 import { inject as service } from "@ember/service";
+import CS from "../constants";
 
 export default class FrameComponent extends Component {
     /* Member methods */
     constructor() {
         super(...arguments);
+
+        // Register the reload hook to `changeView` event
+        this.actionManager.registerEventHook(CS.EVENT_NAME_VIEW_CHANGE, () =>
+            this.modelReload()
+        );
     }
 
     @action

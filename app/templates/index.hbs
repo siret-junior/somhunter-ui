@@ -9,23 +9,27 @@
       <div id="mainPanel" class="col-3">
         
         <!-- Main grid -->
-        <MainPanel @title="Main Panel"/>
+        <MainPanel @model={{@model}} @title="Main Panel"/>
         
       </div>
       <div id="mainWindow" class="col-9">
           
         <!-- Main grid -->
-        <MainGrid />
+        <MainGrid @model={{@model}} />
       
       </div>
     </div>
   </div>
 
 
-  <div class="modals">
+  <section class="modals section">
     <DetailWindow />
     <ReplayWindow />
-  </div>
+  </section>
+
+  <section class="notifications section">
+    <GlobalNotificationWindow />
+  </section>
 
 {{else}}
 

@@ -17,9 +17,15 @@ $theme-colors: (
 
 body {
     overflow: hidden;
+    background-color: map-get($map: $theme-colors, $key: "primary");
 }
 * {
     box-sizing: border-box;
+}
+
+.panel-title {
+    color: #fff;
+    text-align: center;
 }
 
 .main-grid {
@@ -189,3 +195,76 @@ body {
     }
 }
 
+.section.notifications {
+
+}
+
+.toast {
+    opacity: 1;
+
+    &.success {
+        background-color: map-get($map: $theme-colors, $key: "success");
+    }
+
+    &.warning {
+        background-color: map-get($map: $theme-colors, $key: "warning");
+    }
+
+    &.error {
+        background-color: map-get($map: $theme-colors, $key: "danger");
+    }
+
+    .toast-header {
+        background: transparent;
+        p {
+            color: #fff;
+            font-size: 1.5em;
+            margin: 0;
+            text-align: center;
+        }
+
+    }
+    .toast-body {
+        background: rgba(#fff, 0.5);
+    }
+}
+
+.notifications {
+    position: absolute;
+    pointer-events: none;
+    width: 100vw;
+    height: 100vh;
+    left: 0;
+    top: 0;
+    padding: 2rem;
+    & > *{
+        pointer-events: initial;
+    }
+}
+.global-notifications-cont {
+
+    position: relative; 
+    float: right;
+    & > .toast {
+        display: block;
+    }
+}
+
+.blocking-notification-cont {
+    width: 100vw;
+    height: 100vh; 
+    position: absolute;
+    z-index: 100000;
+    left: 0;
+    top: 0;
+    background: rgba(map-get($map: $theme-colors, $key: "primary"), 0.4);
+    
+    .blocking-notification {
+        width: 60vw;
+        height: 300px;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+}
