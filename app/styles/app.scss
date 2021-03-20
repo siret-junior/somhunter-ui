@@ -54,6 +54,7 @@ body {
 }
 
 .frame {
+    cursor: pointer;
     position: relative;
     height: calc(100% / 7);
     min-height: 1px;
@@ -61,9 +62,33 @@ body {
     background-position: center;
     background-repeat: no-repeat;
 
+    &.liked {
+        &:before {
+          content: "";
+          position: absolute;
+          width: 60px;
+          height: 60px;
+          background-image: url("/assets/img/flag_green.png");
+          background-size: 80px;
+          background-position: center;
+          border-right: 30px solid transparent;
+          border-bottom: 30px solid transparent;
+          border-top: 30px solid map-get($theme-colors, "success");
+          border-left: 30px solid map-get($theme-colors, "success");
+          border-color: transparent;
+          left: 0;
+        top: 0;
+        }
+      }
+
     .btn {
         font-size: 1rem;
         padding: 0.4rem 0.4rem 0.4rem 0.4rem;
+    }
+
+    .btn-knn {
+        position: absolute;
+        bottom: 0;
     }
 
     &.highlighted {
@@ -98,6 +123,7 @@ body {
             position: absolute;
             right: 0;
             top: 0;
+            padding: 0.1rem 0.2rem;
         }
 
         .btn-detail {

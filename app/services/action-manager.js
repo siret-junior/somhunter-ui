@@ -300,6 +300,42 @@ export default class ActionManagerService extends Service {
         this.triggerEvent(eventName);
     }
 
+    async likeFrame(frameId) {
+        if (!frameId) throw Error("Invalid `frameId`: ", frameId);
+
+        const url = this.dataLoader.apiSettings.endpoints.searchLike.post.url;
+
+        const reqData = {
+            frameId: frameId,
+        };
+
+        /* FORMAT: 
+        resData = {
+            frameId: 1153572,
+            isLiked: true,
+            status: 200
+        } */
+        const resData = await this.coreApi.post(url, reqData);
+
+        const likedState = resData.isLiked;
+
+        this.dataLoader.setLikedFlag(frameId, likedState);
+
+        if (likedState) {
+            const fs = document.querySelectorAll(
+                `.frame[data-id="${frameId}"]`
+            );
+            fs.forEach((x) => x.classList.add("liked"));
+        } else {
+            const fs = document.querySelectorAll(
+                `.frame[data-id="${frameId}"]`
+            );
+            fs.forEach((x) => x.classList.remove("liked"));
+        }
+
+        this.triggerEvent(EVENTS.LIKE_FRAME, frameId);
+    }
+
     /* Member variables */
     @service coreApi;
     @service actionManager;

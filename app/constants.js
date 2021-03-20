@@ -19,6 +19,7 @@ export const EVENTS = {
     UNBLOCK_WITH_NOTIFICATION: "unblockWithNotification",
 
     RESET_SEARCH: "resetSearch",
+    LIKE_FRAME: "likeFrame",
     CLEAR_MAIN_GRID: "clearMainGrid",
 
     SHOW_SETTINGS_WINDOW: "showSettignsWindow",

@@ -1,5 +1,8 @@
-<div class="frame col-2 {{if @frame.highlighted "highlighted"}}"  
-    style={{thumb "http://127.0.0.1:8888/frames/" @frame.src}} {{on "wheel" this.onWheel}}
+<div class="frame col-2 {{if @frame.highlighted "highlighted"}} {{if @frame.liked "liked"}}"  
+    style={{thumb "http://127.0.0.1:8888/frames/" @frame.src}} 
+    data-id={{@frame.id}}
+    {{on "wheel" this.onWheel}}
+    {{on "click" this.onLikeFrame}}
 >
     <div class="frame-overlay"data-id={{@frame.id}} >
         <button type="button" class="btn-submit btn btn-success"
@@ -9,6 +12,6 @@
             {{on "click" this.onDetailBtnClick}}>Detail</button>            
 
         <button type="button" data-id={{@frame.id}} class="btn-knn btn btn-primary"
-            {{on "click" this.onKnnBtnClick}}>Neighbours</button>            
+            {{on "click" this.onKnnBtnClick}}>k-NN</button>            
     </div>    
 </div>

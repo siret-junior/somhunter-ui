@@ -34,6 +34,11 @@ export default class FrameComponent extends Component {
     }
 
     @action
+    onLikeFrame(e) {
+        this.actionManager.likeFrame(Number(e.target.dataset.id));
+    }
+
+    @action
     onDetailBtnClick(e) {
         this.actionManager.showDetailView(Number(e.target.dataset.id), 0);
     }
