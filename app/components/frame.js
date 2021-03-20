@@ -2,25 +2,21 @@ import Component from "@glimmer/component";
 
 import { action } from "@ember/object";
 
-import { getCurrSubString, subCurrWord } from "../utils";
-
 import { inject as service } from "@ember/service";
-import CS from "../constants";
+
+import { EVENTS, ELEM_IDS } from "../constants";
+import LOG from "../logger";
+import utils from "../utils";
 
 export default class FrameComponent extends Component {
     /* Member methods */
     constructor() {
         super(...arguments);
-
-        // Register the reload hook to `changeView` event
-        this.actionManager.registerEventHook(CS.EVENT_NAME_VIEW_CHANGE, () =>
-            this.modelReload()
-        );
     }
 
     @action
     refresh() {
-        console.debug("Doing the `main-grid.js` component controller refresh!");
+        LOG.D("Doing the `main-grid.js` component controller refresh!");
         this.modelReload();
     }
 

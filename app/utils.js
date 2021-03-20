@@ -50,7 +50,7 @@ export function getFiltersInput() {
         hoursFrom: 0,
         hoursTo: 24,
     };
-
+    /*
     const filtersContEl = document.getElementById("queryFilters");
 
     const weekdaysEl = document.getElementById("queryFiltersWeekdays");
@@ -74,6 +74,7 @@ export function getFiltersInput() {
         hoursFrom,
         hoursTo,
     };
+    */
 }
 
 function get_raw_img(img) {
@@ -114,7 +115,7 @@ export function getCollageInputs() {
         pixel_height: [],
         break: [0],
     };
-
+    /*
     // \todo Undummy
     const cq0 = document.getElementById("collageQuery0");
     const cq1 = document.getElementById("collageQuery1");
@@ -156,13 +157,11 @@ export function getCollageInputs() {
         pics.push(get_raw_img(img));
     }
 
-    console.log(pics);
 
     let conc_pics = [];
     for (p in pics) {
         conc_pics = conc_pics.concat(pics[p]);
     }
-    // console.log(conc_pics)
 
     let body = {
         pictures: conc_pics,
@@ -176,4 +175,5 @@ export function getCollageInputs() {
     };
 
     return body;
+    */
 }

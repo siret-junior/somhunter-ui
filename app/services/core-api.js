@@ -9,6 +9,10 @@ import { toReplaylWindowModel } from "../models/replay-window";
 
 import ENV from "somhunter-ui/config/environment";
 
+import { EVENTS, ELEM_IDS } from "../constants";
+import LOG from "../logger";
+import utils from "../utils";
+
 export default class CoreApiService extends Service {
     @service store;
     @service dataLoader;
@@ -38,7 +42,7 @@ export default class CoreApiService extends Service {
 
             // 222 means that SOM not ready
             if (res.status === 222) {
-                console.warn("SOM not ready!");
+                LOG.W("SOM not yet ready!");
                 await delay(500);
                 continue;
             }
@@ -70,8 +74,6 @@ export default class CoreApiService extends Service {
 
         const coreSettings = this.settings;
         const requestSettings = coreSettings.api.endpoints.screenTop;
-
-        console.log("...");
 
         // << Core API >>
         this.post(requestSettings.post.url, reqData)
@@ -202,7 +204,7 @@ export default class CoreApiService extends Service {
                         },
                     ],
                 });
-                console.debug(" User context loaded...");
+                LOG.D(" User context loaded...");
 
                 cbSucc();
             })
@@ -246,7 +248,7 @@ export default class CoreApiService extends Service {
                         },
                     ],
                 });
-                console.debug(" Core settings loaded...");
+                LOG.D(" Core settings loaded...");
 
                 this.fetchUserContext(cbSucc, cbFail);
             })
@@ -285,13 +287,10 @@ export default class CoreApiService extends Service {
             }
         }
 
-        const response = await fetch(
-            "http://127.0.0.1:8888" + url,
-            fetchOptions
-        );
+        const response = await fetch(ENV.coreUrl + url, fetchOptions);
 
         if (!response.ok) {
-            console.error("RES NOK");
+            LOG.E("RES NOK");
             return;
         }
         const { "content-type": resContentType = "" } = response.headers.map;

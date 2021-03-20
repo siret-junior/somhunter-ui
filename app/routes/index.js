@@ -3,7 +3,9 @@ import { action } from "@ember/object";
 
 import { inject as service } from "@ember/service";
 
-import CS from "../constants";
+import { EVENTS, ELEM_IDS } from "../constants";
+import LOG from "../logger";
+import utils from "../utils";
 
 export default class IndexRoute extends Route {
     /* Member methods */
@@ -27,7 +29,7 @@ export default class IndexRoute extends Route {
 
     @action
     forceRefresh() {
-        console.debug("Forcing the `index.js` route refresh!");
+        LOG.D("Forcing the `index.js` route refresh!");
         this.refresh();
     }
 

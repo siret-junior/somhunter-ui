@@ -4,7 +4,8 @@ import { tracked } from "@glimmer/tracking";
 
 import { inject as service } from "@ember/service";
 
-import CS from "../constants";
+import { EVENTS, ELEM_IDS } from "../constants";
+import LOG from "../logger";
 import utils from "../utils";
 
 export default class ActionManagerService extends Service {
@@ -12,25 +13,10 @@ export default class ActionManagerService extends Service {
     constructor() {
         super(...arguments);
 
-        this.eventHooks[CS.EVENT_NAME_VIEW_CHANGE] = [];
-
-        this.eventHooks[CS.EVENT_LOAD_DETAIL] = [];
-        this.eventHooks[CS.EVENT_HIDE_DETAIL] = [];
-        this.eventHooks[CS.EVENT_SHOW_DETAIL] = [];
-
-        this.eventHooks[CS.EVENT_SHOW_REPLAY] = [];
-        this.eventHooks[CS.EVENT_HIDE_REPLAY] = [];
-        this.eventHooks[CS.EVENT_LOAD_REPLAY] = [];
-        this.eventHooks[CS.EVENT_SLIDE_REPLAY] = [];
-
-        this.eventHooks[CS.EVENT_PUSH_NOTIFICATION] = [];
-        this.eventHooks[CS.EVENT_BLOCK_WITH_NOTIFICATION] = [];
-        this.eventHooks[CS.EVENT_UNBLOCK_WITH_NOTIFICATION] = [];
-
-        /** Global keys events */
-        this.eventHooks[CS.EVENT_GLOBAL_ESC_KEY_DOWN] = [];
-        this.eventHooks[CS.EVENT_GLOBAL_ENTER_KEY_DOWN] = [];
-        this.eventHooks[CS.EVENT_GLOBAL_TAB_KEY_DOWN] = [];
+        // Prepare containers for event hooks
+        for (const field in EVENTS) {
+            this.eventHooks[EVENTS[field]] = [];
+        }
     }
 
     /* ==================================
@@ -42,12 +28,12 @@ export default class ActionManagerService extends Service {
         // If this event name does not exist
         if (!(name in this.eventHooks)) return;
 
-        console.debug(`<!> Registering function for the "${name}" event...`);
+        LOG.D(`<!> Registering function for the "${name}" event...`);
         this.eventHooks[name].push(fn);
     }
 
     triggerEvent(name) {
-        console.debug(`<!> Triggering the "${name}" event...`);
+        LOG.D(`<!> Triggering the "${name}" event...`);
         this.eventHooks[name].forEach((fn) => {
             fn(...Array.prototype.slice.call(arguments, 1));
         });
@@ -59,8 +45,8 @@ export default class ActionManagerService extends Service {
 
         this.coreApi.fetchReplayFrames(dispType, 0, frameId, null, () => {
             this.dataLoader.setShowReplayView(true);
-            this.triggerEvent(CS.EVENT_LOAD_REPLAY);
-            this.triggerEvent(CS.EVENT_SHOW_REPLAY, frameId, yNorm);
+            this.triggerEvent(EVENTS.LOAD_REPLAY);
+            this.triggerEvent(EVENTS.SHOW_REPLAY, frameId, yNorm);
         });
     }
 
@@ -68,7 +54,6 @@ export default class ActionManagerService extends Service {
         const prevPivotId = this.dataLoader.getReplayPivotId();
 
         if (frameId !== prevPivotId) {
-            console.debug("Loading replay data...");
             this.fetchReplayFrames(frameId, yNorm);
             return;
         }
@@ -76,9 +61,9 @@ export default class ActionManagerService extends Service {
         const show = this.dataLoader.getShowReplayView();
         if (!show) {
             this.dataLoader.setShowReplayView(true);
-            this.triggerEvent(CS.EVENT_SHOW_REPLAY, frameId, yNorm);
+            this.triggerEvent(EVENTS.SHOW_REPLAY, frameId, yNorm);
         } else {
-            this.triggerEvent(CS.EVENT_SLIDE_REPLAY, deltaY);
+            this.triggerEvent(EVENTS.SLIDE_REPLAY, deltaY);
         }
     }
 
@@ -128,8 +113,8 @@ export default class ActionManagerService extends Service {
             frameId,
             null,
             () => {
-                this.triggerEvent(CS.EVENT_LOAD_DETAIL);
-                this.triggerEvent(CS.EVENT_SHOW_DETAIL, frameId);
+                this.triggerEvent(EVENTS.LOAD_DETAIL);
+                this.triggerEvent(EVENTS.SHOW_DETAIL, frameId);
                 cbSucc();
             },
             () => cbFail()
@@ -138,7 +123,7 @@ export default class ActionManagerService extends Service {
 
     hideDetailView() {
         this.dataLoader.setShowDetailView(false);
-        this.triggerEvent(CS.EVENT_NAME_DETAIL_VIEW_CHANGE);
+        this.triggerEvent(EVENTS.NAME_DETAIL_VIEW_CHANGE);
     }
 
     gotoKnnView(
@@ -155,7 +140,7 @@ export default class ActionManagerService extends Service {
             frameId,
             null,
             () => {
-                this.triggerEvent(CS.EVENT_NAME_VIEW_CHANGE);
+                this.triggerEvent(EVENTS.NAME_VIEW_CHANGE);
                 cbSucc();
             },
             () => cbFail()
@@ -168,14 +153,14 @@ export default class ActionManagerService extends Service {
         cbSucc = () => null,
         cbFail = () => null
     ) {
-        console.log("pageIdx: ", pageIdx);
+        LOG.D("pageIdx: ", pageIdx);
         this.coreApi.fetchTopDispFrames(
             dispType,
             pageIdx,
             null,
             null,
             () => {
-                this.triggerEvent(CS.EVENT_NAME_VIEW_CHANGE);
+                this.triggerEvent(EVENTS.NAME_VIEW_CHANGE);
                 cbSucc();
             },
             () => cbFail()
@@ -191,7 +176,7 @@ export default class ActionManagerService extends Service {
             0,
             null,
             () => {
-                this.triggerEvent(CS.EVENT_NAME_VIEW_CHANGE);
+                this.triggerEvent(EVENTS.NAME_VIEW_CHANGE);
                 cbSucc();
             },
             () => cbFail()
@@ -202,7 +187,7 @@ export default class ActionManagerService extends Service {
         const dispType = this.coreApi.settings.strings.displayTypes.som;
         this.coreApi.fetchSomViewFrames(
             () => {
-                this.triggerEvent(CS.EVENT_NAME_VIEW_CHANGE);
+                this.triggerEvent(EVENTS.NAME_VIEW_CHANGE);
                 cbSucc();
             },
             () => cbFail()
@@ -260,16 +245,12 @@ export default class ActionManagerService extends Service {
         if (!res) return;
 
         this.coreApi.fetchUserContext(() => {
-            // this.hideNotification();
-
-            //this.dataLoader.unsetQueryChangedFlag();
-
-            console.warn("Rescored & fetches user context...");
+            LOG.D("Rescored & fetches user context...");
         });
     }
 
     globalKeyHandler(eventName) {
-        console.debug(`Global event '${eventName}' hit!`);
+        LOG.D(`Global key down event: the key '${eventName}' hit!`);
 
         this.triggerEvent(eventName);
     }

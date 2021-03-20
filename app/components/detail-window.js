@@ -4,8 +4,9 @@ import { action } from "@ember/object";
 
 import { inject as service } from "@ember/service";
 
-import CS from "../constants";
-import { getCurrSubString, subCurrWord } from "../utils";
+import { EVENTS, ELEM_IDS } from "../constants";
+import LOG from "../logger";
+import utils from "../utils";
 
 export default class DetailWindowComponent extends Component {
     /* Member methods */
@@ -14,22 +15,22 @@ export default class DetailWindowComponent extends Component {
 
         // On global ESC keydown
         this.actionManager.registerEventHook(
-            CS.EVENT_GLOBAL_ESC_KEY_DOWN,
+            EVENTS.GLOBAL_ESC_KEY_DOWN,
             this.hideDetailWindow
         );
 
         this.actionManager.registerEventHook(
-            CS.EVENT_LOAD_DETAIL,
+            EVENTS.LOAD_DETAIL,
             this.loadDetailFrames
         );
 
         this.actionManager.registerEventHook(
-            CS.EVENT_SHOW_DETAIL,
+            EVENTS.SHOW_DETAIL,
             this.showDetailWindow
         );
 
         this.actionManager.registerEventHook(
-            CS.EVENT_HIDE_DETAIL,
+            EVENTS.HIDE_DETAIL,
             this.hideDetailWindow
         );
 
@@ -45,7 +46,6 @@ export default class DetailWindowComponent extends Component {
 
         this.cssFrameWidth = `${100 / this.gridWidth}%`;
         this.cssFrameHeight = `${this.thumbHeight}px`;
-        console.debug("..");
     }
 
     @action loadDetailFrames() {
@@ -73,13 +73,11 @@ export default class DetailWindowComponent extends Component {
                 this.postLoadTimeout
             );
         } else {
-            console.debug("Loaded UP!");
+            LOG.D("All detail frames loaded to the top!");
+            LOG.I("All detail frames loaded to the top!");
+            LOG.E("All detail frames loaded to the top!");
+            LOG.W("All detail frames loaded to the top!");
         }
-
-        // console.debug("rowFrom: ", this.rowFrom);
-        // console.debug("rowTo: ", this.rowTo);
-        //console.debug("displayedFrom: ", this.displayedFrom);
-        // console.debug("displayedTo: ", this.displayedTo);
     }
 
     @action loadDown() {
@@ -95,24 +93,22 @@ export default class DetailWindowComponent extends Component {
             this.displayedTo
         );
 
-        //console.debug("displayedTo: ", this.displayedTo);
-
         if (to < this.allFrames.length) {
             this.downTimeoutHandle = setTimeout(
                 this.loadDown,
                 this.postLoadTimeout
             );
         } else {
-            console.debug("Loaded DOWN!");
+            LOG.D("All detail frames loaded to the bottom!");
         }
     }
 
     @action showDetailWindow(frameId) {
         // Make sure we have the HTML element handle
         if (!this.windowEl || !this.sliderEl) {
-            this.windowEl = document.getElementById(CS.ELEM_ID_DETAIL_WINDOW);
+            this.windowEl = document.getElementById(ELEM_IDS.DETAIL_WINDOW);
             this.sliderEl = document.getElementById(
-                CS.ELEM_ID_DETAIL_WINDOW_SLIDER
+                ELEM_IDS.DETAIL_WINDOW_SLIDER
             );
         }
 
@@ -162,12 +158,6 @@ export default class DetailWindowComponent extends Component {
         this.sliderEl.style.paddingTop = `${topPadding}px`;
         this.windowEl.scrollTop = topScroll;
 
-        // console.debug("pivotRowIdx: ", pivotRowIdx);
-        // console.debug("rowFrom: ", rowFrom);
-        // console.debug("rowTo: ", rowTo);
-        // console.debug("frameFrom: ", frameFrom);
-        // console.debug("frameTo: ", frameTo);
-
         this.downTimeoutHandle = setTimeout(
             this.loadDown,
             this.postLoadTimeout
@@ -201,7 +191,7 @@ export default class DetailWindowComponent extends Component {
     postLoadChunkSize = 2;
     postLoadTimeout = 100;
 
-    CS = CS;
+    ELEM_IDS = ELEM_IDS;
 
     cssFrameWidth = undefined;
     cssFrameHeight = undefined;

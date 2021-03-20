@@ -5,7 +5,7 @@ import { tracked } from "@glimmer/tracking";
 import { getCurrSubString, subCurrWord } from "../utils";
 
 import { inject as service } from "@ember/service";
-import CS from "../constants";
+import { EVENTS, ELEM_IDS } from "../constants";
 
 export default class GlobalNotificationWindowComponent extends Component {
     /* Member methods */
@@ -14,17 +14,17 @@ export default class GlobalNotificationWindowComponent extends Component {
 
         this.notifications = [];
         this.actionManager.registerEventHook(
-            CS.EVENT_PUSH_NOTIFICATION,
+            EVENTS.PUSH_NOTIFICATION,
             (title, msg, duration, type) =>
                 this.pushNotification(title, msg, duration, type)
         );
         this.actionManager.registerEventHook(
-            CS.EVENT_BLOCK_WITH_NOTIFICATION,
+            EVENTS.BLOCK_WITH_NOTIFICATION,
             (title, msg, duration, type) =>
                 this.blockWithNotification(title, msg, duration, type)
         );
         this.actionManager.registerEventHook(
-            CS.EVENT_UNBLOCK_WITH_NOTIFICATION,
+            EVENTS.UNBLOCK_WITH_NOTIFICATION,
             () => this.unblockWithNotification()
         );
     }

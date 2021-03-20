@@ -4,7 +4,9 @@ import { tracked } from "@glimmer/tracking";
 
 import { inject as service } from "@ember/service";
 
-import CS from "../constants";
+import { EVENTS, ELEM_IDS } from "../constants";
+import LOG from "../logger";
+import utils from "../utils";
 
 export default class MainGridComponent extends Component {
     /* Member methods */
@@ -12,7 +14,7 @@ export default class MainGridComponent extends Component {
         super(...arguments);
 
         // Register the reload hook to `changeView` event
-        this.actionManager.registerEventHook(CS.EVENT_NAME_VIEW_CHANGE, () =>
+        this.actionManager.registerEventHook(EVENTS.NAME_VIEW_CHANGE, () =>
             this.modelReload()
         );
 
@@ -29,7 +31,6 @@ export default class MainGridComponent extends Component {
         const tarEl = e.target;
         const diff = tarEl.scrollHeight - tarEl.scrollTop - tarEl.clientHeight;
 
-        console.log("diff: ", diff);
         if (diff < 500) {
             const viewTypes = this.dataLoader.stringSettings.displayTypes;
             if (

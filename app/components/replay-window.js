@@ -4,8 +4,9 @@ import { action } from "@ember/object";
 
 import { inject as service } from "@ember/service";
 
-import CS from "../constants";
-import { getCurrSubString, subCurrWord } from "../utils";
+import { EVENTS, ELEM_IDS } from "../constants";
+import LOG from "../logger";
+import utils from "../utils";
 
 export default class ReplayWindowComponent extends Component {
     /* Member methods */
@@ -14,29 +15,26 @@ export default class ReplayWindowComponent extends Component {
 
         // On global ESC keydown
         this.actionManager.registerEventHook(
-            CS.EVENT_GLOBAL_ESC_KEY_DOWN,
+            EVENTS.GLOBAL_ESC_KEY_DOWN,
             this.hideReplayWindow
         );
 
         this.actionManager.registerEventHook(
-            CS.EVENT_SHOW_REPLAY,
+            EVENTS.SHOW_REPLAY,
             (frameId, yNorm) => {
                 this.showReplayWindow(frameId, yNorm);
             }
         );
 
-        this.actionManager.registerEventHook(CS.EVENT_HIDE_REPLAY, () => {
+        this.actionManager.registerEventHook(EVENTS.HIDE_REPLAY, () => {
             this.hideReplayWindow();
         });
 
-        this.actionManager.registerEventHook(
-            CS.EVENT_SLIDE_REPLAY,
-            (deltaY) => {
-                this.slideReplayWindow(deltaY);
-            }
-        );
+        this.actionManager.registerEventHook(EVENTS.SLIDE_REPLAY, (deltaY) => {
+            this.slideReplayWindow(deltaY);
+        });
 
-        this.actionManager.registerEventHook(CS.EVENT_LOAD_REPLAY, () => {
+        this.actionManager.registerEventHook(EVENTS.LOAD_REPLAY, () => {
             this.loadReplayFrames();
         });
 
@@ -63,9 +61,9 @@ export default class ReplayWindowComponent extends Component {
     showReplayWindow(frameId, yNorm) {
         // Make sure we have the HTML element handle
         if (!this.windowEl || !this.sliderEl) {
-            this.windowEl = document.getElementById(CS.ELEM_ID_REPLAY_WINDOW);
+            this.windowEl = document.getElementById(ELEM_IDS.REPLAY_WINDOW);
             this.sliderEl = document.getElementById(
-                CS.ELEM_ID_REPLAY_WINDOW_SLIDER
+                ELEM_IDS.REPLAY_WINDOW_SLIDER
             );
         }
 
@@ -80,7 +78,6 @@ export default class ReplayWindowComponent extends Component {
         const totW = (this.allFrames.length + neighRadius) * this.thumbWidth;
         this.sliderEl.style.width = `${totW}px`;
         this.sliderEl.style.overflowX = "scroll";
-        console.warn(".");
 
         let topPos = yNorm * 100 + (yNorm > 0.5 ? -25 : 15);
 
@@ -126,9 +123,6 @@ export default class ReplayWindowComponent extends Component {
         const prevScrollLeft = this.windowEl.scrollLeft;
         const newScrollLeft = prevScrollLeft + deltaYFrames * this.thumbWidth;
 
-        console.debug("deltaYFrames: ", deltaYFrames);
-        console.debug("newScrollLeft: ", newScrollLeft);
-
         this.windowEl.scrollLeft = newScrollLeft;
         if (deltaYFrames < 0) {
             this.displayedFrom = Math.max(0, this.displayedFrom + deltaYFrames);
@@ -152,7 +146,7 @@ export default class ReplayWindowComponent extends Component {
     @service actionManager;
     @service dataLoader;
 
-    CS = CS;
+    ELEM_IDS = ELEM_IDS;
 
     slideSpeed = undefined;
     windowEl = undefined;

@@ -6,7 +6,7 @@ import { getCurrSubString, subCurrWord } from "../utils";
 
 import { inject as service } from "@ember/service";
 
-import CS from "../constants";
+import { EVENTS, ELEM_IDS } from "../constants";
 export default class MainButtonsPanelComponent extends Component {
     /* Member methods */
     constructor() {
