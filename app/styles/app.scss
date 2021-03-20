@@ -108,19 +108,28 @@ body {
     }
 }
 
+.autocomplete {
+    position: relative;
+}
+
 .text-suggestions-list {
     margin: 0;
-    padding: 1rem;
-    background: #999;
+    padding: 0;
+    background: map-get($theme-colors, "fourth");
     list-style: none;
+    position:absolute;
+    left:0;
+    top: 100%;
+    width: 100%;
+    z-index: 2;
     .text-suggestions-item {
-        padding: 0.1rem 0.3rem 0.1rem 0.3rem; 
+        padding: 0.3rem 1rem 0.3rem 1rem; 
 
         &.selected {
-            background: rgb(191, 76, 76);
+            background: rgba(map-get($theme-colors, "secondary"), 0.6);
         }
         &:hover {
-            background: #aaa;
+            background: rgba(map-get($theme-colors, "secondary"), 0.3);
             cursor: pointer;
         }
     }
