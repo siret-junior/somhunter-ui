@@ -10,6 +10,7 @@ module.exports = function (environment) {
         coreUrl: "http://127.0.0.1:8888",
         settingsEndpoint: "/settings",
         logLevel: 4, // 0 => nothing, 1 => +Errors, 2=> +Info, 3 => +Warnings, 4 => +Debug
+        debug: true,
 
         EmberENV: {
             FEATURES: {
@@ -37,6 +38,7 @@ module.exports = function (environment) {
     }
 
     if (environment === "test") {
+        ENV.debug = false;
         // Testem prefers this...
         ENV.locationType = "none";
 

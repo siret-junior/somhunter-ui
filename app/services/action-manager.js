@@ -67,6 +67,46 @@ export default class ActionManagerService extends Service {
         }
     }
 
+    resetSearch() {
+        const coreSettings = this.coreApi.settings;
+        const reqUrl = coreSettings.api.endpoints.searchReset.post.url;
+
+        // << Core API >>
+        this.coreApi
+            .post(reqUrl)
+            .then((res) => {
+                LOG.D("Search reset!");
+                this.coreApi.fetchUserContext(
+                    () => {
+                        this.actionManager.triggerEvent(EVENTS.RESET_SEARCH);
+                        this.actionManager.gotoTopScoredView(0);
+                        this.actionManager.triggerEvent(
+                            EVENTS.PUSH_NOTIFICATION,
+                            "Search reset!",
+                            "",
+                            5000,
+                            "success"
+                        );
+                    },
+                    () =>
+                        this.actionManager.triggerEvent(
+                            EVENTS.PUSH_NOTIFICATION,
+                            "Reset search failed!",
+                            "",
+                            5000
+                        )
+                );
+            })
+            .catch((e) => {
+                this.actionManager.triggerEvent(
+                    EVENTS.PUSH_NOTIFICATION,
+                    "Reset search failed!",
+                    "",
+                    5000
+                );
+            });
+    }
+
     getTextAutocompleteSuggestions(
         prefix,
         cbSucc = () => null,
@@ -132,6 +172,11 @@ export default class ActionManagerService extends Service {
         cbSucc = () => null,
         cbFail = () => null
     ) {
+        this.triggerEvent(EVENTS.CLEAR_MAIN_GRID);
+        if (pageIdx == 0) {
+            utils.resetMainGridScroll();
+        }
+
         const dispType = this.coreApi.settings.strings.displayTypes.topknn;
 
         this.coreApi.fetchTopDispFrames(

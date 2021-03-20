@@ -1,0 +1,24 @@
+<div class="custom-modal debug-window-modal modal {{if this.windowVisible " display-block"}}">
+    <div class="help-window modal-dialog" role="document">
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="fa fa-info-circle" aria-hidden="true"></i>Help</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" 
+                {{on "click" this.hideWindow}}>
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec fermentum dignissim diam faucibus
+                    accumsan.</p>
+                <hr />
+                <p>Duis quis nisi ante. Vestibulum convallis tempor nulla, vel pharetra felis vehicula in. Morbi
+                    sagittis neque ut neque sollicitudin congue. Donec sit amet diam ac felis viverra rhoncus. Donec
+                    posuere, felis quis lacinia feugiat, quam turpis vestibulum velit, ut molestie eros leo in lorem.
+                    Nullam blandit condimentum faucibus.</p>
+            </div>
+        </div>
+
+    </div>
+</div>

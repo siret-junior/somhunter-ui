@@ -9,32 +9,34 @@ import { EVENTS, ELEM_IDS } from "../constants";
 import LOG from "../logger";
 import utils from "../utils";
 
-export default class Prototype01Component extends Component {
+export default class SettingsWindowComponent extends Component {
     /* Member methods */
     constructor() {
         super(...arguments);
 
         // Subscribe to the specific EVENTS
-        this.actionManager.registerEventHook(
-            EVENTS.GLOBAL_ESC_KEY_DOWN,
-            this.hideDetailWindow
+        this.actionManager.registerEventHook(EVENTS.SHOW_SETTINGS_WINDOW, () =>
+            this.showWindow()
+        );
+
+        // On global ESC key down
+        this.actionManager.registerEventHook(EVENTS.GLOBAL_ESC_KEY_DOWN, () =>
+            this.hideWindow()
         );
     }
 
-    didUpdateAttrs(elem, [updatedStructure]) {
-        // On attrupate
+    showWindow() {
+        this.windowVisible = true;
     }
+
     @action
-    toast(type, e) {
-        this.actionManager.triggerEvent(
-            EVENTS.PUSH_NOTIFICATION,
-            "Somenotification",
-            "Hello from the notification!",
-            30000,
-            type
-        );
+    hideWindow() {
+        this.windowVisible = false;
     }
 
     /* Member variables */
     @service actionManager;
+    @tracked coreSettings;
+
+    @tracked windowVisible = false;
 }

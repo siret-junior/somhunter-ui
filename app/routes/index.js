@@ -15,17 +15,26 @@ export default class IndexRoute extends Route {
         // Initialize the app
         const cb = () => this.refresh();
         this.actionManager.initialize(cb, cb);
+
+        this.actionManager.registerEventHook(
+            EVENTS.RESET_SEARCH,
+            this.forceRefresh
+        );
     }
 
     model() {
         const coreSettings = this.store.peekRecord("core-settings", 0);
         const userContext = this.store.peekRecord("user-context", 0);
 
+        LOG.D("INDEX: passing model with ID ", this.nextId);
         return {
+            id: this.nextId++,
             coreSettings,
             userContext,
         };
     }
+
+    nextId = 0;
 
     @action
     forceRefresh() {

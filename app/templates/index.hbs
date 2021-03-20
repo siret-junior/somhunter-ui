@@ -1,4 +1,6 @@
-{{page-title "Index"}}
+{{page-title "SOMHunter"}}
+
+{{!-- <h1>Current model ID: {{@model.id}}</h1> --}}
 
 <section class="somhunter-ui">
 
@@ -6,7 +8,7 @@
   <div class="container-fluid">
 
     <div class="row justify-content-center">
-      <div id="mainPanel" class="col-3">
+      <div id="mainPanel" class="main-panel col-3">
         
         <!-- Main grid -->
         <MainPanel @model={{@model}} @title="Main Panel"/>
@@ -25,6 +27,12 @@
   <section class="modals section">
     <DetailWindow />
     <ReplayWindow />
+
+    <DebugWindow @model={{@model}} />
+
+    <HelpWindow @model={{@model}} />
+    <SettingsWindow @model={{@model}} />
+    
   </section>
 
   <section class="notifications section">

@@ -1,5 +1,7 @@
+import { EVENTS, ELEM_IDS } from "./constants";
+
 export function resetMainGridScroll() {
-    const el = document.getElementById("mainGrid");
+    const el = document.getElementById(ELEM_IDS.MAIN_GRID);
     if (el) el.scrollTop = 0;
 }
 

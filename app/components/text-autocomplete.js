@@ -6,14 +6,28 @@ import { getCurrSubString, subCurrWord } from "../utils";
 
 import { inject as service } from "@ember/service";
 
+import ENV from "somhunter-ui/config/environment";
+import { EVENTS, ELEM_IDS } from "../constants";
+import LOG from "../logger";
+import utils from "../utils";
+
+import { addObserver } from "@ember/object/observers";
+
 export default class TextAutocompleteComponent extends Component {
     /* Member methods */
     constructor() {
         super(...arguments);
 
-        this.inputValue = this.args.model.userContext.search.textQueries[
-            this.args.id
-        ];
+        // Subscribe to the specific EVENTS
+        this.actionManager.registerEventHook(
+            EVENTS.GLOBAL_ESC_KEY_DOWN,
+            this.hideAutocompleteWindow
+        );
+    }
+
+    @action
+    hideAutocompleteWindow() {
+        this.suggestions = [];
     }
 
     @action
@@ -38,6 +52,7 @@ export default class TextAutocompleteComponent extends Component {
                 if (this.suggestions.length <= 0) return;
 
                 this.setChosenWord(this.suggestions[this.selIdx].wordString);
+                this.hideAutocompleteWindow();
                 e.stopPropagation();
                 break;
 
@@ -47,6 +62,10 @@ export default class TextAutocompleteComponent extends Component {
                 e.stopPropagation();
                 break;
         }
+    }
+    @action
+    didUpdateAttrs(elem, [x]) {
+        this.inputValue = x.userContext.search.textQueries[this.args.id];
     }
 
     @action
@@ -82,8 +101,10 @@ export default class TextAutocompleteComponent extends Component {
     @service actionManager;
 
     @tracked suggestions = [];
-    @tracked inputValue = "";
-    @tracked cursorIdx = 0; //el.selectionStart
+    @tracked inputValue = this.args.model.userContext.search.textQueries[
+        this.args.id
+    ];
+    @tracked cursorIdx = 0;
     @tracked selIdx = 0;
     lastCurrPos = 0;
 }

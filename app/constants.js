@@ -17,12 +17,20 @@ export const EVENTS = {
     PUSH_NOTIFICATION: "pushNotification",
     BLOCK_WITH_NOTIFICATION: "blockWithNotification",
     UNBLOCK_WITH_NOTIFICATION: "unblockWithNotification",
+
+    RESET_SEARCH: "resetSearch",
+    CLEAR_MAIN_GRID: "clearMainGrid",
+
+    SHOW_SETTINGS_WINDOW: "showSettignsWindow",
+    SHOW_DEBUG_WINDOW: "showDebugWindow",
+    SHOW_HELP_WINDOW: "showHelpWindow",
 };
 
 /**
  * Class/ID name strings.
  */
 export const ELEM_IDS = {
+    MAIN_GRID: "mainGrid",
     DETAIL_WINDOW: "detailWindow",
     DETAIL_WINDOW_SLIDER: "detailWindowSlider",
     REPLAY_WINDOW: "replayWindow",

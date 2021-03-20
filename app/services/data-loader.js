@@ -53,13 +53,13 @@ export default class DataLoaderService extends Service {
     }
 
     setShowReplayView(val) {
-        const detail = this.store.peekRecord("replay-window", 0);
-        detail.show = val;
+        const window = this.store.peekRecord("replay-window", 0);
+        if (window) window.show = val;
     }
 
     setShowDetailView(val) {
-        const detail = this.store.peekRecord("detail-window", 0);
-        detail.show = val;
+        const window = this.store.peekRecord("detail-window", 0);
+        if (window) window.show = val;
     }
 
     getShowReplaylView() {
@@ -68,8 +68,8 @@ export default class DataLoaderService extends Service {
     }
 
     setShowReplayView(val) {
-        const detail = this.store.peekRecord("replay-window", 0);
-        detail.show = val;
+        const window = this.store.peekRecord("replay-window", 0);
+        if (window) window.show = val;
     }
 
     mainDisplayFrames() {

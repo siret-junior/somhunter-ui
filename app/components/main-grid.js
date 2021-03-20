@@ -18,12 +18,19 @@ export default class MainGridComponent extends Component {
             this.modelReload()
         );
 
+        this.actionManager.registerEventHook(EVENTS.CLEAR_MAIN_GRID, () =>
+            this.clearGrid()
+        );
+
         this.modelReload();
     }
 
     modelReload() {
         this.frames = this.dataLoader.mainDisplayFrames();
         this.viewType = this.dataLoader.mainDisplayType();
+    }
+    clearGrid() {
+        this.frames = [];
     }
 
     @action
@@ -56,6 +63,8 @@ export default class MainGridComponent extends Component {
     /* Member variables */
     @service actionManager;
     @service dataLoader;
+
+    ELEM_IDS = ELEM_IDS;
 
     currentPage = 0;
     prevFetchTimestamp = null;

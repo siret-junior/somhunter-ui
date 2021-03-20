@@ -1,0 +1,15 @@
+<div class="bottom buttons-panel container-fluid col-12">
+
+    <div class="row">
+        <div class="col-12">
+            <button type="button" class="btn-submit btn btn-secondary"
+                {{on "click" this.onSettingsBtnClick}}><i class="fa fa-cogs" aria-hidden="true"></i></button>
+
+            {{#if this.debug}}
+                <button type="button" class="btn-submit btn btn-warning"
+                    {{on "click" this.onDebugBtnClick}}><i class="fa fa-bug" aria-hidden="true"></i></button>
+            {{/if}}
+
+        </div>
+    </div>
+</div>

@@ -1,14 +1,15 @@
 
 
-<div {{on "keydown" this.onKeyDown}} class="text autocomplete md-form">
-
+<div {{on "keydown" this.onKeyDown}} class="text autocomplete md-form"
+  
+>
   <input 
     id="textQueryInput{{@id}}" 
     class="form-control mdb-autocomplete" 
     type="search" 
     value={{this.inputValue}} 
     selectionStart={{this.cursorIdx}}
-    
+    {{did-update this.didUpdateAttrs @model}}
     {{on "input" this.updateInputValue}}
   />
 
