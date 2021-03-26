@@ -19,13 +19,26 @@ export default class HistoryPanelComponent extends Component {
         // On attrupate
     }
 
+    // Whenever the @model updates
     @action
-    onClickHistoryItem(e) {
-        const hId = e.target.dataset.historyId;
-        LOG.D(`Switching to history ID ${hId}`);
+    didUpdateAttrs(elem, [x]) {
+        this.currentSearchId = x.userContext.search.id;
+        this.historyItems = x.userContext.history;
     }
 
-    @tracked historyItems = [];
+    @action
+    onClickHistoryItem(e) {
+        const hId = Number(e.currentTarget.dataset.historyId);
+
+        if (typeof hId !== "number") throw Error("Wrong param!");
+
+        LOG.D(`Switching to history ID ${hId}`);
+
+        this.actionManager.switchSearchContext(hId);
+    }
+
+    @tracked historyItems = this.args.model.userContext.history;
+    @tracked currentSearchId = this.args.model.userContext.search.id;
 
     /* Member variables */
     @service actionManager;

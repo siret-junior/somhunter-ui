@@ -1,15 +1,17 @@
 <div class="history-panel container fluid panel">
     <div class="row">
         <div class="col-12">
-            <h1 className="panel-title"> History</h1>
-            <ul className="history-list">
+            <h1 class="panel-title"> History</h1>
+            <ul class="history-list"
+                {{did-update this.didUpdateAttrs @model}}
+            >
                 
                 {{#if this.historyItems}}
 
                     
-                        {{#each this.displayedFrames as |frame|}}
+                        {{#each this.historyItems as |item|}}
                             <li
-                                class="history-item {{if item.active "active" }}"
+                                class="history-item {{if (eq item.id this.currentSearchId) "active" }}"
                                 data-history-id={{item.id}}
                                 {{on "click" this.onClickHistoryItem}}
                             >

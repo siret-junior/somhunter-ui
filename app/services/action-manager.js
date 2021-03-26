@@ -67,6 +67,93 @@ export default class ActionManagerService extends Service {
         }
     }
 
+    async switchSearchContext(searchId) {
+        this.actionManager.triggerEvent(
+            EVENTS.BLOCK_WITH_NOTIFICATION,
+            "Switching search context!",
+            "...",
+            12000
+        );
+
+        const search = this.dataLoader.getSearchContext();
+
+        const srcSearchCtxId = search.id;
+        const url = this.dataLoader.apiSettings.endpoints.searchContext.post
+            .url;
+
+        // Take a screenshot
+        let screenData = "";
+        // Does this screen still lack the screenshot
+        if (search.screenshotFilepath === "" && false) {
+            const frs = state.mainWindow.frames;
+
+            screenData = await takeScreenshotOfElem(
+                document.getElementById("mainGrid"),
+                frs
+            );
+        }
+
+        const reqData = {
+            srcSearchCtxId: srcSearchCtxId,
+            screenshotData: screenData,
+            id: searchId,
+        };
+
+        // << Core API >>
+        const res = await this.coreApi.post(url, reqData);
+        // << Core API >>
+
+        // If failed
+        if (res === null) {
+            return;
+        }
+
+        this.coreApi.fetchUserContext(
+            () => {
+                this.actionManager.triggerEvent(EVENTS.RELOAD_USER_CONTEXT);
+                this.actionManager.gotoTopScoredView(0);
+                this.actionManager.triggerEvent(
+                    EVENTS.PUSH_NOTIFICATION,
+                    "Search context switched!",
+                    "",
+                    5000,
+                    "success"
+                );
+                this.actionManager.triggerEvent(
+                    EVENTS.UNBLOCK_WITH_NOTIFICATION
+                );
+            },
+            () => {
+                this.actionManager.triggerEvent(
+                    EVENTS.PUSH_NOTIFICATION,
+                    "Switch failed!",
+                    "",
+                    5000
+                );
+                this.actionManager.triggerEvent(
+                    EVENTS.UNBLOCK_WITH_NOTIFICATION
+                );
+            }
+        );
+    }
+
+    async addBookmark(frameId) {
+        const url = this.dataLoader.apiSettings.endpoints.searchBookmark.post
+            .url;
+
+        const reqData = {
+            frameId: frameId,
+        };
+
+        const res = await this.coreApi.post(url, reqData);
+        if (res === null) {
+            return;
+        } else {
+            LOG.D("Bookmark succ.");
+            this.actionManager.triggerEvent(EVENTS.BOOKMARK_FRAME, frameId);
+        }
+    }
+
     resetSearch() {
         const coreSettings = this.coreApi.settings;
         const reqUrl = coreSettings.api.endpoints.searchReset.post.url;
@@ -78,7 +165,9 @@ export default class ActionManagerService extends Service {
                 LOG.D("Search reset!");
                 this.coreApi.fetchUserContext(
                     () => {
-                        this.actionManager.triggerEvent(EVENTS.RESET_SEARCH);
+                        this.actionManager.triggerEvent(
+                            EVENTS.RELOAD_USER_CONTEXT
+                        );
                         this.actionManager.gotoTopScoredView(0);
                         this.actionManager.triggerEvent(
                             EVENTS.PUSH_NOTIFICATION,
@@ -291,6 +380,7 @@ export default class ActionManagerService extends Service {
 
         this.coreApi.fetchUserContext(() => {
             LOG.D("Rescored & fetches user context...");
+            this.actionManager.triggerEvent(EVENTS.RELOAD_USER_CONTEXT);
         });
     }
 

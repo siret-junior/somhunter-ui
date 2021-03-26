@@ -125,6 +125,11 @@ body {
             top: 0;
             padding: 0.1rem 0.2rem;
         }
+        .btn-bookmark {
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
 
         .btn-detail {
             position: absolute;
@@ -362,6 +367,8 @@ body {
   
     .history-item {
       width: calc(20% - 0.2rem);
+      min-width: 50px;
+      min-height: 30px;
       display: inline-block;
       vertical-align: top;
       padding: 0rem 0rem;
@@ -410,7 +417,7 @@ body {
   }
 
   .panel-title {
-    display: none;
+    
     font-size: 1.4rem;
     text-transform: uppercase;
     text-align: center;
@@ -442,3 +449,5 @@ body {
       bottom: -0.4rem;
     }
   }
+
+ 

@@ -17,7 +17,7 @@ export default class IndexRoute extends Route {
         this.actionManager.initialize(cb, cb);
 
         this.actionManager.registerEventHook(
-            EVENTS.RESET_SEARCH,
+            EVENTS.RELOAD_USER_CONTEXT,
             this.forceRefresh
         );
     }

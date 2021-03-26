@@ -30,6 +30,10 @@ export default class DataLoaderService extends Service {
     get userContext() {
         return this.store.peekRecord("user-context", 0);
     }
+
+    getSearchContext() {
+        return this.store.peekRecord("user-context", 0)["search"];
+    }
     getMainFrames() {
         const data = this.store.peekRecord("main-display", 0);
         return data?.frames;
