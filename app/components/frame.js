@@ -36,21 +36,25 @@ export default class FrameComponent extends Component {
     @action
     onLikeFrame(e) {
         this.actionManager.likeFrame(Number(e.target.dataset.id));
+        e.stopPropagation(); // Prevent the bubbling
     }
 
     @action
     onDetailBtnClick(e) {
         this.actionManager.showDetailView(Number(e.target.dataset.id), 0);
+        e.stopPropagation(); // Prevent the bubbling
     }
 
     @action
     onKnnBtnClick(e) {
         this.actionManager.gotoKnnView(Number(e.target.dataset.id), 0);
+        e.stopPropagation(); // Prevent the bubbling
     }
 
     @action
     onSubmitBtnClick(e) {
         alert(`Submitting frame with ID ${e.target.dataset.id}...`);
+        e.stopPropagation(); // Prevent the bubbling
     }
 
     /* Member variables */

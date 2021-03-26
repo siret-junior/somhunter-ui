@@ -1,0 +1,32 @@
+<div class="history-panel container fluid panel">
+    <div class="row">
+        <div class="col-12">
+            <h1 className="panel-title"> History</h1>
+            <ul className="history-list">
+                
+                {{#if this.historyItems}}
+
+                    
+                        {{#each this.displayedFrames as |frame|}}
+                            <li
+                                class="history-item {{if item.active "active" }}"
+                                data-history-id={{item.id}}
+                                {{on "click" this.onClickHistoryItem}}
+                            >
+                                {{#if item.screenshotFilepath}}
+                                    <img src={{item.screenshotFilepath}} />
+                                {{else}}
+                                    <img src="/assets/img/history_screenshot.jpg"  />
+                                {{/if}}
+                                <span className="title">{{item.id}}</span>
+                                <span className="time">{{item.time}}</span>
+                            </li>
+                        {{/each}}
+                    
+
+                {{/if}}
+
+            </ul>
+        </div>
+    </div>
+</div>
