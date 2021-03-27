@@ -13,20 +13,21 @@ export default class LikesPanelComponent extends Component {
     /* Member methods */
     constructor() {
         super(...arguments);
+
+        this.actionManager.registerEventHook(
+            EVENTS.AFTER_LIKE_FRAME,
+            this.afterLikeFrameHandler.bind(this)
+        );
     }
 
-    // Whenever the @model updates
     @action
     didUpdateAttrs(elem, [x]) {
-        this.items = x;
+        this.items = this.args.frames;
     }
 
-    @action
-    onRemoveBookmarkItem(e) {
-        const frameId = Number(e.currentTarget.dataset.frameId);
-
-        if (typeof frameId !== "number") throw Error("Wrong param!");
-        this.actionManager.addBookmark(frameId);
+    afterLikeFrameHandler(frame) {
+        if (frame.liked) this.items = [...this.items, frame];
+        else this.items = [...this.items.filter((x) => x.id != frame.id)];
     }
 
     @tracked items = this.args.frames;

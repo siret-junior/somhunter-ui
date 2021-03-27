@@ -103,42 +103,37 @@ export default class ActionManagerService extends Service {
         const res = await this.coreApi.post(url, reqData);
         // << Core API >>
 
+        var cbFail = () => {
+            this.actionManager.triggerEvent(
+                EVENTS.DO_PUSH_NOTIF,
+                "Switch failed!",
+                "error"
+            );
+            this.actionManager.triggerEvent(EVENTS.UNBLOCK_WITH_NOTIFICATION);
+            throw Error("Search switch failed.");
+        };
+
         // If failed
         if (res === null) {
+            cbFail();
             return;
         }
 
-        this.coreApi.fetchUserContext(
-            () => {
-                this.actionManager.triggerEvent(EVENTS.RELOAD_USER_CONTEXT);
-                this.actionManager.gotoTopScoredView(0);
-                this.actionManager.triggerEvent(
-                    EVENTS.PUSH_NOTIFICATION,
-                    "Search context switched!",
-                    "",
-                    5000,
-                    "success"
-                );
-                this.actionManager.triggerEvent(
-                    EVENTS.UNBLOCK_WITH_NOTIFICATION
-                );
-            },
-            () => {
-                this.actionManager.triggerEvent(
-                    EVENTS.PUSH_NOTIFICATION,
-                    "Switch failed!",
-                    "",
-                    5000
-                );
-                this.actionManager.triggerEvent(
-                    EVENTS.UNBLOCK_WITH_NOTIFICATION
-                );
-            }
-        );
+        this.coreApi.fetchUserContext(() => {
+            this.actionManager.triggerEvent(EVENTS.RELOAD_USER_CONTEXT);
+            this.actionManager.gotoTopScoredView(0);
+            this.actionManager.triggerEvent(
+                EVENTS.DO_PUSH_NOTIF,
+                "Search context switched!"
+            );
+            this.actionManager.triggerEvent(EVENTS.UNBLOCK_WITH_NOTIFICATION);
+        }, cbFail);
     }
 
-    async addBookmark(frameId) {
-        this.actionManager.triggerEvent(EVENTS.DO_BOOKMARK_FRAME, frameId);
+    async addBookmark(frame) {
+        const frameId = frame.id;
+
+        this.actionManager.triggerEvent(EVENTS.BEFORE_BOOKMARK_FRAME, frame);
 
         const url = this.dataLoader.apiSettings.endpoints.searchBookmark.post
             .url;
@@ -148,12 +143,25 @@ export default class ActionManagerService extends Service {
         };
 
         const res = await this.coreApi.post(url, reqData);
+        const isBookmarked = res.isBookmarked;
+
+        var cbFail = () => {
+            this.actionManager.triggerEvent(
+                EVENTS.DO_PUSH_NOTIF,
+                `Bookmarking the '${frameId}' frame failed.`,
+                "error"
+            );
+            throw Error("Bookmarking failed.");
+        };
+
         if (res === null) {
+            cbFail();
             return;
         } else {
             this.actionManager.triggerEvent(
-                EVENTS.DONE_BOOKMARK_FRAME,
-                frameId
+                EVENTS.AFTER_BOOKMARK_FRAME,
+                frame,
+                isBookmarked
             );
         }
     }
@@ -166,7 +174,6 @@ export default class ActionManagerService extends Service {
         this.coreApi
             .post(reqUrl)
             .then((res) => {
-                LOG.D("Search reset!");
                 this.coreApi.fetchUserContext(
                     () => {
                         this.actionManager.triggerEvent(
@@ -174,30 +181,25 @@ export default class ActionManagerService extends Service {
                         );
                         this.actionManager.gotoTopScoredView(0);
                         this.actionManager.triggerEvent(
-                            EVENTS.PUSH_NOTIFICATION,
-                            "Search reset!",
-                            "",
-                            5000,
-                            "success"
+                            EVENTS.DO_PUSH_NOTIF,
+                            "Search reset!"
                         );
                     },
                     () =>
                         this.actionManager.triggerEvent(
-                            EVENTS.PUSH_NOTIFICATION,
+                            EVENTS.DO_PUSH_NOTIF,
                             "Reset search failed!",
-                            "",
-                            5000
+                            "error"
                         )
                 );
             })
-            .catch((e) => {
+            .catch((e) =>
                 this.actionManager.triggerEvent(
-                    EVENTS.PUSH_NOTIFICATION,
+                    EVENTS.DO_PUSH_NOTIF,
                     "Reset search failed!",
-                    "",
-                    5000
-                );
-            });
+                    "error"
+                )
+            );
     }
 
     getTextAutocompleteSuggestions(
@@ -394,8 +396,12 @@ export default class ActionManagerService extends Service {
         this.triggerEvent(eventName);
     }
 
-    async likeFrame(frameId) {
+    async likeFrame(frame) {
+        const frameId = frame.id;
         if (!frameId) throw Error("Invalid `frameId`: ", frameId);
+
+        // <!>
+        this.triggerEvent(EVENTS.BEFORE_LIKE_FRAME, frame);
 
         const url = this.dataLoader.apiSettings.endpoints.searchLike.post.url;
 
@@ -409,25 +415,39 @@ export default class ActionManagerService extends Service {
             isLiked: true,
             status: 200
         } */
-        const resData = await this.coreApi.post(url, reqData);
+        try {
+            const resData = await this.coreApi.post(url, reqData);
 
-        const likedState = resData.isLiked;
+            const likedState = resData.isLiked;
 
-        this.dataLoader.setLikedFlag(frameId, likedState);
+            this.dataLoader.setLikedFlag(frameId, likedState);
 
-        if (likedState) {
-            const fs = document.querySelectorAll(
-                `.frame[data-id="${frameId}"]`
+            if (likedState) {
+                const fs = document.querySelectorAll(
+                    `.frame[data-id="${frameId}"]`
+                );
+                fs.forEach((x) => x.classList.add("liked"));
+            } else {
+                const fs = document.querySelectorAll(
+                    `.frame[data-id="${frameId}"]`
+                );
+                fs.forEach((x) => x.classList.remove("liked"));
+            }
+
+            // <!>
+            this.triggerEvent(EVENTS.AFTER_LIKE_FRAME, {
+                ...frame,
+                liked: likedState,
+            });
+        } catch (e) {
+            // <!>
+            this.actionManager.triggerEvent(
+                EVENTS.DO_PUSH_NOTIF,
+                `Liking the frame with ID '${frameId}' failed.`,
+                "error"
             );
-            fs.forEach((x) => x.classList.add("liked"));
-        } else {
-            const fs = document.querySelectorAll(
-                `.frame[data-id="${frameId}"]`
-            );
-            fs.forEach((x) => x.classList.remove("liked"));
+            throw e;
         }
-
-        this.triggerEvent(EVENTS.LIKE_FRAME, frameId);
     }
 
     /* Member variables */

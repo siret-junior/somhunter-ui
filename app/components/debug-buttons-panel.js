@@ -13,9 +13,7 @@ export default class DebugButtonsPanelComponent extends Component {
     block(e) {
         this.actionManager.triggerEvent(
             EVENTS.BLOCK_WITH_NOTIFICATION,
-            "Blocking process is running!",
-            "User is not allowed to interact with the UI!",
-            120000
+            "Blocking process is running!"
         );
     }
 
@@ -27,15 +25,12 @@ export default class DebugButtonsPanelComponent extends Component {
     @action
     toast(type, e) {
         this.actionManager.triggerEvent(
-            EVENTS.PUSH_NOTIFICATION,
-            "Somenotification",
-            "Hello from the notification!",
-            30000,
+            EVENTS.DO_PUSH_NOTIF,
+            "Some notification",
             type
         );
     }
 
     /* Member variables */
-
     @service actionManager;
 }

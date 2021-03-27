@@ -33,15 +33,17 @@ export default class FrameComponent extends Component {
         }
     }
 
+    afterLikeFrameHandler() {}
+
     @action
     onBookmarkBtnClick(e) {
-        this.actionManager.addBookmark(Number(e.currentTarget.dataset.id));
+        this.actionManager.addBookmark(this.args.frame);
         e.stopPropagation(); // Prevent the bubbling
     }
 
     @action
     onLikeFrame(e) {
-        this.actionManager.likeFrame(Number(e.target.dataset.id));
+        this.actionManager.likeFrame(this.args.frame);
         e.stopPropagation(); // Prevent the bubbling
     }
 

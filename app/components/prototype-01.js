@@ -26,12 +26,13 @@ export default class Prototype01Component extends Component {
     }
     @action
     toast(type, e) {
+        // <!>
         this.actionManager.triggerEvent(
-            EVENTS.PUSH_NOTIFICATION,
+            EVENTS.DO_PUSH_NOTIF,
             "Somenotification",
-            "Hello from the notification!",
+            type,
             30000,
-            type
+            "Hello from the notification!"
         );
     }
 

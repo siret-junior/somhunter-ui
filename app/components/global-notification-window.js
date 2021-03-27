@@ -14,14 +14,14 @@ export default class GlobalNotificationWindowComponent extends Component {
 
         this.notifications = [];
         this.actionManager.registerEventHook(
-            EVENTS.PUSH_NOTIFICATION,
-            (title, msg, duration, type) =>
-                this.pushNotification(title, msg, duration, type)
+            EVENTS.DO_PUSH_NOTIF,
+            (title, type, duration, msg) =>
+                this.pushNotification(title, type, duration, msg)
         );
         this.actionManager.registerEventHook(
             EVENTS.BLOCK_WITH_NOTIFICATION,
-            (title, msg, duration, type) =>
-                this.blockWithNotification(title, msg, duration, type)
+            (title, type, duration, msg) =>
+                this.blockWithNotification(title, type, duration, msg)
         );
         this.actionManager.registerEventHook(
             EVENTS.UNBLOCK_WITH_NOTIFICATION,
@@ -30,7 +30,7 @@ export default class GlobalNotificationWindowComponent extends Component {
     }
 
     /** type: "success","warning", "error" */
-    pushNotification(title, msg, duration, type = "warning") {
+    pushNotification(title, type = "success", duration = 3000, msg = "") {
         var newId = this.nextNotId++;
         this.notifications = [
             ...this.notifications,
@@ -49,7 +49,7 @@ export default class GlobalNotificationWindowComponent extends Component {
     }
 
     /** type: "success","warning", "error" */
-    blockWithNotification(title, msg, duration, type = "warning") {
+    blockWithNotification(title, type = "success", duration = 3000, msg = "") {
         this.blockingNotification = {
             title: title,
             type: type,

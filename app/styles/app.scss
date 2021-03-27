@@ -64,20 +64,25 @@ body {
 
     &.liked {
         &:before {
-          content: "";
-          position: absolute;
-          width: 60px;
-          height: 60px;
-          background-image: url("/assets/img/flag_green.png");
-          background-size: 80px;
-          background-position: center;
-          border-right: 30px solid transparent;
-          border-bottom: 30px solid transparent;
-          border-top: 30px solid map-get($theme-colors, "success");
-          border-left: 30px solid map-get($theme-colors, "success");
-          border-color: transparent;
-          left: 0;
-        top: 0;
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 12px solid map-get($map: $theme-colors, $key: "success");
+            left: 0;
+            top: 0;
+            // width: 60px;
+            // height: 60px;
+            // background-image: url("/assets/img/flag_green.png");
+            // background-size: 80px;
+            // background-position: center;
+            // border-right: 30px solid transparent;
+            // border-bottom: 30px solid transparent;
+            // border-top: 30px solid map-get($theme-colors, "success");
+            // border-left: 30px solid map-get($theme-colors, "success");
+            // border-color: transparent;
+            // left: 0;
+            // top: 0;
         }
       }
 
@@ -128,7 +133,8 @@ body {
         .btn-bookmark {
             position: absolute;
             left: 0;
-            top: 0;
+            bottom: 30%;
+            padding: 0.1rem 0.2rem;
         }
 
         .btn-detail {
@@ -452,6 +458,7 @@ body {
     text-align: center;
     padding: 0.4em 0.8em;
 
+    
     &.visible {
       display: block;
     }
@@ -477,6 +484,15 @@ body {
       border: 1px solid rgba(map-get($theme-colors, "white"), 0.7);
       bottom: -0.4rem;
     }
+    &.small {
+        font-size: 1.2rem;
+        text-align: left;
+        
+        &:before,
+        &:after {
+          display: none;
+        }   
+    }
   }
 
  .bookmarks-list, .likes-list {
@@ -489,6 +505,11 @@ body {
          height: 45px;
          display: inline-block;
          max-width: 100%;
+         &.liked {
+             &:before {
+                 display: none;
+             }
+         }
          .btn {
              padding: 0.1rem 0.2rem;
              font-size: 0.5em;
