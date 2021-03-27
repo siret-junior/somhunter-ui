@@ -9,7 +9,7 @@ import { EVENTS, ELEM_IDS } from "../constants";
 import LOG from "../logger";
 import utils from "../utils";
 
-export default class HistoryPanelComponent extends Component {
+export default class BookmarksPanelComponent extends Component {
     /* Member methods */
     constructor() {
         super(...arguments);
@@ -18,23 +18,18 @@ export default class HistoryPanelComponent extends Component {
     // Whenever the @model updates
     @action
     didUpdateAttrs(elem, [x]) {
-        this.currentSearchId = x.userContext.search.id;
-        this.historyItems = x.userContext.history;
+        this.items = x;
     }
 
     @action
-    onClickHistoryItem(e) {
-        const hId = Number(e.currentTarget.dataset.historyId);
+    onRemoveBookmarkItem(e) {
+        const frameId = Number(e.currentTarget.dataset.frameId);
 
-        if (typeof hId !== "number") throw Error("Wrong param!");
-
-        LOG.D(`Switching to history ID ${hId}`);
-
-        this.actionManager.switchSearchContext(hId);
+        if (typeof frameId !== "number") throw Error("Wrong param!");
+        this.actionManager.addBookmark(frameId);
     }
 
-    @tracked historyItems = this.args.model.userContext.history;
-    @tracked currentSearchId = this.args.model.userContext.search.id;
+    @tracked items = this.args.frames;
 
     /* Member variables */
     @service actionManager;

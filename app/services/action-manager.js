@@ -151,7 +151,10 @@ export default class ActionManagerService extends Service {
         if (res === null) {
             return;
         } else {
-            this.actionManager.triggerEvent(EVENTS.DONE_BOOKMARK_FRAME, frameId);
+            this.actionManager.triggerEvent(
+                EVENTS.DONE_BOOKMARK_FRAME,
+                frameId
+            );
         }
     }
 

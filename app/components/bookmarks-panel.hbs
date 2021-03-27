@@ -1,0 +1,21 @@
+<div class="bookmarks-panel container fluid panel">
+    <div class="row">
+        <div class="col-12">
+
+            <h1 class="panel-title"> Bookmarks</h1>
+            <ul class="bookmarks-list"
+                {{did-update this.didUpdateAttrs @frames}}
+            >
+                
+                {{#if this.items}}
+
+                    {{#each this.items as |item|}}
+                        <Frame @frame={{item}} />    
+                    {{/each}}                    
+
+                {{/if}}
+
+            </ul>
+        </div>
+    </div>
+</div>

@@ -5,7 +5,11 @@
 
 <TextSearchPanel @model={{@model}} />
 
+<LikesPanel @frames={{@model.userContext.search.likedFrames}} />
+
 <MainButtonsPanel />
+
+<BookmarksPanel @frames={{@model.userContext.bookmarkedFrames}} />
 
 <HistoryPanel @model={{@model}} />
 

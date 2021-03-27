@@ -479,4 +479,19 @@ body {
     }
   }
 
- 
+ .bookmarks-list, .likes-list {
+     margin: 0;
+     padding: 0;
+     text-align:left;
+     display: block;
+     .frame {
+         width:  80px;
+         height: 45px;
+         display: inline-block;
+         max-width: 100%;
+         .btn {
+             padding: 0.1rem 0.2rem;
+             font-size: 0.5em;
+         }
+     }
+ }
