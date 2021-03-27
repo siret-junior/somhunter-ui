@@ -320,6 +320,8 @@ body {
     }
 }
 
+
+
 .blocking-notification-cont {
     width: 100vw;
     height: 100vh; 
@@ -327,15 +329,42 @@ body {
     z-index: 100000;
     left: 0;
     top: 0;
-    background: rgba(map-get($map: $theme-colors, $key: "primary"), 0.4);
-    
+    background: rgba(map-get($map: $theme-colors, $key: "secondary"), 0.3);
     .blocking-notification {
-        width: 60vw;
-        height: 300px;
+        background: rgba(map-get($map: $theme-colors, $key: "secondary"), 1);
+        width: 100vw;
+        max-width: 100vw;
         position: absolute;
-        left: 50%;
         top: 50%;
-        transform: translate(-50%, -50%);
+        transform: translate(0, -50%);
+        border-radius: 0;
+        text-align: center;
+        padding: 2rem 1rem 2.2rem 1rem;
+        .toast-header {
+            text-align: center;
+            color: rgba(map-get($map: $theme-colors, $key: "white"), 1);
+            display: block;
+            font-size: 3rem;
+            
+        }
+        .toast-body {
+            background: rgba(map-get($map: $theme-colors, $key: "primary"), 0.7);
+            font-size: 1.4rem;
+        }
+    }
+    .unstuck-panel {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        .stuck-msg {
+            display: block;
+            font-size: 0.6rem;
+        }
+        .btn {
+            font-size: 0.6rem;
+            padding: 0.1rem 0.2rem;
+            text-transform: uppercase;
+        }
     }
 }
 

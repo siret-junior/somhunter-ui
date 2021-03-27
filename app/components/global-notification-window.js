@@ -68,6 +68,11 @@ export default class GlobalNotificationWindowComponent extends Component {
         this.blockingNotification = null;
     }
 
+    @action
+    unblock(e) {
+        this.actionManager.triggerEvent(EVENTS.UNBLOCK_WITH_NOTIFICATION);
+    }
+
     /* Member variables */
     nextNotId = 0;
 

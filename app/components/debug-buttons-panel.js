@@ -15,7 +15,7 @@ export default class DebugButtonsPanelComponent extends Component {
             EVENTS.BLOCK_WITH_NOTIFICATION,
             "Blocking process is running!",
             "User is not allowed to interact with the UI!",
-            12000
+            120000
         );
     }
 

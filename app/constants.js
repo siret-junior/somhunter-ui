@@ -20,7 +20,8 @@ export const EVENTS = {
 
     RELOAD_USER_CONTEXT: "reloadUserContext",
     LIKE_FRAME: "likeFrame",
-    BOOKMARK_FRAME: "bookmarkFrame",
+    DO_BOOKMARK_FRAME: "DO_BOOKMARK_FRAME",
+    DONE_BOOKMARK_FRAME: "DONE_BOOKMARK_FRAME",
     CLEAR_MAIN_GRID: "clearMainGrid",
 
     SHOW_SETTINGS_WINDOW: "showSettignsWindow",

@@ -138,6 +138,8 @@ export default class ActionManagerService extends Service {
     }
 
     async addBookmark(frameId) {
+        this.actionManager.triggerEvent(EVENTS.DO_BOOKMARK_FRAME, frameId);
+
         const url = this.dataLoader.apiSettings.endpoints.searchBookmark.post
             .url;
 
@@ -149,8 +151,7 @@ export default class ActionManagerService extends Service {
         if (res === null) {
             return;
         } else {
-            LOG.D("Bookmark succ.");
-            this.actionManager.triggerEvent(EVENTS.BOOKMARK_FRAME, frameId);
+            this.actionManager.triggerEvent(EVENTS.DONE_BOOKMARK_FRAME, frameId);
         }
     }
 

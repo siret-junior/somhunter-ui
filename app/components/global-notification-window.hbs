@@ -3,10 +3,14 @@
 
     <div class="blocking-notification-cont">  
         <div class="toast huge blocking-notification {{this.blockingNotification.type}}">
-            <div class="toast-header">
-                <p class="mr-auto">{{this.blockingNotification.title}}</p>
+            <h2 class="toast-header">{{this.blockingNotification.title}}</h2>
+            {{#if this.blockingNotification.message}}
+                <div class="toast-body">{{this.blockingNotification.message}}</div>
+            {{/if}}
+            <div class="unstuck-panel">
+                <span class="stuck-msg">Got stuck?</span>
+                <button class="btn-danger btn" type="button" {{on "click" this.unblock}}>Unstuck</button>
             </div>
-            <div class="toast-body">{{this.blockingNotification.message}}</div>
         </div>
     </div>
 
@@ -26,7 +30,9 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="toast-body">{{not.message}}</div>
+                {{#if not.message}}
+                    <div class="toast-body">{{not.message}}</div>
+                {{/if}}
             </div>
             
         {{/each}}
