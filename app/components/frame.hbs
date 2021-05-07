@@ -1,5 +1,5 @@
 <div class="frame col-2 {{if @frame.highlighted "highlighted"}} {{if @frame.liked "liked"}}"  
-    style={{thumb "http://127.0.0.1:8888/frames/" @frame.src}} 
+    style={{thumb this.thumbsUrlPrefix @frame.src}} 
     data-id={{@frame.id}}
     {{on "wheel" this.onWheel}}
     {{on "click" this.onLikeFrame}}
