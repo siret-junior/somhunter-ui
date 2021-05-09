@@ -189,6 +189,7 @@ export default class CoreApiService extends Service {
         const url = this.settings.api.endpoints.userContext.get.url;
         this.get(url)
             .then((res2) => {
+                console.log('fetchUserContext:192')
                 this.store.push({
                     data: [
                         {
@@ -209,6 +210,7 @@ export default class CoreApiService extends Service {
                 cbSucc();
             })
             .catch(() => {
+                console.log('fetchUserContext:213')
                 this.store.push({
                     data: [
                         {
@@ -236,7 +238,7 @@ export default class CoreApiService extends Service {
                             id: 0,
                             type: "core-settings",
                             attributes: {
-                                generated: res.generated,
+                                error: false,
                                 strings: res.strings,
                                 core: res.core,
                                 server: res.server,
@@ -252,7 +254,8 @@ export default class CoreApiService extends Service {
 
                 this.fetchUserContext(cbSucc, cbFail);
             })
-            .catch(() => {
+            .catch((e) => {
+                console.log(e);
                 this.store.push({
                     data: [
                         {

@@ -73,10 +73,7 @@ export default class DetailWindowComponent extends Component {
                 this.postLoadTimeout
             );
         } else {
-            LOG.D("All detail frames loaded to the top!");
             LOG.I("All detail frames loaded to the top!");
-            LOG.E("All detail frames loaded to the top!");
-            LOG.W("All detail frames loaded to the top!");
         }
     }
 

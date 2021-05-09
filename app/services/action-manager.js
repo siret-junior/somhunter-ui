@@ -169,11 +169,11 @@ export default class ActionManagerService extends Service {
     resetSearch() {
         const coreSettings = this.coreApi.settings;
         const reqUrl = coreSettings.api.endpoints.searchReset.post.url;
-
         // << Core API >>
         this.coreApi
             .post(reqUrl)
             .then((res) => {
+                console.log('A')
                 this.coreApi.fetchUserContext(
                     () => {
                         this.actionManager.triggerEvent(
@@ -193,12 +193,14 @@ export default class ActionManagerService extends Service {
                         )
                 );
             })
-            .catch((e) =>
+            .catch((e) => {
+                console.log('C')
                 this.actionManager.triggerEvent(
                     EVENTS.DO_PUSH_NOTIF,
                     "Reset search failed!",
                     "error"
                 )
+            }
             );
     }
 

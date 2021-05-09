@@ -24,14 +24,14 @@ export default class MainButtonsPanelComponent extends Component {
     }
 
     @action
-    onClickRescoreTopScoredBtn(e) {
-        this.actionManager.rescore();
+    async onClickRescoreTopScoredBtn(e) {
+        await this.actionManager.rescore();
         this.actionManager.gotoTopScoredView(0);
     }
 
     @action
-    onClickRescoreSomScoredBtn(e) {
-        this.actionManager.rescore();
+    async onClickRescoreSomScoredBtn(e) {
+        await this.actionManager.rescore();
         this.actionManager.gotoSomView();
     }
 
