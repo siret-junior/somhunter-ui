@@ -73,7 +73,7 @@ export default class ReplayWindowComponent extends Component {
          * Calculate values for perfect centering & scroll of the slider to the pivot.
          */
         const windowW = this.windowEl.clientWidth;
-        const neighRadius = Math.ceil(windowW / this.thumbWidth) / 2;
+        const neighRadius = (Math.ceil(windowW / this.thumbWidth) / 2) + 5;
 
         const totW = (this.allFrames.length + neighRadius) * this.thumbWidth;
         this.sliderEl.style.width = `${totW}px`;
