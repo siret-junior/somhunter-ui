@@ -4,6 +4,6 @@ cd ${ABSOLUTE_PATH}
 printf "\tInstalling 'somhunter-ui'...\n"
 
 npm install
-npm install -g ember-cli
+#npm install -g ember-cli
 
 printf "\tDone installing 'somhunter-ui'...\n"
