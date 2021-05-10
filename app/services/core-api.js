@@ -189,7 +189,6 @@ export default class CoreApiService extends Service {
         const url = this.settings.api.endpoints.userContext.get.url;
         this.get(url)
             .then((res2) => {
-                console.log('fetchUserContext:192')
                 this.store.push({
                     data: [
                         {
@@ -210,7 +209,6 @@ export default class CoreApiService extends Service {
                 cbSucc();
             })
             .catch(() => {
-                console.log('fetchUserContext:213')
                 this.store.push({
                     data: [
                         {

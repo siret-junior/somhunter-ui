@@ -173,7 +173,6 @@ export default class ActionManagerService extends Service {
         this.coreApi
             .post(reqUrl)
             .then((res) => {
-                console.log('A')
                 this.coreApi.fetchUserContext(
                     () => {
                         this.actionManager.triggerEvent(
@@ -194,14 +193,13 @@ export default class ActionManagerService extends Service {
                 );
             })
             .catch((e) => {
-                console.log('C')
+                console.log("C");
                 this.actionManager.triggerEvent(
                     EVENTS.DO_PUSH_NOTIF,
                     "Reset search failed!",
                     "error"
-                )
-            }
-            );
+                );
+            });
     }
 
     getTextAutocompleteSuggestions(
@@ -371,11 +369,29 @@ export default class ActionManagerService extends Service {
         const reqData = {
             srcSearchCtxId: srcSearchCtxId,
             screenshotData: screenData,
-            q0: query0,
-            q1: query1,
+            q0: query0.trim(),
+            q1: query1.trim(),
             filters,
             collages: collagesData,
         };
+
+        const likedFrames = this.dataLoader.getLikedFrames();
+        LOG.D("likedFrames", likedFrames);
+
+        // \todo Better hash?
+
+        const newHash = utils.hashQuery(reqData);
+        const prevHash = this.dataLoader.getLastQuery();
+
+        if (newHash.trim() == prevHash.trim() && likedFrames.length == 0) {
+            LOG.I("Query hasn't changed. Not rescoring.");
+            return;
+        }
+        if (utils.isQueryEmpty(reqData) && likedFrames.length == 0) {
+            LOG.I("Empty query. Not rescoring.");
+            return;
+        }
+        this.dataLoader.setLastQuery(newHash);
 
         const requestSettings = this.dataLoader.settings.api.endpoints
             .searchRescore;

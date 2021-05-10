@@ -75,6 +75,10 @@ export default class TextAutocompleteComponent extends Component {
 
         const currValue = getCurrSubString(this.inputValue, this.cursorIdx);
 
+        if (currValue == "") {
+            return;
+        }
+
         this.actionManager.getTextAutocompleteSuggestions(
             currValue,
             (suggs) => {

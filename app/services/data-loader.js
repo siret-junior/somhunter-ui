@@ -31,9 +31,79 @@ export default class DataLoaderService extends Service {
         return this.store.peekRecord("user-context", 0);
     }
 
+    getLastQuery() {
+        const hash = this.store.peekRecord("last-query", 0);
+        return hash !== null ? hash.lastQueryHash : "";
+    }
+
+    setLastQuery(hash) {
+        let lastQuery = this.store.peekRecord("last-query", 0);
+
+        if (!lastQuery) {
+            //LOG.D("hash query not there, pushing in: ", hash);
+            this.store.push({
+                data: [
+                    {
+                        id: 0,
+                        type: "last-query",
+                        attributes: {
+                            lastQueryHash: hash,
+                        },
+                        relationships: {},
+                    },
+                ],
+            });
+        } else {
+            //LOG.D("Ooverriding prev hash with: ", hash);
+            lastQuery = hash;
+        }
+    }
+
     getSearchContext() {
         return this.store.peekRecord("user-context", 0)["search"];
     }
+
+    getLikedFrames() {
+        return this.getSearchContext().likedFrames;
+    }
+    toggleLikedFrame(frameId) {
+        let liked = this.getSearchContext().likedFrames;
+
+        const idx = liked.findIndex((x) => x.id == frameId);
+
+        // Not found
+        if (idx < 0) {
+            liked.push({
+                id: frameId,
+            });
+        } else {
+            liked.splice(idx, 1);
+        }
+    }
+    pushLikedFrame(frameId) {
+        let liked = this.getSearchContext().likedFrames;
+
+        const idx = liked.findIndex((x) => x.id == frameId);
+
+        // Not found
+        if (idx < 0) {
+            liked.push({
+                id: frameId,
+            });
+        }
+    }
+
+    removeLikedFrame(frameId) {
+        let liked = this.getSearchContext().likedFrames;
+
+        const idx = liked.findIndex((x) => x.id == frameId);
+
+        // Found
+        if (idx >= 0) {
+            liked.splice(idx, 1);
+        }
+    }
+
     getMainFrames() {
         const data = this.store.peekRecord("main-display", 0);
         return data?.frames;
@@ -97,6 +167,12 @@ export default class DataLoaderService extends Service {
     }
 
     setLikedFlag(frameId, likedState) {
+        if (likedState) {
+            this.pushLikedFrame(frameId);
+        } else {
+            this.removeLikedFrame(frameId);
+        }
+
         if (!frameId || typeof likedState === "undefined" || likedState == null)
             throw Error(
                 `Invalid params: frameId: ${frameId}, likedState: ${likedState}`

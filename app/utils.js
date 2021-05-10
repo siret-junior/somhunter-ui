@@ -7,6 +7,27 @@ export function resetMainGridScroll() {
 
 export const delay = (ms) => new Promise((res) => setTimeout(res, ms));
 
+export function hashQuery(q) {
+    const queryClean = {
+        q0: q.q0.trim(),
+        q1: q.q1.trim(),
+        filters: q.filters,
+        collages: q.collages,
+    };
+    return JSON.stringify(queryClean);
+}
+export function isQueryEmpty(q) {
+    if (q.q0 != "" || q.q1 != "") {
+        return false;
+    }
+
+    if (q.collages.pictures.length > 0) {
+        return false;
+    }
+
+    return true;
+}
+
 /**
  *
  * @param {string} str Original string.
