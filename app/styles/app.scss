@@ -43,6 +43,7 @@ body {
     position: relative;
     height: 100vh;
     overflow-y: scroll;
+    align-content: flex-start;
     &.SOM_display {
         .frame {
             width: 12.5%;
@@ -243,6 +244,7 @@ body {
 .slider-row {
     display: table;
     font-size: 0;
+    width: 100%;
     .frame {
         display: inline-block;
     }

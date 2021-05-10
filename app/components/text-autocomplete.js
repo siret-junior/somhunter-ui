@@ -52,8 +52,7 @@ export default class TextAutocompleteComponent extends Component {
                 if (this.suggestions.length <= 0) return;
 
                 this.setChosenWord(this.suggestions[this.selIdx].wordString);
-                this.hideAutocompleteWindow();
-                e.stopPropagation();
+
                 break;
 
             case 27: // ESC
@@ -99,6 +98,8 @@ export default class TextAutocompleteComponent extends Component {
         );
         this.inputValue = newInputValue;
         this.cursorIdx = newCursorIndex;
+        this.hideAutocompleteWindow();
+        e.stopPropagation();
     }
 
     /* Member variables */

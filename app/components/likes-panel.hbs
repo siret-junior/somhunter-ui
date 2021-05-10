@@ -10,7 +10,9 @@
                 {{#if this.items}}
 
                     {{#each this.items as |item|}}
-                        <Frame @frame={{item}} />    
+                        {{#if item.src }}
+                            <Frame @frame={{item}} />    
+                        {{/if}}
                     {{/each}}                    
 
                 {{/if}}
