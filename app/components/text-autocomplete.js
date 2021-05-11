@@ -98,7 +98,7 @@ export default class TextAutocompleteComponent extends Component {
         );
         this.inputValue = newInputValue;
         this.cursorIdx = newCursorIndex;
-        this.hideAutocompleteWindow();  
+        this.hideAutocompleteWindow();
     }
 
     /* Member variables */

@@ -36,7 +36,7 @@
         
         function collageImageElement(uid, src) {
             return $(
-                `<div id="${uid}" class="collage-image ui-widget-content">
+                `<div id="${uid}" class="collage-image bitmap ui-widget-content">
                     <span class="delete" onclick="deleteElementByUid($(this).closest('div').attr('id'))">&times;</span>
                     <img src="${src}">
                 </div>`

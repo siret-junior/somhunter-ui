@@ -1,4 +1,5 @@
 import { EVENTS, ELEM_IDS } from "./constants";
+import LOG from "./logger";
 
 export function resetMainGridScroll() {
     const el = document.getElementById(ELEM_IDS.MAIN_GRID);
@@ -112,7 +113,7 @@ function get_raw_img(img) {
 
 function collectCollageImages(collage_canvas) {
     collage_canvas = $(collage_canvas);
-    const images = collage_canvas.find(".collage-image");
+    const images = collage_canvas.find(".bitmap");
     let images_information = [];
     for (var i = 0; i < images.length; i++) {
         const image = images.eq(i);
@@ -128,18 +129,6 @@ function collectCollageImages(collage_canvas) {
 }
 
 export function getCollageInputs() {
-    return {
-        pictures: [],
-        left: [],
-        top: [],
-        width: [],
-        height: [],
-        pixel_width: [],
-        pixel_height: [],
-        break: [0],
-    };
-    /*
-    // \todo Undummy
     const cq0 = document.getElementById("collageQuery0");
     const cq1 = document.getElementById("collageQuery1");
 
@@ -155,8 +144,8 @@ export function getCollageInputs() {
     let pixel_heights = [];
     let first = [first_collage.length];
 
-    let i, p;
-    for (i in first_collage) {
+    let p;
+    for (let i = 0; i < first_collage.length; ++i) {
         lefts.push(first_collage[i].left);
         tops.push(first_collage[i].top);
         heights.push(first_collage[i].height);
@@ -168,7 +157,7 @@ export function getCollageInputs() {
         pics.push(get_raw_img(img));
     }
 
-    for (i in second_collage) {
+    for (let i = 0; i < second_collage.length; ++i) {
         lefts.push(second_collage[i].left);
         tops.push(second_collage[i].top);
         heights.push(second_collage[i].height);
@@ -179,7 +168,6 @@ export function getCollageInputs() {
         pixel_widths.push(img.width);
         pics.push(get_raw_img(img));
     }
-
 
     let conc_pics = [];
     for (p in pics) {
@@ -197,6 +185,7 @@ export function getCollageInputs() {
         break: first,
     };
 
+    LOG.D("body", body);
+
     return body;
-    */
 }

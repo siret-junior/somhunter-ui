@@ -400,7 +400,10 @@ export default class ActionManagerService extends Service {
             const requestSettings = this.dataLoader.settings.api.endpoints
                 .searchRescore;
             // << Core API >>
-            const res = await this.coreApi.post(requestSettings.post.url, reqData);
+            const res = await this.coreApi.post(
+                requestSettings.post.url,
+                reqData
+            );
             // << Core API >>
 
             // If failed
@@ -409,7 +412,9 @@ export default class ActionManagerService extends Service {
             this.coreApi.fetchUserContext(() => {
                 LOG.D("Rescored & fetches user context...");
                 this.actionManager.triggerEvent(EVENTS.RELOAD_USER_CONTEXT);
-                this.actionManager.triggerEvent(EVENTS.UNBLOCK_WITH_NOTIFICATION);
+                this.actionManager.triggerEvent(
+                    EVENTS.UNBLOCK_WITH_NOTIFICATION
+                );
             });
         } catch (e) {
             // <!>

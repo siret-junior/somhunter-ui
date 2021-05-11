@@ -21,7 +21,7 @@ export default class QueryCanvasComponent extends Component {
         );
 
         this.index = this.args.index;
-        this.initActive = (this.index == 0 ? true : false);
+        this.initActive = this.index == 0 ? true : false;
     }
 
     didUpdateAttrs(elem, [updatedStructure]) {
