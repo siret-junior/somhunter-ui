@@ -335,10 +335,6 @@ export default class ActionManagerService extends Service {
     }
 
     async rescore() {
-        // \todo check query changed flag
-
-        // this.showNotification("Working...");
-
         const srcSearchCtxId = this.dataLoader.userContext.search.id;
 
         // Take a screenshot
@@ -393,19 +389,38 @@ export default class ActionManagerService extends Service {
         }
         this.dataLoader.setLastQuery(newHash);
 
-        const requestSettings = this.dataLoader.settings.api.endpoints
-            .searchRescore;
-        // << Core API >>
-        const res = await this.coreApi.post(requestSettings.post.url, reqData);
-        // << Core API >>
+        try {
+            this.actionManager.triggerEvent(
+                EVENTS.BLOCK_WITH_NOTIFICATION,
+                "Rescoring!",
+                "...",
+                12000
+            );
 
-        // If failed
-        if (!res) return;
+            const requestSettings = this.dataLoader.settings.api.endpoints
+                .searchRescore;
+            // << Core API >>
+            const res = await this.coreApi.post(requestSettings.post.url, reqData);
+            // << Core API >>
 
-        this.coreApi.fetchUserContext(() => {
-            LOG.D("Rescored & fetches user context...");
-            this.actionManager.triggerEvent(EVENTS.RELOAD_USER_CONTEXT);
-        });
+            // If failed
+            if (!res) return;
+
+            this.coreApi.fetchUserContext(() => {
+                LOG.D("Rescored & fetches user context...");
+                this.actionManager.triggerEvent(EVENTS.RELOAD_USER_CONTEXT);
+                this.actionManager.triggerEvent(EVENTS.UNBLOCK_WITH_NOTIFICATION);
+            });
+        } catch (e) {
+            // <!>
+            this.actionManager.triggerEvent(
+                EVENTS.DO_PUSH_NOTIF,
+                `Rescore failed!.`,
+                "error"
+            );
+            this.actionManager.triggerEvent(EVENTS.UNBLOCK_WITH_NOTIFICATION);
+            throw e;
+        }
     }
 
     globalKeyHandler(eventName) {
