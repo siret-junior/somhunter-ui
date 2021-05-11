@@ -19,13 +19,21 @@ export default class Prototype01Component extends Component {
             EVENTS.GLOBAL_ESC_KEY_DOWN,
             this.hideDetailWindow
         );
+
+        // Attributes passed in as `args` ar accessible as so:
+        // e.g. for <Prototype01Component @someArg={{someVar}}>
+        this.args.someArg = 123;
     }
 
     didUpdateAttrs(elem, [updatedStructure]) {
         // On attrupate
     }
     @action
+    // For some reason the parameters go in inverted (event as last)
     toast(type, e) {
+        // Get the target DOM element that this event happened on
+        const element = e.currentTarget;
+
         // <!>
         this.actionManager.triggerEvent(
             EVENTS.DO_PUSH_NOTIF,

@@ -2,17 +2,18 @@
 
 // Theme #2
 $theme-colors: (
-  "primary": #043540,
-  "secondary": #0d0d0d,
-  "third": #1f6373,
-  "fourth": #6d96a6,
-  "fifth": #bacbd9,
-  "white": #fff,
-  "black": #222,
-  "success": #4bb543,
-  "danger": #ff0000,
-  "warning": #fa7500,
-  "green": #00ff00,
+    "primary": #043540,
+    "secondary": #0d0d0d,
+    "third": #1f6373,
+    "fourth": #6d96a6,
+    "fifth": #bacbd9,
+    "white": #fff,
+    "black": #222,
+    "success": #4bb543,
+    "danger": #ff0000,
+    "warning": #fa7500,
+    "green": #00ff00,
+    "grey": #bacbd9,
 );
 
 body {
@@ -36,8 +37,6 @@ body {
 }
 
 .main-panel {
-    
-
 }
 .main-grid {
     position: relative;
@@ -85,7 +84,7 @@ body {
             // left: 0;
             // top: 0;
         }
-      }
+    }
 
     .btn {
         font-size: 1rem;
@@ -101,22 +100,20 @@ body {
         .frame-overlay {
             border-color: map-get($theme-colors, "danger");
         }
-        
     }
 
     .frame-overlay {
         border: 4px solid transparent;
-        
+
         position: absolute;
-        left:0;
+        left: 0;
         top: 0;
         width: 100%;
         height: 100%;
 
-        &>* {
+        & > * {
             opacity: 0;
         }
-
 
         &:hover {
             border-color: olive;
@@ -155,13 +152,13 @@ body {
     padding: 0;
     background: map-get($theme-colors, "fourth");
     list-style: none;
-    position:absolute;
-    left:0;
+    position: absolute;
+    left: 0;
     top: 100%;
     width: 100%;
     z-index: 2;
     .text-suggestions-item {
-        padding: 0.3rem 1rem 0.3rem 1rem; 
+        padding: 0.3rem 1rem 0.3rem 1rem;
 
         &.selected {
             background: rgba(map-get($theme-colors, "secondary"), 0.6);
@@ -172,8 +169,6 @@ body {
         }
     }
 }
-
-
 
 .modal-dialog {
     max-width: 75vw;
@@ -189,7 +184,8 @@ body {
     transform: translate(0, -50px);
 }
 
-.modal-lg, .modal-xl {
+.modal-lg,
+.modal-xl {
     max-width: 75%;
 }
 
@@ -203,9 +199,9 @@ body {
 .replay-window {
     position: absolute;
     width: 100vw;
-    left:0;
+    left: 0;
     top: 0;
-    background:  map-get($theme-colors, "primary");
+    background: map-get($theme-colors, "primary");
     overflow-x: auto;
     overflow-y: hidden;
     display: block;
@@ -225,13 +221,12 @@ body {
             height: 112px;
             display: inline-block;
             max-width: none;
-           
         }
     }
 }
 
 .custom-modal-window {
-    position:absolute;
+    position: absolute;
     width: max-content;
     height: max-content;
     left: 50%;
@@ -262,18 +257,16 @@ body {
 
 #detailWindow {
     padding: 0;
-    
+
     overflow-y: scroll;
-    
+
     #detailWindowSlider {
         background-color: map-get($theme-colors, "fifth");
         display: relative;
-        
     }
 }
 
 .section.notifications {
-
 }
 
 .toast {
@@ -299,7 +292,6 @@ body {
             margin: 0;
             text-align: center;
         }
-
     }
     .toast-body {
         background: rgba(#fff, 0.5);
@@ -314,25 +306,22 @@ body {
     left: 0;
     top: 0;
     padding: 2rem;
-    & > *{
+    & > * {
         pointer-events: initial;
         z-index: 100;
     }
 }
 .global-notifications-cont {
-
-    position: relative; 
+    position: relative;
     float: right;
     & > .toast {
         display: block;
     }
 }
 
-
-
 .blocking-notification-cont {
     width: 100vw;
-    height: 100vh; 
+    height: 100vh;
     position: absolute;
     z-index: 100000;
     left: 0;
@@ -353,7 +342,6 @@ body {
             color: rgba(map-get($map: $theme-colors, $key: "white"), 1);
             display: block;
             font-size: 3rem;
-            
         }
         .toast-body {
             background: rgba(map-get($map: $theme-colors, $key: "primary"), 0.7);
@@ -393,7 +381,6 @@ body {
     }
 }
 
-
 .history-list {
     list-style: none;
     display: block;
@@ -401,120 +388,224 @@ body {
     padding: 0;
     max-height: 10rem;
     overflow: auto;
-  
-    .history-item {
-      width: calc(20% - 0.2rem);
-      min-width: 50px;
-      min-height: 30px;
-      display: inline-block;
-      vertical-align: top;
-      padding: 0rem 0rem;
-      position: relative;
-      background: theme-color-level($color-name: "black", $level: 0);
-      margin-right: 0.2rem;
-      margin-bottom: 0.4rem;
-      border: 3px solid transparent;
-      transition: 0.1s ease-in-out;
-      cursor: pointer;
-  
-      &.active {
-        border: 3px solid theme-color-level($color-name: "danger", $level: 0);
-        img {
-          opacity: 1 !important;
-        }
-      }
-      img {
-        display: block;
-        width: 100%;
-        max-height: 60px;
-        opacity: 0.3;
-        transition: 0.2s ease-in-out;
-        &:hover {
-          opacity: 1;
-        }
-      }
-      .title {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        font-size: 2rem;
-        color: theme-color-level($color-name: "green", $level: 0);
-        pointer-events: none;
-        display: none;
-      }
-      .time {
-        display: block;
-        color: theme-color-level($color-name: "white", $level: 0);
-        font-size: 0.8rem;
-        width: 100%;
-        text-align: center;
-      }
-    }
-  }
 
-  .panel-title {
-    
-    font-size: 1.4rem;
+    .history-item {
+        width: calc(20% - 0.2rem);
+        min-width: 50px;
+        min-height: 30px;
+        display: inline-block;
+        vertical-align: top;
+        padding: 0rem 0rem;
+        position: relative;
+        background: theme-color-level($color-name: "black", $level: 0);
+        margin-right: 0.2rem;
+        margin-bottom: 0.4rem;
+        border: 3px solid transparent;
+        transition: 0.1s ease-in-out;
+        cursor: pointer;
+
+        &.active {
+            border: 3px solid theme-color-level($color-name: "danger", $level: 0);
+            img {
+                opacity: 1 !important;
+            }
+        }
+        img {
+            display: block;
+            width: 100%;
+            max-height: 60px;
+            opacity: 0.3;
+            transition: 0.2s ease-in-out;
+            &:hover {
+                opacity: 1;
+            }
+        }
+        .title {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2rem;
+            color: theme-color-level($color-name: "green", $level: 0);
+            pointer-events: none;
+            display: none;
+        }
+        .time {
+            display: block;
+            color: theme-color-level($color-name: "white", $level: 0);
+            font-size: 0.8rem;
+            width: 100%;
+            text-align: center;
+        }
+    }
+}
+
+.panel-title {
+    font-size: 0.8rem;
     text-transform: uppercase;
     text-align: center;
-    padding: 0.4em 0.8em;
-
-    
+    padding: 0.5em 1em 0em 1em;
     &.visible {
-      display: block;
+        display: block;
     }
 
     &:before,
     &:after {
-      border: 1px solid rgba(map-get($theme-colors, "white"), 0.7);
-      content: "";
-      position: relative;
-      display: block;
-      width: 80%;
-      margin: 0 auto;
+        border: 1px solid rgba(map-get($theme-colors, "white"), 0.7);
+        content: "";
+        position: relative;
+        display: block;
+        width: 80%;
+        margin: 0 auto;
     }
 
     &:before {
-      width: 80%;
-      border: 2px solid rgba(map-get($theme-colors, "fifth"), 0.7);
-      top: -0.4rem;
+        width: 80%;
+        border: 2px solid rgba(map-get($theme-colors, "fifth"), 0.7);
+        top: -0.2rem;
     }
 
     &:after {
-      width: 45%;
-      border: 1px solid rgba(map-get($theme-colors, "white"), 0.7);
-      bottom: -0.4rem;
+        width: 45%;
+        border: 1px solid rgba(map-get($theme-colors, "white"), 0.7);
+        bottom: -0.2rem;
     }
     &.small {
         font-size: 1.2rem;
         text-align: left;
-        
+
         &:before,
         &:after {
-          display: none;
-        }   
+            display: none;
+        }
     }
-  }
+}
 
- .bookmarks-list, .likes-list {
-     margin: 0;
-     padding: 0;
-     text-align:left;
-     display: block;
-     .frame {
-         width:  80px;
-         height: 45px;
-         display: inline-block;
-         max-width: 100%;
-         &.liked {
-             &:before {
-                 display: none;
-             }
-         }
-         .btn {
-             padding: 0.1rem 0.2rem;
-             font-size: 0.5em;
-         }
-     }
- }
+.bookmarks-list,
+.likes-list {
+    margin: 0;
+    padding: 0;
+    text-align: left;
+    display: block;
+    .frame {
+        width: 80px;
+        height: 45px;
+        display: inline-block;
+        max-width: 100%;
+        &.liked {
+            &:before {
+                display: none;
+            }
+        }
+        .btn {
+            padding: 0.1rem 0.2rem;
+            font-size: 0.5em;
+        }
+    }
+}
+
+.query-canvas-connector-cont {
+    font-size: 0.6rem;
+    padding: 0 0 0 0;
+    position: relative;
+    height: 0;
+    display: block;
+    margin: 0 0 0 0;
+    .query-canvas-connector {
+        position: absolute;
+        bottom: -13px;
+        right: 0;
+    }
+}
+
+/** COLLAGE UI **/
+.delete {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    z-index: 1;
+    background-color: rgba(map-get($map: $theme-colors, $key: "danger"), 1);
+    padding: 5px 2px 2px;
+    color: #000;
+    font-weight: bold;
+    cursor: pointer;
+    text-align: center;
+    line-height: 10px;
+    border-radius: 60%;
+    opacity: 0.8;
+    color: rgba(map-get($map: $theme-colors, $key: "white"), 1);
+    font-size: 18px;
+    width: 16px;
+    height: 16px;
+    line-height: 3px;
+    transition: 0.2s ease-in-out;
+    &:hover,
+    &:active {
+        opacity: 1;
+    }
+}
+
+.ui-icon {
+    width: 12px;
+    height: 12px;
+}
+
+.collage-canvas {
+    background-color: rgba(map-get($map: $theme-colors, $key: "grey"), 1);
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    position: absolute;
+    border: 4px solid rgba(map-get($map: $theme-colors, $key: "third"), 1);
+    &.paste-active {
+        border: 4px solid rgba(map-get($map: $theme-colors, $key: "warning"), 1);
+    }
+}
+
+.collage-image {
+    border-width: 0;
+    position: absolute !important;
+    width: 20%;
+    border-right-width: 2px;
+    border-bottom-width: 2px;
+    border-color: rgba(map-get($map: $theme-colors, $key: "danger"), 1);
+}
+
+.collage-image img {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.img-container {
+    float: left;
+    width: 24%;
+    padding: 5px;
+    position: relative;
+}
+
+.collage-search .inter-query-text {
+    text-align: center;
+    margin: auto;
+    position: absolute;
+    top: 40%;
+    left: 100%;
+    width: 100px;
+}
+
+.canvas-wrapper {
+    position: relative;
+    padding-bottom: 56.25%;
+    margin-bottom: 15px;
+}
+
+.collage-search {
+    margin: auto;
+    width: 100%;
+}
+
+#collageTemporalQueries {
+    max-width: 300px;
+    position: relative;
+}
