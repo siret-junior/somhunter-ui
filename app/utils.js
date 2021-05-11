@@ -170,10 +170,9 @@ export function getCollageInputs() {
     }
 
     let conc_pics = [];
-    for (p in pics) {
-        conc_pics = conc_pics.concat(pics[p]);
+    for (let i = 0; i < pics.length; ++i) {
+        conc_pics = conc_pics.concat(pics[i]);
     }
-
     let body = {
         pictures: conc_pics,
         left: lefts,
@@ -184,8 +183,5 @@ export function getCollageInputs() {
         pixel_height: pixel_heights,
         break: first,
     };
-
-    LOG.D("body", body);
-
     return body;
 }

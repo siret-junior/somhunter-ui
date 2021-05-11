@@ -372,10 +372,8 @@ export default class ActionManagerService extends Service {
         };
 
         const likedFrames = this.dataLoader.getLikedFrames();
-        LOG.D("likedFrames", likedFrames);
-
+    
         // \todo Better hash?
-
         const newHash = utils.hashQuery(reqData);
         const prevHash = this.dataLoader.getLastQuery();
 
@@ -410,7 +408,7 @@ export default class ActionManagerService extends Service {
             if (!res) return;
 
             this.coreApi.fetchUserContext(() => {
-                LOG.D("Rescored & fetches user context...");
+                LOG.D("Rescored & fetched user context...");
                 this.actionManager.triggerEvent(EVENTS.RELOAD_USER_CONTEXT);
                 this.actionManager.triggerEvent(
                     EVENTS.UNBLOCK_WITH_NOTIFICATION
@@ -430,7 +428,6 @@ export default class ActionManagerService extends Service {
 
     globalKeyHandler(eventName) {
         LOG.D(`Global key down event: the key '${eventName}' hit!`);
-
         this.triggerEvent(eventName);
     }
 

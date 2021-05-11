@@ -15,10 +15,10 @@ export default class QueryCanvasComponent extends Component {
         super(...arguments);
 
         // Subscribe to the specific EVENTS
-        this.actionManager.registerEventHook(
-            EVENTS.GLOBAL_ESC_KEY_DOWN,
-            this.hideDetailWindow
-        );
+        // this.actionManager.registerEventHook(
+        //     EVENTS.GLOBAL_ESC_KEY_DOWN,
+        //     this.hideDetailWindow
+        // );
 
         this.index = this.args.index;
         this.initActive = this.index == 0 ? true : false;
