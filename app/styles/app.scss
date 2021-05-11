@@ -156,7 +156,7 @@ body {
     left: 0;
     top: 100%;
     width: 100%;
-    z-index: 2;
+    z-index: 1001;
     .text-suggestions-item {
         padding: 0.3rem 1rem 0.3rem 1rem;
 
@@ -508,7 +508,7 @@ body {
     font-size: 0.6rem;
     padding: 0 0 0 0;
     position: relative;
-    height: 0;
+    // height: 0;
     display: block;
     margin: 0 0 0 0;
     .query-canvas-connector {
@@ -523,7 +523,7 @@ body {
     position: absolute;
     top: -8px;
     right: -8px;
-    z-index: 1;
+    z-index: 2;
     background-color: rgba(map-get($map: $theme-colors, $key: "danger"), 1);
     padding: 5px 2px 2px;
     color: #000;
@@ -561,6 +561,23 @@ body {
     &.paste-active {
         border: 4px solid rgba(map-get($map: $theme-colors, $key: "warning"), 1);
     }
+    .autocomplete {
+        min-width: 100px;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        min-width: 100%;
+        width: auto;
+        input {
+            font-size: 10px;
+            padding: 2px 2px;
+            height: auto;
+            min-width: 20px;
+            width: 100%;
+            text-align: center;
+        }
+    }
 }
 
 .collage-image {
@@ -570,6 +587,13 @@ body {
     border-right-width: 2px;
     border-bottom-width: 2px;
     border-color: rgba(map-get($map: $theme-colors, $key: "danger"), 1);
+}
+.collage-text {
+    padding: 10px 10px;
+    border: 2px dashed rgba(map-get($map: $theme-colors, $key: "danger"), 1);
+    background: transparent;
+    min-width: 30px;
+    min-height: 30px;
 }
 
 .collage-image img {
@@ -597,7 +621,7 @@ body {
 .canvas-wrapper {
     position: relative;
     padding-bottom: 56.25%;
-    margin-bottom: 15px;
+    margin-bottom: 0px;
 }
 
 .collage-search {
@@ -608,4 +632,8 @@ body {
 #collageTemporalQueries {
     max-width: 300px;
     position: relative;
+}
+.add-collage-text-query {
+    padding: 3px 5px 5px 5px;
+    line-height: 12px;
 }

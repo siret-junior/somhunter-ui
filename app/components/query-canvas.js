@@ -21,6 +21,7 @@ export default class QueryCanvasComponent extends Component {
         );
 
         this.index = this.args.index;
+        this.initActive = (this.index == 0 ? true : false);
     }
 
     didUpdateAttrs(elem, [updatedStructure]) {
@@ -39,6 +40,7 @@ export default class QueryCanvasComponent extends Component {
     // If this canavs is visible to the user
     visible = true;
     index = null;
+    initActive = null;
 
     /* Member variables */
     @service actionManager;
