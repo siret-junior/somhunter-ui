@@ -199,6 +199,7 @@ export default class CoreApiService extends Service {
                                 history: res2.history,
                                 bookmarkedFrames: res2.bookmarkedFrames,
                                 url: `${ENV.coreUrl}${url}`,
+                                targets: res2.targets,
                             },
                             relationships: {},
                         },

@@ -35,6 +35,7 @@ export const EVENTS = {
     SHOW_SETTINGS_WINDOW: "showSettignsWindow",
     SHOW_DEBUG_WINDOW: "showDebugWindow",
     SHOW_HELP_WINDOW: "showHelpWindow",
+    SHOW_COLLECTOR_WINDOW: "showCollectorWindow",
 
     DO_BOOKMARK_FRAME: "DO_BOOKMARK_FRAME",
     BEFORE_BOOKMARK_FRAME: "BEFORE_BOOKMARK_FRAME",

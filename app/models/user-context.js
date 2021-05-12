@@ -6,4 +6,5 @@ export default class UserContextModel extends Model {
     @attr bookmarkedFrames;
     @attr("boolean", { defaultValue: false }) error;
     @attr("string") url;
+    @attr targets;
 }

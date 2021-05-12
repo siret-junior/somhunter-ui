@@ -25,6 +25,11 @@ export default class BottomButtonsPanelComponent extends Component {
         this.actionManager.triggerEvent(EVENTS.SHOW_DEBUG_WINDOW);
     }
 
+    @action
+    onCollectorBtnClick(e) {
+        this.actionManager.triggerEvent(EVENTS.SHOW_COLLECTOR_WINDOW);
+    }
+
     /* Member variables */
     @service actionManager;
 

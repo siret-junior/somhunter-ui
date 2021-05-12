@@ -1,0 +1,25 @@
+
+
+<div 
+    {{did-update this.didUpdateAttrs @model}}
+    class="custom-modal collector-window-modal modal {{if this.windowVisible " display-block"}}">
+    <div class="collector-window modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="target-grid main-grid row" >
+
+                    {{#if this.targets}}
+                        {{#each this.targets as |frame|}}
+
+                            <Frame @frame={{frame}} />    
+                            
+                        {{/each}}
+                    {{/if}}
+
+                </div>            
+
+            </div>
+
+        </div>
+    </div>
+</div>

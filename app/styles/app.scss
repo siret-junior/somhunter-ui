@@ -587,7 +587,7 @@ body {
     border-right-width: 2px;
     border-bottom-width: 2px;
     border-color: rgba(map-get($map: $theme-colors, $key: "danger"), 1);
-    
+
     img {
         width: 100%;
         height: 100%;
@@ -639,4 +639,32 @@ body {
 .add-collage-text-query {
     padding: 3px 5px 5px 5px;
     line-height: 12px;
+}
+
+.target-grid {
+    min-height: 50vh;
+    height: 100vh;
+}
+
+.collector-window-modal {
+    background: transparent;
+    pointer-events: none;
+}
+.collector-window {
+    left: 25vw;
+    top: 0;
+    right: 0;
+    width: calc(75vw);
+    margin: 0;
+    padding: 0;
+
+    .modal-content {
+        background: black;
+    }
+}
+
+.target-grid {
+    .frame {
+        
+    }
 }
