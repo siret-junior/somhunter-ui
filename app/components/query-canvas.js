@@ -9,6 +9,16 @@ import { EVENTS, ELEM_IDS } from "../constants";
 import LOG from "../logger";
 import utils from "../utils";
 
+function draggableAndResizable(elements, containment) {
+    elements.draggable({
+        containment: containment,
+    });
+    elements.resizable({
+        containment: containment,
+        aspectRatio: false,
+    });
+}
+
 export default class QueryCanvasComponent extends Component {
     /* Member methods */
     constructor() {
@@ -19,8 +29,13 @@ export default class QueryCanvasComponent extends Component {
         this.canvasElemId = ELEM_IDS.CANVAS_QUERY_PREFIX + this.index;
     }
 
-    didUpdateAttrs(elem, [updatedStructure]) {
-        // On attrupate
+    didUpdateAttrs(elem, [updatedStructure]) {}
+
+    didInsert(elem) {
+        console.log(".....");
+        const elements = $(elem);
+        const par = elements.parent();
+        draggableAndResizable(elements, par);
     }
 
     @action
@@ -31,6 +46,12 @@ export default class QueryCanvasComponent extends Component {
         canvases.forEach((x) => x.classList.remove("paste-active"));
         el.classList.add("paste-active");
     }
+
+    // @action
+    // onRemoveItem(ID, e) {
+    //     this.args.texts = this.args.texts.filter(x => x.id != ID);
+    //     console.log(this.args.texts);
+    // }
 
     // If this canavs is visible to the user
     visible = true;

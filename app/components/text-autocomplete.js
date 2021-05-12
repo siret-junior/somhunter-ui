@@ -64,6 +64,7 @@ export default class TextAutocompleteComponent extends Component {
     }
     @action
     didUpdateAttrs(elem, [x]) {
+        if (this.args.value == "") return;
         this.inputValue = x.userContext.search.textQueries[this.args.id];
     }
 
@@ -105,9 +106,9 @@ export default class TextAutocompleteComponent extends Component {
     @service actionManager;
 
     @tracked suggestions = [];
-    @tracked inputValue = this.args.model.userContext.search.textQueries[
-        this.args.id
-    ];
+    @tracked inputValue = this.args.value
+        ? this.args.value
+        : this.args.model.userContext.search.textQueries[this.args.id];
     @tracked cursorIdx = 0;
     @tracked selIdx = 0;
     lastCurrPos = 0;

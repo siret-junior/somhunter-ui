@@ -1,14 +1,19 @@
 
 <section class={{this.ELEM_CLASSES.CANVAS_QUERY_PANEL}}>
-    <div clasas="collage-search small-12 cell {{if this.visible "none" }} ">
+    <div 
+        clasas="collage-search small-12 cell {{if this.visible "none" }} "
+        {{did-insert this.didInsertWrapper}}
+    >
         <div id="collageTemporalQueries">
             
-            <QueryCanvas @index=0 />
+            <QueryCanvas @onRemoveItem={{this.onRemoveItem}} @index=0 @texts={{this.texts.[0]}} @model={{@model}} />
             <div class="query-canvas-connector-cont">
-                <a class="btn btn-success add-collage-text-query">+</a>
+                <a
+                    {{on "click" this.onClickAddTextBtn}}
+                     class="btn btn-success add-collage-text-query">+</a>
                 <p class="query-canvas-connector">...and then...</p>
             </div>
-            <QueryCanvas @index=1 />
+            <QueryCanvas @onRemoveItem={{this.onRemoveItem}} @index=1 @texts={{this.texts.[1]}} @model={{@model}} />
         </div>
     </div>
 
@@ -48,24 +53,6 @@
             );
         }
 
-        function createTextQueryElement(uid) {
-            
-            return $(
-                `<div id="${uid}" class="
-                    canvas-query
-                    text
-                    ui-widget-content"
-                >
-                    <span class="delete" onclick="deleteElementByUid($(this).closest('div').attr('id'))">&times;</span>
-                    <div class="text autocomplete md-form">
-                        <input 
-                            class="canvas-text-input form-control mdb-autocomplete" 
-                            type="search" 
-                        />
-                    </div>
-                </div>`
-            );
-        }
 
         $(document).ready(function() {
             collage_temporal_queries = $("#collageTemporalQueries");
@@ -98,21 +85,10 @@
                 }
             });
 
-            $(".add-collage-text-query").on('click', function (event) {
-                const active_canvas = $(".paste-active");
 
-                if (!active_canvas) return;
-
-                const collage_image = createTextQueryElement("image_" + available_id);
-                draggableAndResizable(collage_image, active_canvas);
-                active_canvas.append(collage_image);
-                available_id++;
-
-            });
 
             
         });
     
     </script>
-
 </section>

@@ -3,5 +3,35 @@
     <div 
         id={{this.canvasElemId}} 
         class="collage-canvas" 
-        {{on "click" (fn this.onClickQueryCanvas @index)}}></div>
+        {{did-update this.didUpdateAttrs @texts}}
+        
+        data-id={{@index}}
+        {{on "click" (fn this.onClickQueryCanvas @index)}}>
+        
+        
+        {{#if @texts}}
+            {{#each @texts as |item|}}
+
+                <div id="{{item.id}}" class="
+                    canvas-query
+                    text
+                    ui-widget-content"
+                    {{did-insert this.didInsert}}
+
+                    
+                >
+                    <span class="delete" 
+                        {{on "click" (fn @onRemoveItem item.id @index)}}
+                        
+                    >
+                    &times;                       
+                    </span>
+                    <TextAutocomplete @model={{@model}} @id={{item.id}} @value={{item.text}}/>
+                </div>
+            
+        
+            {{/each}}
+        {{/if}}
+
+    </div>
 </div>
