@@ -1,6 +1,6 @@
 
-<section class="query-canvas-panel">
-    <div className="collage-search small-12 cell {{if this.visible "none" }} ">
+<section class={{this.ELEM_CLASSES.CANVAS_QUERY_PANEL}}>
+    <div clasas="collage-search small-12 cell {{if this.visible "none" }} ">
         <div id="collageTemporalQueries">
             
             <QueryCanvas @index=0 />
@@ -35,8 +35,13 @@
         }
         
         function collageImageElement(uid, src) {
+            
             return $(
-                `<div id="${uid}" class="collage-image bitmap ui-widget-content">
+                `<div id="${uid}" class="
+                    canvas-query
+                    bitmap
+                    ui-widget-content"
+                >
                     <span class="delete" onclick="deleteElementByUid($(this).closest('div').attr('id'))">&times;</span>
                     <img src="${src}">
                 </div>`
@@ -46,7 +51,11 @@
         function createTextQueryElement(uid) {
             
             return $(
-                `<div id="${uid}" class="collage-text collage-image ui-widget-content">
+                `<div id="${uid}" class="
+                    canvas-query
+                    text
+                    ui-widget-content"
+                >
                     <span class="delete" onclick="deleteElementByUid($(this).closest('div').attr('id'))">&times;</span>
                     <div class="text autocomplete md-form">
                         <input 

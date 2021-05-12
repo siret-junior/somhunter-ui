@@ -1,4 +1,4 @@
-import { EVENTS, ELEM_IDS } from "./constants";
+import { EVENTS, ELEM_IDS, ELEM_CLASSES } from "./constants";
 import LOG from "./logger";
 
 export function resetMainGridScroll() {
@@ -13,7 +13,7 @@ export function hashQuery(q) {
         q0: q.q0.trim(),
         q1: q.q1.trim(),
         filters: q.filters,
-        collages: q.collages,
+        canvas_query: q.canvas_query,
     };
     return JSON.stringify(queryClean);
 }
@@ -22,7 +22,7 @@ export function isQueryEmpty(q) {
         return false;
     }
 
-    if (q.collages.pictures.length > 0) {
+    if (q.canvas_query.length > 0) {
         return false;
     }
 
@@ -111,77 +111,75 @@ function get_raw_img(img) {
     return Array.from(myData.data);
 }
 
-function collectCollageImages(collage_canvas) {
-    collage_canvas = $(collage_canvas);
-    const images = collage_canvas.find(".bitmap");
-    let images_information = [];
-    for (var i = 0; i < images.length; i++) {
-        const image = images.eq(i);
-        images_information.push({
-            src: image.children("img").attr("src"),
-            top: image.position().top / collage_canvas.height(),
-            left: image.position().left / collage_canvas.width(),
-            width: image.width() / collage_canvas.width(),
-            height: image.height() / collage_canvas.height(),
-        });
+function collectCanvasQueries(queryCanvasEl) {
+    const maxImageWidth = 224;
+    const subqueriesElems = queryCanvasEl.querySelectorAll(
+        `.${ELEM_CLASSES.CANVAS_QUERY_CONT}`
+    );
+
+    let subqueries = [];
+    for (var i = 0; i < subqueriesElems.length; i++) {
+        const subqueryEl = subqueriesElems[i];
+
+        let base = {
+            rect: [
+                subqueryEl.offsetLeft / queryCanvasEl.clientWidth,
+                subqueryEl.offsetTop / queryCanvasEl.clientHeight,
+                (subqueryEl.offsetLeft + subqueryEl.clientWidth) /
+                    queryCanvasEl.clientWidth,
+                (subqueryEl.offsetTop + subqueryEl.clientHeight) /
+                    queryCanvasEl.clientHeight,
+            ],
+        };
+
+        // If is bitmap subquery
+        if (subqueryEl.classList.contains("bitmap")) {
+            LOG.D("Processing BITMAP subquery...");
+
+            var img = new Image();
+            img.src = subqueryEl.querySelector("img").src;
+
+            // Scale it down if needed
+            if (img.width > maxImageWidth || img.height > maxImageWidth) {
+                const scale = maxImageWidth / Math.max(img.width, img.height);
+                img.width = img.width * scale;
+                img.height = img.height * scale;
+                LOG.D("Resizing the image to " + maxImageWidth);
+            }
+
+            subqueries.push({
+                ...base,
+                type: ELEM_CLASSES.CANVAS_QUERY_CONT_BITMAP,
+                num_channels: 4,
+                width_pixels: img.width,
+                height_pixels: img.height,
+                bitmap_data: get_raw_img(img),
+            });
+        } else {
+            LOG.D("Processing TEXT subquery...");
+
+            subqueries.push({
+                ...base,
+                type: ELEM_CLASSES.CANVAS_QUERY_CONT_TEXT,
+                text_query: subqueryEl.querySelector("input").value,
+            });
+        }
     }
-    return images_information;
+    return subqueries;
 }
 
-export function getCollageInputs() {
-    const cq0 = document.getElementById("collageQuery0");
-    const cq1 = document.getElementById("collageQuery1");
+export function getCanvasQueryInput() {
+    // For schema details, see `Request__Rescore__Post` in the OpenAPI specification
 
-    let first_collage = collectCollageImages(cq0);
-    let second_collage = collectCollageImages(cq1);
+    const cq0El = document.getElementById(ELEM_IDS.CANVAS_QUERY_PREFIX + "0");
+    const cq1El = document.getElementById(ELEM_IDS.CANVAS_QUERY_PREFIX + "1");
+    const cq0 = collectCanvasQueries(cq0El);
+    const cq1 = collectCanvasQueries(cq1El);
 
-    let lefts = [];
-    let tops = [];
-    let heights = [];
-    let widths = [];
-    let pics = [];
-    let pixel_widths = [];
-    let pixel_heights = [];
-    let first = [first_collage.length];
+    let res = [];
+    if (cq0.length != 0) res.push(cq0);
+    if (cq1.length != 0) res.push(cq1);
 
-    let p;
-    for (let i = 0; i < first_collage.length; ++i) {
-        lefts.push(first_collage[i].left);
-        tops.push(first_collage[i].top);
-        heights.push(first_collage[i].height);
-        widths.push(first_collage[i].width);
-        var img = new Image();
-        img.src = first_collage[i].src;
-        pixel_heights.push(img.height);
-        pixel_widths.push(img.width);
-        pics.push(get_raw_img(img));
-    }
-
-    for (let i = 0; i < second_collage.length; ++i) {
-        lefts.push(second_collage[i].left);
-        tops.push(second_collage[i].top);
-        heights.push(second_collage[i].height);
-        widths.push(second_collage[i].width);
-        var img = new Image();
-        img.src = second_collage[i].src;
-        pixel_heights.push(img.height);
-        pixel_widths.push(img.width);
-        pics.push(get_raw_img(img));
-    }
-
-    let conc_pics = [];
-    for (let i = 0; i < pics.length; ++i) {
-        conc_pics = conc_pics.concat(pics[i]);
-    }
-    let body = {
-        pictures: conc_pics,
-        left: lefts,
-        top: tops,
-        width: widths,
-        height: heights,
-        pixel_width: pixel_widths,
-        pixel_height: pixel_heights,
-        break: first,
-    };
-    return body;
+    LOG.D("canvasQuery: ", res);
+    return res;
 }

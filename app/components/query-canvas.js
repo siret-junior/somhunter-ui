@@ -14,14 +14,9 @@ export default class QueryCanvasComponent extends Component {
     constructor() {
         super(...arguments);
 
-        // Subscribe to the specific EVENTS
-        // this.actionManager.registerEventHook(
-        //     EVENTS.GLOBAL_ESC_KEY_DOWN,
-        //     this.hideDetailWindow
-        // );
-
         this.index = this.args.index;
         this.initActive = this.index == 0 ? true : false;
+        this.canvasElemId = ELEM_IDS.CANVAS_QUERY_PREFIX + this.index;
     }
 
     didUpdateAttrs(elem, [updatedStructure]) {
@@ -41,6 +36,7 @@ export default class QueryCanvasComponent extends Component {
     visible = true;
     index = null;
     initActive = null;
+    canvasElemId = null;
 
     /* Member variables */
     @service actionManager;

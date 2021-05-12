@@ -54,4 +54,14 @@ export const ELEM_IDS = {
     DETAIL_WINDOW_SLIDER: "detailWindowSlider",
     REPLAY_WINDOW: "replayWindow",
     REPLAY_WINDOW_SLIDER: "replayWindowSlider",
+    CANVAS_QUERY_PREFIX: "canvasQuery_",
 };
+
+export const ELEM_CLASSES = {
+    CANVS_QUERY_PANEL: "query-canvas-panel",
+    CANVAS_QUERY_CONT: "canvas-query",
+    CANVAS_QUERY_CONT_TEXT: "text",
+    CANVAS_QUERY_CONT_BITMAP: "bitmap",
+};
+
+export const GUI_STRINGS = {};

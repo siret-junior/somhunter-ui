@@ -348,18 +348,10 @@ export default class ActionManagerService extends Service {
         //     );
         // }
 
-        let query0 = "";
-        let query1 = "";
-        let filters = null;
-        let collagesData = null;
-
-        // Current text queries
-        // \todo Do it propperly!
-        query0 = utils.getTextQueryInput(0);
-        query1 = utils.getTextQueryInput(1);
-
-        collagesData = utils.getCollageInputs();
-        filters = utils.getFiltersInput();
+        let query0 = utils.getTextQueryInput(0);
+        let query1 = utils.getTextQueryInput(1);
+        let filters = utils.getFiltersInput();
+        let canvasQuery = utils.getCanvasQueryInput();
 
         // POST data
         const reqData = {
@@ -368,11 +360,11 @@ export default class ActionManagerService extends Service {
             q0: query0.trim(),
             q1: query1.trim(),
             filters,
-            collages: collagesData,
+            canvas_query: canvasQuery,
         };
 
         const likedFrames = this.dataLoader.getLikedFrames();
-    
+
         // \todo Better hash?
         const newHash = utils.hashQuery(reqData);
         const prevHash = this.dataLoader.getLastQuery();
