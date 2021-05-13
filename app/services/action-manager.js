@@ -384,7 +384,7 @@ export default class ActionManagerService extends Service {
                 EVENTS.BLOCK_WITH_NOTIFICATION,
                 "Rescoring!",
                 "...",
-                12000
+                60000
             );
 
             const requestSettings = this.dataLoader.settings.api.endpoints

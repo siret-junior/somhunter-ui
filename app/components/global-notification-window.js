@@ -61,8 +61,10 @@ export default class GlobalNotificationWindowComponent extends Component {
     }
 
     unblockWithNotification() {
-        if (this.blockingNotification.deleteHandle) {
-            clearTimeout(this.blockingNotification.deleteHandle);
+        if (this.blockingNotification) {
+            if (this.blockingNotification.deleteHandle) {
+                clearTimeout(this.blockingNotification.deleteHandle);
+            }
         }
 
         this.blockingNotification = null;

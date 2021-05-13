@@ -209,7 +209,8 @@ export default class CoreApiService extends Service {
 
                 cbSucc();
             })
-            .catch(() => {
+            .catch((e) => {
+                LOG.D(e);
                 this.store.push({
                     data: [
                         {
