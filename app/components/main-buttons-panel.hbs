@@ -5,6 +5,13 @@
             <button class="btn-rescore btn-primary btn" type="button" {{on "click" this.onClickRescoreTopScoredBtn}}>Rescore<br/>Top Scored
                 View</button>
             <button class="btn-rescore btn-primary btn" type="button" {{on "click" this.onClickRescoreSomScoredBtn}}>Rescore<br/>SOM View</button>
+
+        {{#if this.debug}}
+            <hr />
+            <button class="large special btn-rescore btn-secondary btn" type="button" {{on "click" this.onClickSave}}>Save query</button>
+            <hr />
+        {{/if}}
+
         </div>
     </div>
 

@@ -334,8 +334,10 @@ export default class ActionManagerService extends Service {
         );
     }
 
-    async rescore() {
+    async rescore(isSave) {
         const srcSearchCtxId = this.dataLoader.userContext.search.id;
+
+        LOG.W("isSave", isSave)
 
         // Take a screenshot
         let screenData = "";
@@ -361,6 +363,8 @@ export default class ActionManagerService extends Service {
             q1: query1.trim(),
             filters,
             canvas_query: canvasQuery,
+            is_save: (isSave ? true : false),
+            query_dir: "/somedir/"
         };
 
         const likedFrames = this.dataLoader.getLikedFrames();

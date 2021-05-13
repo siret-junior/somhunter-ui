@@ -5,6 +5,7 @@ import { action } from "@ember/object";
 import { getCurrSubString, subCurrWord } from "../utils";
 
 import { inject as service } from "@ember/service";
+import ENV from "somhunter-ui/config/environment";
 
 import { EVENTS, ELEM_IDS } from "../constants";
 export default class MainButtonsPanelComponent extends Component {
@@ -34,6 +35,14 @@ export default class MainButtonsPanelComponent extends Component {
         await this.actionManager.rescore();
         this.actionManager.gotoSomView();
     }
+
+    @action
+    async onClickSave(e) {
+        await this.actionManager.rescore(true);
+        //this.actionManager.gotoSomView();
+    }
+
+    debug = ENV.debug;
 
     /* Member variables */
     @service actionManager;
