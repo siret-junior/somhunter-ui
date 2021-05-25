@@ -8,8 +8,10 @@
             {{#if this.debug}}
                 <button type="button" class="btn-submit btn btn-warning"
                     {{on "click" this.onDebugBtnClick}}><i class="fa fa-bug" aria-hidden="true"></i></button>
-                    
-                <button type="button" class="btn-colletor btn btn-danger"
+            {{/if}}
+
+            {{#if this.collectorMode}}
+                    <button type="button" class="btn-colletor btn btn-danger"
                     {{on "click" this.onCollectorBtnClick}}><i class="fa fa-credit-card" aria-hidden="true"></i></button>
             {{/if}}
 

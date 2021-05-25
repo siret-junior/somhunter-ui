@@ -11,8 +11,12 @@ module.exports = function (environment) {
         //dataServerUrl: "https://127.0.0.1:8889",
         dataServerUrl: "http://127.0.0.1:8889", // non-HTTPS
         settingsEndpoint: "/settings",
+
         logLevel: 4, // 0 => nothing, 1 => +Errors, 2=> +Info, 3 => +Warnings, 4 => +Debug
+
         debug: true,
+        collectorMode: false, // To see collector buttons & stuff
+
 
         EmberENV: {
             FEATURES: {

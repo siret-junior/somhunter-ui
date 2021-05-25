@@ -34,4 +34,5 @@ export default class BottomButtonsPanelComponent extends Component {
     @service actionManager;
 
     debug = ENV.debug;
+    collectorMode = ENV.collectorMode;
 }

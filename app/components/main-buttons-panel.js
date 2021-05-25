@@ -43,6 +43,7 @@ export default class MainButtonsPanelComponent extends Component {
     }
 
     debug = ENV.debug;
+    collectorMode = ENV.collectorMode;
 
     /* Member variables */
     @service actionManager;
