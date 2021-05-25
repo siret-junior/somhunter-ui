@@ -38,7 +38,7 @@ export default class DetailWindowComponent extends Component {
         const configVideoDetail = this.dataLoader.getConfigUi().video_detail;
         
         this.thumbWidth = configVideoDetail.thumb_width;
-        this.thumbHeight = Math.ceil(this.thumb_width * 0.5625);
+        this.thumbHeight = Math.ceil(this.thumbWidth * 0.5625);
         this.gridWidth = configVideoDetail.grid_width;
         this.gridHeight = configVideoDetail.grid_height;
 

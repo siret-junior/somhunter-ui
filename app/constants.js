@@ -59,7 +59,7 @@ export const ELEM_IDS = {
 };
 
 export const ELEM_CLASSES = {
-    ACTIVE_BTN: "active",
+    ACTIVE_BUTTON: "active",
 
     GOTO_TOP_SCORED_BTN: "btn-top-scored",
     GOTO_TOP_SCORED_CONTEXT_BTN: "btn-top-scored-context",

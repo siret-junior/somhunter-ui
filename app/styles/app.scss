@@ -361,12 +361,16 @@ div.canvas-wrapper:nth-child(2) {
     }
 }
 
+#replayWindow {
+    z-index: 201;
+}
+
 .detail-window-modal {
     z-index: -1;
     opacity: 0;
     &.visible {
         opacity: 1;
-        z-index: 20;
+        z-index: 200;
     }
     padding: 2em;
 }
@@ -378,7 +382,7 @@ div.canvas-wrapper:nth-child(2) {
 
     #detailWindowSlider {
         background-color: map-get($theme-colors, "fifth");
-        display: relative;
+        position: relative;
     }
 }
 
