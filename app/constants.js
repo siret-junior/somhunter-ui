@@ -59,6 +59,12 @@ export const ELEM_IDS = {
 };
 
 export const ELEM_CLASSES = {
+    ACTIVE_BTN: "active",
+
+    GOTO_TOP_SCORED_BTN: "btn-top-scored",
+    GOTO_TOP_SCORED_CONTEXT_BTN: "btn-top-scored-context",
+    GOTO_SOM_BTN: "btn-som",
+
     CANVAS_QUERY_PANEL: "query-canvas-panel",
     CANVAS_QUERY_CONT: "canvas-query",
     CANVAS_QUERY_CONT_TEXT: "text",

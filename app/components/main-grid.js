@@ -39,11 +39,11 @@ export default class MainGridComponent extends Component {
         const diff = tarEl.scrollHeight - tarEl.scrollTop - tarEl.clientHeight;
 
         if (diff < 500) {
-            const viewTypes = this.dataLoader.stringSettings.displayTypes;
+            const viewTypes = this.dataLoader.getConfigStrings().display_types;
             if (
-                this.viewType === viewTypes.topn ||
-                this.viewType === viewTypes.topknn ||
-                this.viewType === viewTypes.topnContext
+                this.viewType === viewTypes.top_scored ||
+                this.viewType === viewTypes.nearest_neighbours ||
+                this.viewType === viewTypes.top_scored_context
             ) {
                 const t = new Date().getTime();
                 if (this.prevFetchTimestamp + 2000 < t) {

@@ -18,7 +18,7 @@ export default class CoreApiService extends Service {
     @service dataLoader;
 
     get settings() {
-        return this.store.peekRecord("core-settings", 0);
+        return this.store.peekRecord("config", 0);
     }
 
     post(url, data) {
@@ -30,13 +30,13 @@ export default class CoreApiService extends Service {
     }
 
     async fetchSomViewFrames(cbSucc = () => null, cbFail = (e) => null) {
-        const coreSettings = this.settings;
-        const requestSettings = coreSettings.api.endpoints.screenSom;
+        const url = this.dataLoader.getEndpoint("handle__get_SOM_screen__POST");
+
 
         // << Core API >>
         let res = null;
         do {
-            res = await this.post(requestSettings.post.url);
+            res = await this.post(url);
 
             if (res === null) return;
 
@@ -48,7 +48,7 @@ export default class CoreApiService extends Service {
             }
 
             const resData = {
-                activeDisplay: this.settings.strings.displayTypes.som,
+                activeDisplay: this.dataLoader.getConfigStrings().display_types.SOM,
                 currentPage: 0,
                 frames: res.viewData.somhunter.screen.frames,
             };
@@ -72,11 +72,10 @@ export default class CoreApiService extends Service {
             frameId: frameId,
         };
 
-        const coreSettings = this.settings;
-        const requestSettings = coreSettings.api.endpoints.screenTop;
+        const url = this.dataLoader.getEndpoint("handle__get_top_screen__POST");
 
         // << Core API >>
-        this.post(requestSettings.post.url, reqData)
+        this.post(url, reqData)
             .then((res) => {
                 if (res === null) return;
                 if (pageId === 0) resetMainGridScroll();
@@ -116,11 +115,10 @@ export default class CoreApiService extends Service {
             frameId: Number(frameId),
         };
 
-        const coreSettings = this.settings;
-        const requestSettings = coreSettings.api.endpoints.frameDetail;
+        const url = this.dataLoader.getEndpoint("handle__get_frame_detail_data__GET");
 
         // << Core API >>
-        this.get(requestSettings.get.url, reqData)
+        this.get(url, reqData)
             .then((res) => {
                 if (res === null) return;
 
@@ -157,11 +155,10 @@ export default class CoreApiService extends Service {
             frameId: Number(frameId),
         };
 
-        const coreSettings = this.settings;
-        const requestSettings = coreSettings.api.endpoints.frameDetail;
+        const url = this.dataLoader.getEndpoint("handle__get_frame_detail_data__GET");
 
         // << Core API >>
-        this.get(requestSettings.get.url, reqData)
+        this.get(url, reqData)
             .then((res) => {
                 if (res === null) return;
 
@@ -186,7 +183,7 @@ export default class CoreApiService extends Service {
     }
 
     fetchUserContext(cbSucc = () => null, cbFail = () => null) {
-        const url = this.settings.api.endpoints.userContext.get.url;
+        const url = this.dataLoader.getEndpoint("handle__user__context__GET");
         this.get(url)
             .then((res2) => {
                 this.store.push({
@@ -236,14 +233,14 @@ export default class CoreApiService extends Service {
                     data: [
                         {
                             id: 0,
-                            type: "core-settings",
+                            type: "config",
                             attributes: {
                                 error: false,
                                 strings: res.strings,
                                 core: res.core,
-                                server: res.server,
-                                ui: res.ui,
-                                api: res.api,
+                                dataServer: res.data_server,
+                                ui: res.UI,
+                                api: res.API,
                                 url: `${ENV.coreUrl}${ENV.settingsEndpoint}`,
                             },
                             relationships: {},
@@ -260,7 +257,7 @@ export default class CoreApiService extends Service {
                     data: [
                         {
                             id: 0,
-                            type: "core-settings",
+                            type: "config",
                             attributes: {
                                 error: true,
                                 url: `${ENV.coreUrl}${ENV.settingsEndpoint}`,

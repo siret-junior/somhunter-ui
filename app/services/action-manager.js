@@ -41,7 +41,7 @@ export default class ActionManagerService extends Service {
     /* ================================== */
 
     fetchReplayFrames(frameId, yNorm) {
-        const dispType = this.dataLoader.stringSettings.displayTypes.replay;
+        const dispType = this.dataLoader.getConfigStrings().display_types.replay;
 
         this.coreApi.fetchReplayFrames(dispType, 0, frameId, null, () => {
             this.dataLoader.setShowReplayView(true);
@@ -78,8 +78,7 @@ export default class ActionManagerService extends Service {
         const search = this.dataLoader.getSearchContext();
 
         const srcSearchCtxId = search.id;
-        const url = this.dataLoader.apiSettings.endpoints.searchContext.post
-            .url;
+        const url = this.dataLoader.getEndpoint("handle__search__context__POST");
 
         // Take a screenshot
         let screenData = "";
@@ -135,9 +134,7 @@ export default class ActionManagerService extends Service {
 
         this.actionManager.triggerEvent(EVENTS.BEFORE_BOOKMARK_FRAME, frame);
 
-        const url = this.dataLoader.apiSettings.endpoints.searchBookmark.post
-            .url;
-
+        const url = this.dataLoader.getEndpoint("handle__search__bookmark__POST");
         const reqData = {
             frameId: frameId,
         };
@@ -167,8 +164,7 @@ export default class ActionManagerService extends Service {
     }
 
     resetSearch() {
-        const coreSettings = this.coreApi.settings;
-        const reqUrl = coreSettings.api.endpoints.searchReset.post.url;
+        const reqUrl = this.dataLoader.getEndpoint("handle__reset_search_session__POST");
         // << Core API >>
         this.coreApi
             .post(reqUrl)
@@ -211,13 +207,11 @@ export default class ActionManagerService extends Service {
             queryValue: prefix,
         };
 
-        const coreSettings = this.coreApi.settings;
-        const requestSettings =
-            coreSettings.api.endpoints.textSearchSuggestions;
+        const url = this.dataLoader.getEndpoint("handle__get_autocomplete_results__GET");
 
         // << Core API >>
         this.coreApi
-            .get(requestSettings.get.url, reqData)
+            .get(url, reqData)
             .then((res) => {
                 cbSucc(res);
             })
@@ -240,7 +234,7 @@ export default class ActionManagerService extends Service {
         cbSucc = () => null,
         cbFail = () => null
     ) {
-        const dispType = this.coreApi.settings.strings.displayTypes.detail;
+        const dispType = this.dataLoader.getConfigStrings().display_types.detail;
 
         this.coreApi.fetchDetailFrames(
             dispType,
@@ -272,7 +266,7 @@ export default class ActionManagerService extends Service {
             utils.resetMainGridScroll();
         }
 
-        const dispType = this.coreApi.settings.strings.displayTypes.topknn;
+        const dispType = this.dataLoader.getConfigStrings().display_types.nearest_neighbours;
 
         this.coreApi.fetchTopDispFrames(
             dispType,
@@ -308,7 +302,7 @@ export default class ActionManagerService extends Service {
     }
 
     gotoTopScoredView(pageIdx, cbSucc = () => null, cbFail = () => null) {
-        const dispType = this.coreApi.settings.strings.displayTypes.topn;
+        const dispType = this.dataLoader.getConfigStrings().display_types.top_scored;
 
         this.coreApi.fetchTopDispFrames(
             dispType,
@@ -324,7 +318,7 @@ export default class ActionManagerService extends Service {
     }
 
     gotoSomView(cbSucc = () => null, cbFail = () => null) {
-        const dispType = this.coreApi.settings.strings.displayTypes.som;
+        const dispType = this.dataLoader.getConfigStrings().display_types.SOM;
         this.coreApi.fetchSomViewFrames(
             () => {
                 this.triggerEvent(EVENTS.NAME_VIEW_CHANGE);
@@ -391,11 +385,12 @@ export default class ActionManagerService extends Service {
                 60000
             );
 
-            const requestSettings = this.dataLoader.settings.api.endpoints
-                .searchRescore;
+            const url = this.dataLoader.getEndpoint("handle__rescore__POST");
+            LOG.W(url);
+
             // << Core API >>
             const res = await this.coreApi.post(
-                requestSettings.post.url,
+                url,
                 reqData
             );
             // << Core API >>
@@ -434,7 +429,7 @@ export default class ActionManagerService extends Service {
         // <!>
         this.triggerEvent(EVENTS.BEFORE_LIKE_FRAME, frame);
 
-        const url = this.dataLoader.apiSettings.endpoints.searchLike.post.url;
+        const url = this.dataLoader.getEndpoint("handle__like_frame__POST");
 
         const reqData = {
             frameId: frameId,

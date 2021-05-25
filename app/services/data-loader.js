@@ -1,51 +1,88 @@
-import Service from "@ember/service";
+import Service from '@ember/service';
+import { inject as service } from '@ember/service';
 
-import { inject as service } from "@ember/service";
-
-import { EVENTS, ELEM_IDS } from "../constants";
-import LOG from "../logger";
-import utils from "../utils";
+import { ELEM_IDS, EVENTS } from '../constants';
+import LOG from '../logger';
+import utils from '../utils';
 
 export default class DataLoaderService extends Service {
     /* Member methods */
     constructor() {
         super(...arguments);
+
+        // Cached operationId -> endpoint URL records
+        this.endpointCache = {};
     }
 
-    get settings() {
-        return this.store.peekRecord("core-settings", 0);
+    /**
+     * For the given `operationId` from OpenAPI specification of the core API it
+     * returnes the URL of the corresponding endpoint.
+     *
+     * \param   operationId     A unique `operationId` of the endpoint as defined in OpenAPI specification.
+     */
+    getEndpoint(operationId) {
+        // Check cache
+        const record = this.endpointCache[operationId];
+        if (typeof record !== 'undefined') {
+            return record;
+        }
+
+        const apiPaths = this.getConfigApi().paths;
+
+        // For each path defined
+        for (const url in apiPaths) {
+            const val = apiPaths[url];
+
+            // For each method
+            for (const method in val) {
+                const valMethod = val[method];
+
+                if (operationId == valMethod.operationId) {
+                    this.endpointCache[operationId] = url;
+                }
+            }
+        }
+
+        return this.endpointCache[operationId];
     }
 
-    get uiSettings() {
-        return this.settings.ui;
+
+    getConfig() {
+        return this.store.peekRecord('config', 0);
     }
 
-    get apiSettings() {
-        return this.settings.api;
+    getConfigUi() {
+        return this.getConfig().ui;
     }
-    get stringSettings() {
-        return this.settings.strings;
+
+    getConfigApi() {
+        return this.getConfig().api;
     }
+
+    getConfigStrings() {
+        return this.getConfig().strings;
+    }
+
 
     get userContext() {
-        return this.store.peekRecord("user-context", 0);
+        return this.store.peekRecord('user-context', 0);
     }
 
     getLastQuery() {
-        const hash = this.store.peekRecord("last-query", 0);
-        return hash !== null ? hash.lastQueryHash : "";
+        const hash = this.store.peekRecord('last-query', 0);
+        return hash !== null ? hash.lastQueryHash : '';
     }
 
     setLastQuery(hash) {
-        let lastQuery = this.store.peekRecord("last-query", 0);
+        let lastQuery = this.store.peekRecord('last-query', 0);
 
         if (!lastQuery) {
-            //LOG.D("hash query not there, pushing in: ", hash);
+            // LOG.D("hash query not there, pushing in: ", hash);
             this.store.push({
                 data: [
                     {
                         id: 0,
-                        type: "last-query",
+                        type: 'last-query',
                         attributes: {
                             lastQueryHash: hash,
                         },
@@ -54,13 +91,13 @@ export default class DataLoaderService extends Service {
                 ],
             });
         } else {
-            //LOG.D("Ooverriding prev hash with: ", hash);
+            // LOG.D("Ooverriding prev hash with: ", hash);
             lastQuery = hash;
         }
     }
 
     getSearchContext() {
-        return this.store.peekRecord("user-context", 0)["search"];
+        return this.store.peekRecord('user-context', 0)['search'];
     }
 
     getLikedFrames() {
@@ -105,63 +142,63 @@ export default class DataLoaderService extends Service {
     }
 
     getMainFrames() {
-        const data = this.store.peekRecord("main-display", 0);
+        const data = this.store.peekRecord('main-display', 0);
         return data?.frames;
     }
 
     getDetailFrames() {
-        const detail = this.store.peekRecord("detail-window", 0);
+        const detail = this.store.peekRecord('detail-window', 0);
         return detail?.frames;
     }
 
     getReplayFrames() {
-        const detail = this.store.peekRecord("replay-window", 0);
+        const detail = this.store.peekRecord('replay-window', 0);
         return detail?.frames;
     }
 
     getReplayPivotId() {
-        const detail = this.store.peekRecord("replay-window", 0);
+        const detail = this.store.peekRecord('replay-window', 0);
         return detail?.pivotFrameId;
     }
 
     getShowDetailView() {
-        const detail = this.store.peekRecord("detail-window", 0);
+        const detail = this.store.peekRecord('detail-window', 0);
         return detail?.show;
     }
 
     getShowReplayView() {
-        const detail = this.store.peekRecord("replay-window", 0);
+        const detail = this.store.peekRecord('replay-window', 0);
         return detail?.show;
     }
 
     setShowReplayView(val) {
-        const window = this.store.peekRecord("replay-window", 0);
+        const window = this.store.peekRecord('replay-window', 0);
         if (window) window.show = val;
     }
 
     setShowDetailView(val) {
-        const window = this.store.peekRecord("detail-window", 0);
+        const window = this.store.peekRecord('detail-window', 0);
         if (window) window.show = val;
     }
 
     getShowReplaylView() {
-        const detail = this.store.peekRecord("replay-window", 0);
+        const detail = this.store.peekRecord('replay-window', 0);
         return detail?.show;
     }
 
     setShowReplayView(val) {
-        const window = this.store.peekRecord("replay-window", 0);
+        const window = this.store.peekRecord('replay-window', 0);
         if (window) window.show = val;
     }
 
     mainDisplayFrames() {
-        const mainDisplay = this.store.peekRecord("main-display", 0);
+        const mainDisplay = this.store.peekRecord('main-display', 0);
 
         return mainDisplay?.frames;
     }
 
     mainDisplayType() {
-        const mainDisplay = this.store.peekRecord("main-display", 0);
+        const mainDisplay = this.store.peekRecord('main-display', 0);
 
         return mainDisplay?.activeDisplay;
     }
@@ -173,10 +210,9 @@ export default class DataLoaderService extends Service {
             this.removeLikedFrame(frameId);
         }
 
-        if (!frameId || typeof likedState === "undefined" || likedState == null)
+        if (!frameId || typeof likedState === 'undefined' || likedState == null)
             throw Error(
-                `Invalid params: frameId: ${frameId}, likedState: ${likedState}`
-            );
+                `Invalid params: frameId: ${frameId}, likedState: ${likedState}`);
 
         // Main grid
         let frames = this.getMainFrames();
@@ -185,8 +221,7 @@ export default class DataLoaderService extends Service {
                 if (x.id == frameId) {
                     x.liked = likedState;
                     LOG.D(
-                        `MAIN GRID: Setting liked state to ${frameId} to ${likedState}`
-                    );
+                        `MAIN GRID: Setting liked state to ${frameId} to ${likedState}`);
                 }
             });
         }
@@ -197,9 +232,7 @@ export default class DataLoaderService extends Service {
             frames.forEach((x) => {
                 if (x.id == frameId) {
                     x.liked = likedState;
-                    LOG.D(
-                        `REPLAY GRID: Setting liked state to ${frameId} to ${likedState}`
-                    );
+                    LOG.D(`REPLAY GRID: Setting liked state to ${frameId} to ${likedState}`);
                 }
             });
         }
@@ -210,9 +243,7 @@ export default class DataLoaderService extends Service {
             frames.forEach((x) => {
                 if (x.id == frameId) {
                     x.liked = likedState;
-                    LOG.D(
-                        `DETAIL GRID: Setting liked state to ${frameId} to ${likedState}`
-                    );
+                    LOG.D(`DETAIL GRID: Setting liked state to ${frameId} to ${likedState}`);
                 }
             });
         }

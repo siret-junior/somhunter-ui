@@ -35,11 +35,12 @@ export default class DetailWindowComponent extends Component {
         );
 
         // Create shortcuts for frequently used values
-
-        this.thumbWidth = this.dataLoader.uiSettings.videoDetail.thumbWidth;
-        this.thumbHeight = Math.ceil(this.thumbWidth * 0.5625);
-        this.gridWidth = this.dataLoader.uiSettings.videoDetail.gridWidth;
-        this.gridHeight = this.dataLoader.uiSettings.videoDetail.gridHeight;
+        const configVideoDetail = this.dataLoader.getConfigUi().video_detail;
+        
+        this.thumbWidth = configVideoDetail.thumb_width;
+        this.thumbHeight = Math.ceil(this.thumb_width * 0.5625);
+        this.gridWidth = configVideoDetail.grid_width;
+        this.gridHeight = configVideoDetail.grid_height;
 
         this.modalSliderW = this.gridWidth * this.thumbWidth;
         this.modalSliderH = this.gridWidth * this.thumbHeight;

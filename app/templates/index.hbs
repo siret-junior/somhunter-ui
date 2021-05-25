@@ -46,7 +46,7 @@
   {{#if @model.coreSettings.error}}
 
     <div class="container">
-      <div class="alert alert-danger text-center" role="alert">
+      <div class="absolute-centered alert alert-danger text-center" role="alert">
         <h3>Error loading core settings from '{{@model.coreSettings.url}}'!</h3>
         <hr>
         <button type="button" class="btn btn-primary" onclick="location.reload()">Reload</button>
@@ -56,7 +56,7 @@
   {{else}}
     {{#if @model.userContext.error}}
       <div class="container">
-        <div class="alert alert-danger text-center" role="alert">
+        <div class="absolute-centered alert alert-danger text-center" role="alert">
           <h3>Error loading user context from `{{@model.userContext.url}}` !</h3>
           <hr>
           <button type="button" class="btn btn-primary" onclick="location.reload()">Reload</button>
@@ -64,7 +64,7 @@
       </div>
     {{else}}
       <div class="container">
-        <div class="alert alert-warning text-center" role="alert">
+        <div class="absolute-centered alert alert-warning text-center" role="alert">
           <h1>Loading...</h1>
         </div>
         </div>

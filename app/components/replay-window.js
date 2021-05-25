@@ -40,8 +40,8 @@ export default class ReplayWindowComponent extends Component {
 
         // Create shortcuts for frequently used values
 
-        this.slideSpeed = this.dataLoader.uiSettings.videoReplay.slideSpeed;
-        this.thumbWidth = this.dataLoader.uiSettings.videoReplay.thumbWidth;
+        this.slideSpeed = this.dataLoader.getConfigUi().video_replay.slide_speed;
+        this.thumbWidth = this.dataLoader.getConfigUi().video_replay.thumb_width;
     }
 
     /**

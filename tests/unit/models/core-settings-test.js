@@ -7,7 +7,7 @@ module("Unit | Model | core settings", function (hooks) {
     // Replace this with your real tests.
     test("it exists", function (assert) {
         let store = this.owner.lookup("service:store");
-        let model = store.createRecord("core-settings", {});
+        let model = store.createRecord("config", {});
         assert.ok(model);
     });
 });

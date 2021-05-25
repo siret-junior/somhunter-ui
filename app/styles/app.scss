@@ -1,6 +1,14 @@
 @import "ember-bootstrap/bootstrap";
 
-// Theme #2
+/**
+ * Settings
+ */
+
+// The main layout
+$left-panel-width: 20%;
+$left-panel-min-width: 400px;
+
+// Color theme
 $theme-colors: (
     "primary": #043540,
     "secondary": #0d0d0d,
@@ -23,17 +31,45 @@ body {
 }
 * {
     box-sizing: border-box;
+}
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+span {
     color: #fff;
 }
 
+.alert {
+    &.absolute-centered {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    p,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    span {
+        color: map-get($theme-colors, "black");
+    }
+}
 #mainPanel {
-    flex: 0 0 20%;
-    max-width: 20%;
+    flex: 0 0 $left-panel-width;
+    max-width: $left-panel-width;
+    min-width: $left-panel-min-width;
 }
 
 #mainWindow {
-    flex: 0 0 80%;
-    max-width: 80%;
+    flex: 0 0 calc(100% - #{$left-panel-width});
+    max-width: calc(100% - #{$left-panel-min-width});
 }
 
 .panel-title {
@@ -63,6 +99,11 @@ body {
     &.btn-third {
         background-color: map-get($map: $theme-colors, $key: "third");
         border: 1px solid rgba(map-get($map: $theme-colors, $key: "white"), 1);
+    }
+
+    &.active {
+        background-color: rgba(map-get($map: $theme-colors, $key: "warning"), 1) !important;
+        border: 1px solid rgba(map-get($map: $theme-colors, $key: "warning"), 1) !important;
     }
 }
 

@@ -8,9 +8,8 @@ module.exports = function (environment) {
         locationType: "auto",
 
         coreUrl: "http://127.0.0.1:8888",
-        //dataServerUrl: "https://127.0.0.1:8889",
+        settingsEndpoint: "/config", //< This is the first request we do, without the config UI cannot function
         dataServerUrl: "http://127.0.0.1:8889", // non-HTTPS
-        settingsEndpoint: "/settings",
 
         logLevel: 4, // 0 => nothing, 1 => +Errors, 2=> +Info, 3 => +Warnings, 4 => +Debug
 

@@ -23,7 +23,7 @@ export default class IndexRoute extends Route {
     }
 
     model() {
-        const coreSettings = this.store.peekRecord("core-settings", 0);
+        const coreSettings = this.store.peekRecord("config", 0);
         const userContext = this.store.peekRecord("user-context", 0);
 
         LOG.D("INDEX: passing model with ID ", this.nextId);
