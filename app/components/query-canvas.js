@@ -43,8 +43,12 @@ export default class QueryCanvasComponent extends Component {
         const el = e.currentTarget;
 
         const canvases = document.querySelectorAll(".collage-canvas");
-        canvases.forEach((x) => x.classList.remove("paste-active"));
+        canvases.forEach((x) => {
+            x.parentElement.classList.remove("active")
+            x.classList.remove("paste-active");
+        });
         el.classList.add("paste-active");
+        el.parentElement.classList.add("active");
     }
 
     // @action

@@ -19,10 +19,21 @@ $theme-colors: (
 body {
     overflow: hidden;
     background-color: map-get($map: $theme-colors, $key: "primary");
+    font-family: "Roboto", sans-serif;
 }
 * {
     box-sizing: border-box;
     color: #fff;
+}
+
+#mainPanel {
+    flex: 0 0 20%;
+    max-width: 20%;
+}
+
+#mainWindow {
+    flex: 0 0 80%;
+    max-width: 80%;
 }
 
 .panel-title {
@@ -30,14 +41,31 @@ body {
     text-align: center;
 }
 
-.alert {
-    * {
-        color: #000;
+.btn {
+    border-radius: 0;
+    &.btn-primary {
+        background-color: lighten(map-get($map: $theme-colors, $key: "primary"), 0%);
+        border: 1px solid lighten(map-get($map: $theme-colors, $key: "white"), 0%);
+
+        &:hover {
+            background-color: lighten(map-get($map: $theme-colors, $key: "primary"), 10%);
+            border: 1px solid lighten(map-get($map: $theme-colors, $key: "primary"), 10%);
+        }
+    }
+    &.btn-secondary {
+        background-color: rgba(map-get($map: $theme-colors, $key: "secondary"), 1);
+        border: 1px solid rgba(map-get($map: $theme-colors, $key: "white"), 1);
+
+        &:hover {
+            background-color: rgba(map-get($map: $theme-colors, $key: "white"), 0.2);
+        }
+    }
+    &.btn-third {
+        background-color: map-get($map: $theme-colors, $key: "third");
+        border: 1px solid rgba(map-get($map: $theme-colors, $key: "white"), 1);
     }
 }
 
-.main-panel {
-}
 .main-grid {
     position: relative;
     height: 100vh;
@@ -51,6 +79,14 @@ body {
             height: calc(100% / 8);
         }
     }
+}
+#mainPanel {
+    background-color: map-get($map: $theme-colors, $key: "secondary");
+    padding-top: 1em;
+}
+
+.likes-panel {
+    min-height: 55px;
 }
 
 .frame {
@@ -143,21 +179,49 @@ body {
     }
 }
 
-.autocomplete {
-    position: relative;
+.query-canvas-panel {
+    padding: 0 0 1em 0;
 }
 
+.text-divider {
+    position: absolute;
+    font-size: 1.6rem;
+    top: 0;
+    left: -11px;
+    line-height: 1.5;
+    font-weight: 100;
 
-    div.canvas-wrapper:nth-child(1) {
-        z-index: 100;
+    width: 20px;
+    i {
+        color: rgba(map-get($theme-colors, "warning"), 1);
     }
-
-    div.canvas-wrapper:nth-child(2) {
-        z-index: 99;
+    &.canvas {
+        top: 3px;
+        left: inherit;
+        transform: rotate(45deg);
+        right: 7%;
+        font-size: 1.8rem;
     }
+}
+.text-search-panel {
+    font-size: 0;
+    .autocomplete {
+        input {
+            border-radius: 0;
+        }
+    }
+}
 
+div.canvas-wrapper:nth-child(1) {
+    z-index: 100;
+}
+
+div.canvas-wrapper:nth-child(2) {
+    z-index: 99;
+}
 
 .text-suggestions-list {
+    font-size: 1rem;
     min-width: 300px;
     margin: 0;
     padding: 0;
@@ -390,6 +454,11 @@ body {
         bottom: 0;
         left: 0;
     }
+    &.top {
+        .btn {
+            width: calc(50% - 2px);
+        }
+    }
 }
 
 .history-list {
@@ -451,39 +520,59 @@ body {
     }
 }
 
+.btn {
+    outline: 0 !important;
+    box-shadow: none !important;
+}
+
+.change-view-btns,
+.rescore-btns-const {
+    margin: 4px -4px 4px -4px;
+    font-size: 0;
+
+    .btn {
+        width: calc(50% - 4px);
+        border-radius: 0;
+        margin: 2px;
+    }
+}
+
 .panel-title {
-    font-size: 0.8rem;
+    font-size: 1.2rem;
+    font-weight: 600;
     text-transform: uppercase;
     text-align: center;
-    padding: 0.5em 1em 0em 1em;
+    padding: 0.7em 0em 0em 0em;
     &.visible {
         display: block;
     }
 
-    &:before,
-    &:after {
-        border: 1px solid rgba(map-get($theme-colors, "white"), 0.7);
-        content: "";
-        position: relative;
-        display: block;
-        width: 80%;
-        margin: 0 auto;
-    }
+    //&:before,
+    // &:after {
+    //     border: 1px solid rgba(map-get($theme-colors, "white"), 0.7);
+    //     content: "";
+    //     position: relative;
+    //     display: block;
+    //     width: 80%;
+    //     margin: 0 auto;
+    // }
 
-    &:before {
-        width: 80%;
-        border: 2px solid rgba(map-get($theme-colors, "fifth"), 0.7);
-        top: -0.2rem;
-    }
+    // &:before {
+    //     width: 80%;
+    //     border: 2px solid rgba(map-get($theme-colors, "fifth"), 0.7);
+    //     top: -0.2rem;
+    // }
 
     &:after {
-        width: 45%;
-        border: 1px solid rgba(map-get($theme-colors, "white"), 0.7);
+        width: 95%;
+        border: 1px solid rgba(map-get($theme-colors, "white"), 0.9);
         bottom: -0.2rem;
     }
     &.small {
         font-size: 1.2rem;
         text-align: left;
+        padding: 17px 0 18px 0;
+        margin: 0;
 
         &:before,
         &:after {
@@ -494,6 +583,7 @@ body {
 
 .bookmarks-list,
 .likes-list {
+    min-height: 55px;
     margin: 0;
     padding: 0;
     text-align: left;
@@ -522,11 +612,10 @@ body {
     // height: 0;
     display: block;
     margin: 0 0 0 0;
-    .query-canvas-connector {
-        position: absolute;
-        bottom: -13px;
-        right: 0;
-    }
+    bottom: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
 }
 
 /** COLLAGE UI **/
@@ -534,7 +623,7 @@ body {
     position: absolute;
     top: -8px;
     right: -8px;
-    background-color: rgba(map-get($map: $theme-colors, $key: "danger"), 1);
+    background-color: red;
     padding: 5px 2px 2px;
     color: #000;
     font-weight: bold;
@@ -543,12 +632,13 @@ body {
     line-height: 10px;
     border-radius: 60%;
     opacity: 0.8;
-    color: rgba(map-get($map: $theme-colors, $key: "white"), 1);
-    font-size: 18px;
-    width: 16px;
-    height: 16px;
-    line-height: 3px;
+    color: white;
+    font-size: 21px;
+    width: 18px;
+    height: 18px;
+    line-height: 7px;
     transition: 0.2s ease-in-out;
+    z-index: 100;
     &:hover,
     &:active {
         opacity: 1;
@@ -561,14 +651,75 @@ body {
     z-index: 0 !important;
 }
 
+.img-container {
+    float: left;
+    width: 24%;
+    padding: 5px;
+    position: relative;
+}
+
+.collage-search .inter-query-text {
+    text-align: center;
+    margin: auto;
+    position: absolute;
+    top: 40%;
+    left: 100%;
+    width: 100px;
+}
+
+.collage-search {
+    margin: auto;
+    width: 100%;
+}
+
+.add-collage-text-query {
+    padding: 10px 11px 10px 11px;
+    line-height: 12px;
+    bottom: 0;
+    position: absolute;
+    font-size: 2rem;
+}
+
+.target-grid {
+    min-height: 50vh;
+    height: 100vh;
+}
+
+.collector-window-modal {
+    background: transparent;
+    pointer-events: none;
+}
+.collector-window {
+    left: 25vw;
+    top: 0;
+    right: 0;
+    width: calc(75vw);
+    margin: 0;
+    padding: 0;
+
+    .modal-content {
+        background: black;
+    }
+}
+
+.target-grid {
+    .frame {
+    }
+}
+
+#collageTemporalQueries {
+    width: 100%;
+    position: relative;
+    min-height: 210px;
+}
+
 .collage-canvas {
-    z-index: 10;
     background-color: rgba(map-get($map: $theme-colors, $key: "grey"), 1);
     width: 100%;
     height: 100%;
     top: 0;
     left: 0;
-    position: absolute;
+    //position: absolute;
     border: 4px solid rgba(map-get($map: $theme-colors, $key: "third"), 1);
     &.paste-active {
         border: 4px solid rgba(map-get($map: $theme-colors, $key: "warning"), 1);
@@ -617,67 +768,21 @@ body {
     }
 }
 
-.img-container {
-    float: left;
-    width: 24%;
-    padding: 5px;
-    position: relative;
-}
-
-.collage-search .inter-query-text {
-    text-align: center;
-    margin: auto;
-    position: absolute;
-    top: 40%;
-    left: 100%;
-    width: 100px;
-}
-
 .canvas-wrapper {
-    position: relative;
-    padding-bottom: 56.25%;
+    position: absolute;
+    //padding-bottom: 56.25%;
     margin-bottom: 0px;
-}
-
-.collage-search {
-    margin: auto;
-    width: 100%;
-}
-
-#collageTemporalQueries {
-    max-width: 300px;
-    position: relative;
-}
-.add-collage-text-query {
-    padding: 3px 5px 5px 5px;
-    line-height: 12px;
-}
-
-.target-grid {
-    min-height: 50vh;
-    height: 100vh;
-}
-
-.collector-window-modal {
-    background: transparent;
-    pointer-events: none;
-}
-.collector-window {
-    left: 25vw;
-    top: 0;
-    right: 0;
-    width: calc(75vw);
-    margin: 0;
-    padding: 0;
-
-    .modal-content {
-        background: black;
+    width: 300px;
+    height: calc(300px * 0.55);
+    &.canvasQuery_1 {
+        right: 0;
+        bottom: 0;
+    }
+    &.active {
+        z-index: 101;
     }
 }
 
-.target-grid {
-    .frame {
-        
-    }
+.second-canvas {
+    position: absolute;
 }
-

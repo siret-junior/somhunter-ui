@@ -4,6 +4,8 @@
         clasas="collage-search small-12 cell {{if this.visible "none" }} "
         {{did-insert this.didInsertWrapper}}
     >
+        <h2 class="panel-title">Canvas Queries</h2>
+
         <div id="collageTemporalQueries">
             
             <QueryCanvas @onRemoveItem={{this.onRemoveItem}} @index=0 @texts={{this.texts.[0]}} @model={{@model}} />
@@ -11,9 +13,11 @@
                 <a
                     {{on "click" this.onClickAddTextBtn}}
                      class="btn btn-success add-collage-text-query">+</a>
-                <p class="query-canvas-connector">...and then...</p>
+                <span class="canvas text-divider"><i class="fa fa-arrow-right" aria-hidden="true"></i></span>
             </div>
+
             <QueryCanvas @onRemoveItem={{this.onRemoveItem}} @index=1 @texts={{this.texts.[1]}} @model={{@model}} />
+
         </div>
     </div>
 

@@ -59,7 +59,7 @@ export const ELEM_IDS = {
 };
 
 export const ELEM_CLASSES = {
-    CANVS_QUERY_PANEL: "query-canvas-panel",
+    CANVAS_QUERY_PANEL: "query-canvas-panel",
     CANVAS_QUERY_CONT: "canvas-query",
     CANVAS_QUERY_CONT_TEXT: "text",
     CANVAS_QUERY_CONT_BITMAP: "bitmap",

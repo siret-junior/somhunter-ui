@@ -3,9 +3,16 @@
 {{!-- <h1>Current model ID: {{@model.id}}</h1> --}}
 
 <div class="text-search-panel container-fluid col-12">
-    <h2 class="panel-title">Text queries</h2>
-    
-    <TextAutocomplete @model={{@model}} @id={{0}} />
-
-    <TextAutocomplete @model={{@model}} @id={{1}} />
+    <div class="row">
+        <div class="col-12 p-0">
+            <h2 class="panel-title">Text queries</h2>
+        </div>
+        <div class="col-6 p-0 pr-3">
+            <TextAutocomplete @model={{@model}} @id={{0}} />
+        </div>
+        <div class="col-6 p-0 pl-3">
+            <span class="text-divider"><i class="fa fa-arrow-right" aria-hidden="true"></i></span>
+            <TextAutocomplete @model={{@model}} @id={{1}} />
+        </div>
+    </div>
 </div>
