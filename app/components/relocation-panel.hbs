@@ -10,6 +10,7 @@
         <div class="col-3 relocation-frame">
             {{#if this.relocation0}}
                 <Frame @frame={{this.relocation0}} id="relocationFrame0" />
+                <span class="delete" onclick={{this.clearRelocation0}} style="right: 8px;">&times;</span>
                 <input type="hidden" id="relocationFrame0" value={{this.relocation0.id}}/>
             {{/if}}
         </div>
@@ -22,6 +23,7 @@
         <div class="col-3 relocation-frame">
             {{#if this.relocation1}}
                 <Frame @frame={{this.relocation1}}  />
+                <span class="delete" onclick={{this.clearRelocation1}} style="right: 8px;">&times;</span>
                 <input type="hidden" id="relocationFrame1" value={{this.relocation1.id}} />
             {{/if}}
         </div>

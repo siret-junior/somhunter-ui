@@ -43,8 +43,20 @@ export default class RelocationPanelComponent extends Component {
     }
 
     @action
+    clearRelocation0(e) {
+        this.relocation0 = undefined;
+        e.stopPropagation(); // Prevent the bubbling
+    }
+
+    @action
     onRelocationBtnClick1(e) {
         this.actionManager.showRelocationView(1);
+        e.stopPropagation(); // Prevent the bubbling
+    }
+
+    @action
+    clearRelocation1(e) {
+        this.relocation1 = undefined;
         e.stopPropagation(); // Prevent the bubbling
     }
 
