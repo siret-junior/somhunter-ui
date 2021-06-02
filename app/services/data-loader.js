@@ -151,6 +151,11 @@ export default class DataLoaderService extends Service {
         return detail?.frames;
     }
 
+    getRelocationFrames() {
+        const detail = this.store.peekRecord('relocation-window', 0);
+        return detail?.frames;
+    }
+
     getReplayFrames() {
         const detail = this.store.peekRecord('replay-window', 0);
         return detail?.frames;

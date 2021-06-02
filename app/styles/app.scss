@@ -253,6 +253,10 @@ span {
     }
 }
 
+.relocation-panel {
+    font-size: 0;
+}
+
 div.canvas-wrapper:nth-child(1) {
     z-index: 100;
 }
@@ -371,6 +375,16 @@ div.canvas-wrapper:nth-child(2) {
     &.visible {
         opacity: 1;
         z-index: 200;
+    }
+    padding: 2em;
+}
+
+.relocation-window-modal {
+    z-index: -1;
+    opacity: 0;
+    &.visible {
+        opacity: 1;
+        z-index: 150;
     }
     padding: 2em;
 }
@@ -626,6 +640,7 @@ div.canvas-wrapper:nth-child(2) {
     }
 }
 
+.relocation-frame,
 .bookmarks-list,
 .likes-list {
     min-height: 55px;

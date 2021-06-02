@@ -16,6 +16,10 @@ export const EVENTS = {
     HIDE_DETAIL: "hideDetail",
     LOAD_DETAIL: "loadDetail",
 
+    SHOW_RELOCATION: "showRelocation",
+    HIDE_RELOCATION: "hideRelocation",
+    LOAD_RELOCATION: "loadRelocation",
+
     SHOW_REPLAY: "showReplay",
     HIDE_REPLAY: "hideReplay",
     LOAD_REPLAY: "loadReplay",
@@ -44,6 +48,8 @@ export const EVENTS = {
     DO_LIKE_FRAME: "DO_LIKE_FRAME",
     BEFORE_LIKE_FRAME: "BEFORE_LIKE_FRAME",
     AFTER_LIKE_FRAME: "AFTER_LIKE_FRAME",
+
+    SET_RELOCATION: "SET_RELOCATION",
 };
 
 /**
@@ -53,6 +59,8 @@ export const ELEM_IDS = {
     MAIN_GRID: "mainGrid",
     DETAIL_WINDOW: "detailWindow",
     DETAIL_WINDOW_SLIDER: "detailWindowSlider",
+    RELOCATION_WINDOW: "relocationWindow",
+    RELOCATION_WINDOW_SLIDER: "relocationWindowSlider",
     REPLAY_WINDOW: "replayWindow",
     REPLAY_WINDOW_SLIDER: "replayWindowSlider",
     CANVAS_QUERY_PREFIX: "canvasQuery_",

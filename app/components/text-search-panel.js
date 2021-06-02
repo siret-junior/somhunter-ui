@@ -11,4 +11,5 @@ export default class TextSearchPanelComponent extends Component {
     }
 
     /* Member variables */
+    @service actionManager;
 }

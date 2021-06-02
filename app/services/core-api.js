@@ -5,6 +5,7 @@ import { delay, resetMainGridScroll } from "../utils";
 
 import { toMainDisplayModel, mergeDisplayModel } from "../models/main-display";
 import { toDetailWindowModel } from "../models/detail-window";
+import { toRelocationWindowModel } from "../models/relocation-window";
 import { toReplaylWindowModel } from "../models/replay-window";
 
 import ENV from "somhunter-ui/config/environment";
@@ -53,6 +54,39 @@ export default class CoreApiService extends Service {
                 frames: res.viewData.somhunter.screen.frames,
             };
             const data = toMainDisplayModel(resData);
+            this.store.push(data);
+
+            cbSucc();
+        } while (res.status === 222);
+    }
+
+    async fetchSomRelocationViewFrames(tempId, cbSucc = () => null, cbFail = (e) => null) {
+        const url = this.dataLoader.getEndpoint("handle__get_SOM_relocation_screen__POST");
+        const reqData = {
+            temporalId: tempId,
+        };
+
+        // << Core API >>
+        let res = null;
+        do {
+            res = await this.post(url, reqData);
+
+            if (res === null) return;
+
+            // 222 means that SOM not ready
+            if (res.status === 222) {
+                LOG.W("SOM relocation " + tempId + " not yet ready!");
+                await delay(500);
+                continue;
+            }
+
+            const resData = {
+                activeDisplay: this.dataLoader.getConfigStrings().display_types.SOM, // TODO set correct display type
+                currentPage: 0,
+                frames: res.viewData.somhunter.screen.frames,
+            };
+
+            const data = toRelocationWindowModel(resData);
             this.store.push(data);
 
             cbSucc();
@@ -141,6 +175,7 @@ export default class CoreApiService extends Service {
                 cbFail(e);
             });
     }
+
 
     fetchDetailFrames(
         type,

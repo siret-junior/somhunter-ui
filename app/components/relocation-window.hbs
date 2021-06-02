@@ -1,0 +1,50 @@
+
+<div class="custom-modal-window relocation-window-modal {{if this.windowVisible "visible"}}">
+    <div id={{this.ELEM_IDS.RELOCATION_WINDOW}} 
+        class="relocation-window"
+    >
+        <div id={{this.ELEM_IDS.RELOCATION_WINDOW_SLIDER}} 
+            class="slider-row"
+        >
+
+            {{#if this.windowVisible}}
+
+                {{#if this.displayedFrames}}
+                    {{#each this.displayedFrames as |frame|}}
+                        <Frame 
+                            @frame={{frame}} 
+                            @onClick={{this.setRelocation}}
+                        />
+                    {{/each}}
+                {{/if}}
+
+            {{/if}}
+
+        </div>
+    </div>
+
+
+    <!-- We need to enforce the frame sizes so our calculations match! -->
+    {{#if (and this.cssFrameWidth this.cssFrameHeight)}}
+        <style>
+            #{{this.ELEM_IDS.RELOCATION_WINDOW}} .frame {
+                width: {{this.cssFrameWidth}} !important;
+                height: {{this.cssFrameHeight}} !important;
+                max-width: {{this.cssFrameWidth}};
+                
+            }
+            /* So button sizes scale propperly. */
+            #{{this.ELEM_IDS.RELOCATION_WINDOW}} .frame * { 
+                font-size: 10px; 
+            }
+        </style>
+    {{/if}}
+
+</div>
+
+<style>
+    .relocation-window {
+        width:{{this.modalSliderW}}px; 
+        height:{{this.modalSliderH}}px;
+    }
+</style>

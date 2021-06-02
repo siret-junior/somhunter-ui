@@ -250,6 +250,24 @@ export default class ActionManagerService extends Service {
         );
     }
 
+    showRelocationView(
+        temporalId,
+        cbSucc = () => null,
+        cbFail = () => null
+    ) {
+        //const dispType = this.dataLoader.getConfigStrings().display_types.detail;
+
+        this.coreApi.fetchSomRelocationViewFrames(
+            temporalId,
+            () => {
+                this.triggerEvent(EVENTS.LOAD_RELOCATION);
+                this.triggerEvent(EVENTS.SHOW_RELOCATION, temporalId);
+                cbSucc();
+            },
+            () => cbFail()
+        );
+    }
+
     hideDetailView() {
         this.dataLoader.setShowDetailView(false);
         this.triggerEvent(EVENTS.NAME_DETAIL_VIEW_CHANGE);
@@ -346,6 +364,8 @@ export default class ActionManagerService extends Service {
 
         let query0 = utils.getTextQueryInput(0);
         let query1 = utils.getTextQueryInput(1);
+        let relocation0 = utils.getRelocationInput(0);
+        let relocation1 = utils.getRelocationInput(1);
         let filters = utils.getFiltersInput();
         let canvasQuery = utils.getCanvasQueryInput();
 
@@ -355,6 +375,8 @@ export default class ActionManagerService extends Service {
             screenshotData: screenData,
             q0: query0.trim(),
             q1: query1.trim(),
+            relocation0: relocation0,
+            relocation1: relocation1,
             filters,
             canvas_query: canvasQuery,
             is_save: (isSave ? true : false),

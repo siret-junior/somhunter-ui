@@ -14,6 +14,8 @@ export function hashQuery(q) {
         q1: q.q1.trim(),
         filters: q.filters,
         canvas_query: q.canvas_query,
+        relocation0: q.relocation0,
+        relocation1: q.relocation1,
     };
     return JSON.stringify(queryClean);
 }
@@ -25,6 +27,9 @@ export function isQueryEmpty(q) {
     if (q.canvas_query.length > 0) {
         return false;
     }
+
+    if (q.relocation0 != -1 || q.relocation1 != -1)
+        return false;
 
     return true;
 }
@@ -65,6 +70,14 @@ export function subCurrWord(str, currIdx, word) {
 
 export function getTextQueryInput(idx) {
     return document.getElementById(`textQueryInput${idx}`).value;
+}
+
+export function getRelocationInput(idx) {
+    let res = -1;
+    let el = document.getElementById(`relocationFrame${idx}`);
+    if (el)
+        res = parseInt(el.value);
+    return res;
 }
 
 export function getFiltersInput() {
