@@ -76,24 +76,21 @@ export default class DataLoaderService extends Service {
     setLastQuery(hash) {
         let lastQuery = this.store.peekRecord('last-query', 0);
 
-        if (!lastQuery) {
-            // LOG.D("hash query not there, pushing in: ", hash);
-            this.store.push({
-                data: [
-                    {
-                        id: 0,
-                        type: 'last-query',
-                        attributes: {
-                            lastQueryHash: hash,
-                        },
-                        relationships: {},
+        if (lastQuery)
+            lastQuery.deleteRecord();
+
+        this.store.push({
+            data: [
+                {
+                    id: 0,
+                    type: 'last-query',
+                    attributes: {
+                        lastQueryHash: hash,
                     },
-                ],
-            });
-        } else {
-            // LOG.D("Ooverriding prev hash with: ", hash);
-            lastQuery = hash;
-        }
+                    relationships: {},
+                },
+            ],
+        });
     }
 
     getSearchContext() {
