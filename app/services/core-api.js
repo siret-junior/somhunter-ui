@@ -31,7 +31,7 @@ export default class CoreApiService extends Service {
     }
 
     async fetchSomViewFrames(cbSucc = () => null, cbFail = (e) => null) {
-        const url = this.dataLoader.getEndpoint("handle__get_SOM_screen__POST");
+        const url = this.dataLoader.getEndpoint("search_get_som_display_post");
 
 
         // << Core API >>
@@ -61,7 +61,7 @@ export default class CoreApiService extends Service {
     }
 
     async fetchSomRelocationViewFrames(tempId, cbSucc = () => null, cbFail = (e) => null) {
-        const url = this.dataLoader.getEndpoint("handle__get_SOM_relocation_screen__POST");
+        const url = this.dataLoader.getEndpoint("search_get_som_relocation_display");
         const reqData = {
             temporalId: tempId,
         };
@@ -106,7 +106,7 @@ export default class CoreApiService extends Service {
             frameId: frameId,
         };
 
-        const url = this.dataLoader.getEndpoint("handle__get_top_screen__POST");
+        const url = this.dataLoader.getEndpoint("search_get_top_display");
 
         // << Core API >>
         this.post(url, reqData)
@@ -149,7 +149,7 @@ export default class CoreApiService extends Service {
             frameId: Number(frameId),
         };
 
-        const url = this.dataLoader.getEndpoint("handle__get_frame_detail_data__GET");
+        const url = this.dataLoader.getEndpoint("search_video_detail_get");
 
         // << Core API >>
         this.get(url, reqData)
@@ -190,7 +190,7 @@ export default class CoreApiService extends Service {
             frameId: Number(frameId),
         };
 
-        const url = this.dataLoader.getEndpoint("handle__get_frame_detail_data__GET");
+        const url = this.dataLoader.getEndpoint("search_video_detail_get");
 
         // << Core API >>
         this.get(url, reqData)
@@ -218,7 +218,7 @@ export default class CoreApiService extends Service {
     }
 
     fetchUserContext(cbSucc = () => null, cbFail = () => null) {
-        const url = this.dataLoader.getEndpoint("handle__user__context__GET");
+        const url = this.dataLoader.getEndpoint("user_context_get");
         this.get(url)
             .then((res2) => {
                 this.store.push({

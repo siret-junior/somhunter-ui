@@ -134,7 +134,7 @@ export default class ActionManagerService extends Service {
 
         this.actionManager.triggerEvent(EVENTS.BEFORE_BOOKMARK_FRAME, frame);
 
-        const url = this.dataLoader.getEndpoint("handle__search__bookmark__POST");
+        const url = this.dataLoader.getEndpoint("search_bookmark_frame");
         const reqData = {
             frameId: frameId,
         };
@@ -164,7 +164,7 @@ export default class ActionManagerService extends Service {
     }
 
     resetSearch() {
-        const reqUrl = this.dataLoader.getEndpoint("handle__reset_search_session__POST");
+        const reqUrl = this.dataLoader.getEndpoint("search_reset");
         // << Core API >>
         this.coreApi
             .post(reqUrl)
@@ -407,7 +407,7 @@ export default class ActionManagerService extends Service {
                 60000
             );
 
-            const url = this.dataLoader.getEndpoint("handle__rescore__POST");
+            const url = this.dataLoader.getEndpoint("search_rescore");
             LOG.W(url);
 
             // << Core API >>
@@ -451,7 +451,7 @@ export default class ActionManagerService extends Service {
         // <!>
         this.triggerEvent(EVENTS.BEFORE_LIKE_FRAME, frame);
 
-        const url = this.dataLoader.getEndpoint("handle__like_frame__POST");
+        const url = this.dataLoader.getEndpoint("search_like_frame");
 
         const reqData = {
             frameId: frameId,
