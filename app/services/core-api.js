@@ -149,7 +149,7 @@ export default class CoreApiService extends Service {
             frameId: Number(frameId),
         };
 
-        const url = this.dataLoader.getEndpoint("search_video_detail_get");
+        const url = this.dataLoader.getEndpoint("dataset_video_detail_get");
 
         // << Core API >>
         this.get(url, reqData)
@@ -190,7 +190,7 @@ export default class CoreApiService extends Service {
             frameId: Number(frameId),
         };
 
-        const url = this.dataLoader.getEndpoint("search_video_detail_get");
+        const url = this.dataLoader.getEndpoint("dataset_video_detail_get");
 
         // << Core API >>
         this.get(url, reqData)

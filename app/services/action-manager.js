@@ -78,7 +78,7 @@ export default class ActionManagerService extends Service {
         const search = this.dataLoader.getSearchContext();
 
         const srcSearchCtxId = search.id;
-        const url = this.dataLoader.getEndpoint("handle__search__context__POST");
+        const url = this.dataLoader.getEndpoint("search_context_post");
 
         // Take a screenshot
         let screenData = "";
@@ -207,7 +207,7 @@ export default class ActionManagerService extends Service {
             queryValue: prefix,
         };
 
-        const url = this.dataLoader.getEndpoint("handle__get_autocomplete_results__GET");
+        const url = this.dataLoader.getEndpoint("search_keyword_autocomplete");
 
         // << Core API >>
         this.coreApi
