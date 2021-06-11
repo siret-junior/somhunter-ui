@@ -14,7 +14,7 @@ module.exports = function (environment) {
         logLevel: 4, // 0 => nothing, 1 => +Errors, 2=> +Info, 3 => +Warnings, 4 => +Debug
 
         debug: true,
-        collectorMode: false, // To see collector buttons & stuff
+        collectorMode: true, // To see collector buttons & stuff
 
 
         EmberENV: {
