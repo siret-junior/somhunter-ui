@@ -5,6 +5,7 @@ import { tracked } from "@glimmer/tracking";
 import { inject as service } from "@ember/service";
 
 import { EVENTS, ELEM_IDS } from "../constants";
+import ENV from "somhunter-ui/config/environment";
 import LOG from "../logger";
 import utils from "../utils";
 
@@ -419,6 +420,10 @@ export default class ActionManagerService extends Service {
 
             // If failed
             if (!res) return;
+
+            if (ENV.debug){
+                document.getElementById("targetRank").innerHTML = res.target_position;
+            }
 
             this.coreApi.fetchUserContext(() => {
                 LOG.D("Rescored & fetched user context...");

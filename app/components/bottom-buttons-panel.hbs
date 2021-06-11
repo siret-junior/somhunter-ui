@@ -2,6 +2,9 @@
 
     <div class="row">
         <div class="col-12">
+            
+        </div>
+        <div class="col-12">
             <button type="button" class="btn-submit btn btn-secondary"
                 {{on "click" this.onSettingsBtnClick}}><i class="fa fa-cogs" aria-hidden="true"></i></button>
 
@@ -10,9 +13,11 @@
                     {{on "click" this.onDebugBtnClick}}><i class="fa fa-bug" aria-hidden="true"></i></button>
             {{/if}}
 
-            {{#if this.collectorMode}}
+            {{#if this.debug}}
                     <button type="button" class="btn-colletor btn btn-danger"
                     {{on "click" this.onCollectorBtnClick}}><i class="fa fa-credit-card" aria-hidden="true"></i></button>
+
+                    <span id="targetRank"></span>
             {{/if}}
 
         </div>
