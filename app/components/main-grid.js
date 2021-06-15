@@ -28,7 +28,7 @@ export default class MainGridComponent extends Component {
     modelReload() {
         this.frames = this.dataLoader.mainDisplayFrames();
         this.viewType = this.dataLoader.mainDisplayType();
-        this.prevScrollLogPosition = 0
+        this.prevScrollLogPosition = 0;
     }
     clearGrid() {
         this.frames = [];

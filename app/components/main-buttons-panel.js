@@ -21,12 +21,9 @@ export default class MainButtonsPanelComponent extends Component {
         this.debug = ENV.debug;
         this.collectorMode = ENV.collectorMode;
 
-        this.actionManager.registerEventHook(
-            EVENTS.NAME_VIEW_CHANGE,
-            () => {
-                this.updateActiveButton();
-            }
-        );
+        this.actionManager.registerEventHook(EVENTS.NAME_VIEW_CHANGE, () => {
+            this.updateActiveButton();
+        });
     }
 
     updateActiveButton() {
@@ -35,6 +32,7 @@ export default class MainButtonsPanelComponent extends Component {
         let allElements = [];
         allElements = allElements.concat([...document.querySelectorAll("." + ELEM_CLASSES.GOTO_SOM_BTN)]);
         allElements = allElements.concat([...document.querySelectorAll("." + ELEM_CLASSES.GOTO_TOP_SCORED_BTN)]);
+        allElements = allElements.concat([...document.querySelectorAll("." + ELEM_CLASSES.GOTO_TOP_SCORED_CONTEXT_BTN)]);
 
         let elements = [];
         switch (currDisplay) {
@@ -44,6 +42,10 @@ export default class MainButtonsPanelComponent extends Component {
 
             case displays.top_scored:
                 elements = elements.concat([...document.querySelectorAll("." + ELEM_CLASSES.GOTO_TOP_SCORED_BTN)]);
+                break;
+
+            case displays.top_scored_context:
+                elements = elements.concat([...document.querySelectorAll("." + ELEM_CLASSES.GOTO_TOP_SCORED_CONTEXT_BTN)]);
                 break;
 
             default:
@@ -61,6 +63,11 @@ export default class MainButtonsPanelComponent extends Component {
     @action
     onClickTopScoredBtn(e) {
         this.actionManager.gotoTopScoredView(0);
+    }
+
+    @action
+    onClickTopScoredContextBtn(e) {
+        this.actionManager.gotoTopScoredView(0, true);
     }
 
     @action

@@ -65,7 +65,12 @@ export default class FrameComponent extends Component {
 
     @action
     onSubmitBtnClick(e) {
-        this.actionManager.submitFrame(this.args.frame);
+        if (
+            window.confirm(
+                `Do you really want to submit frame '${this.args.frame.id}'?`
+            )
+        )
+            this.actionManager.submitFrame(this.args.frame);
         e.stopPropagation(); // Prevent the bubbling
     }
 

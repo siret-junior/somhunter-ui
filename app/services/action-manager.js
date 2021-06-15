@@ -320,8 +320,16 @@ export default class ActionManagerService extends Service {
         );
     }
 
-    gotoTopScoredView(pageIdx, cbSucc = () => null, cbFail = () => null) {
-        const dispType = this.dataLoader.getConfigStrings().display_types.top_scored;
+    gotoTopScoredView(
+        pageIdx,
+        withContext = false,
+        cbSucc = () => null,
+        cbFail = () => null
+    ) {
+        const types = this.dataLoader.getConfigStrings().display_types;
+        const dispType = withContext
+            ? types.top_scored_context
+            : types.top_scored;
 
         this.coreApi.fetchTopDispFrames(
             dispType,
