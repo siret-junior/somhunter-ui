@@ -503,6 +503,37 @@ export default class ActionManagerService extends Service {
         }
     }
 
+    async logScroll(delta, scrollArea) {
+        if (!delta) {
+            LOG.W("Wrong scroll delta " + delta);
+            return;
+        }
+
+        if (!scrollArea) {
+            LOG.W("Wrong scrollArea " + scrollArea);
+            return;
+        }
+
+        const url = this.dataLoader.getEndpoint("log_scroll_event");
+
+        const reqData = {
+            scrollArea: scrollArea,
+            delta: delta,
+        };
+
+        try {
+            this.coreApi.get(url, reqData);
+        } catch (e) {
+            // <!>
+            this.actionManager.triggerEvent(
+                EVENTS.DO_PUSH_NOTIF,
+                `Logging scroll failed`,
+                "error"
+            );
+            throw e;
+        }
+    }
+
     /* Member variables */
     @service coreApi;
     @service actionManager;

@@ -37,6 +37,7 @@ export default class MainGridComponent extends Component {
     onScroll(e) {
         const tarEl = e.target;
         const diff = tarEl.scrollHeight - tarEl.scrollTop - tarEl.clientHeight;
+        const t = new Date().getTime();
 
         if (diff < 500) {
             const viewTypes = this.dataLoader.getConfigStrings().display_types;
@@ -45,7 +46,6 @@ export default class MainGridComponent extends Component {
                 this.viewType === viewTypes.nearest_neighbours ||
                 this.viewType === viewTypes.top_scored_context
             ) {
-                const t = new Date().getTime();
                 if (this.prevFetchTimestamp + 2000 < t) {
                     this.prevFetchTimestamp = t;
 
@@ -58,6 +58,19 @@ export default class MainGridComponent extends Component {
                 }
             }
         }
+
+        if (
+            !this.prevScrollLogTime ||
+            t - this.prevScrollLogTime >
+                this.dataLoader.getConfig().core.eval_server.log_action_timeout
+        ) {
+            this.prevScrollLogTime = t;
+            this.actionManager.logScroll(
+                this.prevScrollLogPosition - e.currentTarget.scrollTop,
+                this.viewType
+            );
+            this.prevScrollLogPosition = e.currentTarget.scrollTop;
+        }
     }
 
     /* Member variables */
@@ -68,6 +81,9 @@ export default class MainGridComponent extends Component {
 
     currentPage = 0;
     prevFetchTimestamp = null;
+
+    prevScrollLogTime = null;
+    prevScrollLogPosition = 0;
 
     @tracked frames = undefined;
     @tracked viewType = undefined;
