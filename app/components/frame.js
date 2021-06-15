@@ -65,7 +65,7 @@ export default class FrameComponent extends Component {
 
     @action
     onSubmitBtnClick(e) {
-        alert(`Submitting frame with ID ${e.target.dataset.id}...`);
+        this.actionManager.submitFrame(this.args.frame);
         e.stopPropagation(); // Prevent the bubbling
     }
 

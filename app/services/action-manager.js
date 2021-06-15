@@ -503,6 +503,40 @@ export default class ActionManagerService extends Service {
         }
     }
 
+    async submitFrame(frame) {
+        const frameId = frame.id;
+        if (!frameId) throw Error("Invalid `frameId`: ", frameId);
+
+        const url = this.dataLoader.getEndpoint("eval_server_submit");
+
+        const reqData = {
+            frameId: frameId,
+        };
+
+        /* FORMAT: 
+        resData = {
+            frameId: 1153572,
+            isLiked: true,
+            status: 200
+        } */
+        try {
+            const resData = await this.coreApi.post(url, reqData);
+            this.actionManager.triggerEvent(
+                EVENTS.DO_PUSH_NOTIF,
+                `Correct: '${resData.result}'`,
+                resData.result ? "success" : "error"
+            );
+        } catch (e) {
+            // <!>
+            this.actionManager.triggerEvent(
+                EVENTS.DO_PUSH_NOTIF,
+                `Submitting '${frameId}' failed.`,
+                "error"
+            );
+            throw e;
+        }
+    }
+
     async logScroll(delta, scrollArea) {
         if (!delta) {
             LOG.W("Wrong scroll delta " + delta);
