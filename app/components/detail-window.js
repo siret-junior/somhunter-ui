@@ -179,9 +179,29 @@ export default class DetailWindowComponent extends Component {
         clearTimeout(this.downTimeoutHandle);
     }
 
+    @action
+    onScroll(e) {
+        const t = new Date().getTime();
+        if (
+            !this.prevScrollLogTime ||
+            t - this.prevScrollLogTime >
+                this.dataLoader.getConfig().core.eval_server.log_action_timeout
+        ) {
+            this.prevScrollLogTime = t;
+            this.actionManager.logScroll(
+                this.prevScrollLogPosition - e.currentTarget.scrollTop,
+                "video_detail"
+            );
+            this.prevScrollLogPosition = e.currentTarget.scrollTop;
+        }
+    }
+
     /* Member variables */
     @service actionManager;
     @service dataLoader;
+
+    prevScrollLogTime = null;
+    prevScrollLogPosition = 0;
 
     upTimeoutHandle = null;
     downTimeoutHandle = null;

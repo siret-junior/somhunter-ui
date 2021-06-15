@@ -140,6 +140,17 @@ export default class ReplayWindowComponent extends Component {
             this.displayedFrom,
             this.displayedTo
         );
+
+        const t = new Date().getTime();
+
+        if (
+            !this.prevScrollLogTime ||
+            t - this.prevScrollLogTime >
+                this.dataLoader.getConfig().core.eval_server.log_action_timeout
+        ) {
+            this.prevScrollLogTime = t;
+            this.actionManager.logScroll(deltaY, "video_replay");
+        }
     }
 
     /* Member variables */
@@ -158,6 +169,8 @@ export default class ReplayWindowComponent extends Component {
 
     displayedFrom = 0;
     displayedTo = 0;
+
+    prevScrollLogTime = null;
 
     allFrames = undefined;
 }
