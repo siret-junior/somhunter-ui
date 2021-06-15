@@ -5,6 +5,7 @@ import { tracked } from "@glimmer/tracking";
 import { inject as service } from "@ember/service";
 
 import { EVENTS, ELEM_IDS } from "../constants";
+import LOG from "../logger";
 
 export default class IndexController extends Controller {
     /* Member methods */
@@ -22,22 +23,52 @@ export default class IndexController extends Controller {
 
     @action
     onGlobalKeyDown(e) {
-        switch (e.which) {
-            case 27: // ESC
+        // General keys
+        switch (e.key) {
+            case "Escape":
                 this.actionManager.globalKeyHandler(EVENTS.GLOBAL_ESC_KEY_DOWN);
                 break;
 
-            case 13: // enter
-                this.actionManager.globalKeyHandler(
-                    EVENTS.GLOBAL_ENTER_KEY_DOWN
-                );
+            case "Enter":
+                if (e.shiftKey) {
+                    this.actionManager.globalKeyHandler(
+                        EVENTS.GLOBAL_SHIFT_ENTER_KEY_DOWN
+                    );
+                } else {
+                    this.actionManager.globalKeyHandler(
+                        EVENTS.GLOBAL_ENTER_KEY_DOWN
+                    );
+                }
                 break;
 
-            case 9: // tab
+            case "Tab":
                 this.actionManager.globalKeyHandler(EVENTS.GLOBAL_TAB_KEY_DOWN);
                 e.stopPropagation();
                 e.preventDefault();
                 break;
+        }
+
+        // Global keys only if not writing
+        if (!document.activeElement.id.startsWith("textQueryInput")) {
+            switch (e.key) {
+                case "s":
+                    this.actionManager.globalKeyHandler(
+                        EVENTS.GLOBAL_s_KEY_DOWN
+                    );
+                    break;
+
+                case "t":
+                    this.actionManager.globalKeyHandler(
+                        EVENTS.GLOBAL_t_KEY_DOWN
+                    );
+                    break;
+
+                case "T":
+                    this.actionManager.globalKeyHandler(
+                        EVENTS.GLOBAL_T_KEY_DOWN
+                    );
+                    break;
+            }
         }
     }
 

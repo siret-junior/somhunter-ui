@@ -52,6 +52,8 @@ export default class TextAutocompleteComponent extends Component {
                 if (this.suggestions.length <= 0) return;
 
                 this.setChosenWord(this.suggestions[this.selIdx].wordString);
+                e.stopPropagation();
+                e.preventDefault();
 
                 break;
 

@@ -27,7 +27,11 @@ export const EVENTS = {
 
     GLOBAL_ESC_KEY_DOWN: "globalEscKeyDown",
     GLOBAL_ENTER_KEY_DOWN: "globalEnterKeyDown",
+    GLOBAL_SHIFT_ENTER_KEY_DOWN: "globalShiftEnterKeyDown",
     GLOBAL_TAB_KEY_DOWN: "globalTabKeyDown",
+    GLOBAL_T_KEY_DOWN: "globalTKeyDown",
+    GLOBAL_t_KEY_DOWN: "globaltKeyDown",
+    GLOBAL_s_KEY_DOWN: "globalsKeyDown",
 
     DO_PUSH_NOTIF: "DO_PUSH_NOTIF",
     BLOCK_WITH_NOTIFICATION: "BLOCK_WITH_NOTIFICATION",

@@ -24,6 +24,32 @@ export default class MainButtonsPanelComponent extends Component {
         this.actionManager.registerEventHook(EVENTS.NAME_VIEW_CHANGE, () => {
             this.updateActiveButton();
         });
+
+        this.actionManager.registerEventHook(EVENTS.GLOBAL_s_KEY_DOWN, () => {
+            this.onClickSomBtn();
+        });
+
+        this.actionManager.registerEventHook(EVENTS.GLOBAL_t_KEY_DOWN, () => {
+            this.onClickTopScoredBtn();
+        });
+
+        this.actionManager.registerEventHook(EVENTS.GLOBAL_T_KEY_DOWN, () => {
+            this.onClickTopScoredContextBtn();
+        });
+
+        this.actionManager.registerEventHook(
+            EVENTS.GLOBAL_ENTER_KEY_DOWN,
+            () => {
+                this.onClickRescoreTopScoredBtn();
+            }
+        );
+
+        this.actionManager.registerEventHook(
+            EVENTS.GLOBAL_SHIFT_ENTER_KEY_DOWN,
+            () => {
+                this.onClickRescoreTopScoredContextBtn();
+            }
+        );
     }
 
     updateActiveButton() {
@@ -53,10 +79,10 @@ export default class MainButtonsPanelComponent extends Component {
         }
 
         if (allElements.length > 0) {
-            allElements.forEach(x => x.classList.remove(ELEM_CLASSES.ACTIVE_BUTTON))
+            allElements.forEach(x => x.classList.remove(ELEM_CLASSES.ACTIVE_BUTTON));
         }
         if (elements.length > 0) {
-            elements.forEach(x => x.classList.add(ELEM_CLASSES.ACTIVE_BUTTON))
+            elements.forEach(x => x.classList.add(ELEM_CLASSES.ACTIVE_BUTTON));
         }
     }
 
@@ -79,6 +105,12 @@ export default class MainButtonsPanelComponent extends Component {
     async onClickRescoreTopScoredBtn(e) {
         await this.actionManager.rescore();
         this.actionManager.gotoTopScoredView(0);
+    }
+
+    @action
+    async onClickRescoreTopScoredContextBtn(e) {
+        await this.actionManager.rescore();
+        this.actionManager.gotoTopScoredView(0, true);
     }
 
     @action
