@@ -557,7 +557,7 @@ export default class ActionManagerService extends Service {
         try {
             const resData = await this.coreApi.post(url, reqData);
             alert(
-                `Logout to eval server ${
+                `Login to eval server ${
                     resData.result ? "completed" : "failed"
                 }.`
             );
