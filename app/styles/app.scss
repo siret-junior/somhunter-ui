@@ -852,3 +852,25 @@ div.canvas-wrapper:nth-child(2) {
 .rescore-btns-const hr {
     display: none;
 }
+
+.btn-reloc {
+    
+}
+
+.relocation-panel {
+    height: 0;
+}
+
+.relocation-btn-cont  {
+    text-align: left;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.relocation-btn-cont.right {
+    text-align: right;
+}
+
+.relocation-frame .frame-overlay {
+    display: none !important;
+}

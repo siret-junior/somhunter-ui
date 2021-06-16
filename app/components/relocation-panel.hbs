@@ -2,9 +2,9 @@
 
 <div class="relocation-panel container-fluid col-12">
     <div class="row">
-        <div class="col-3 p-0 pr-3">
-            <button type="button" data-id=0 class="btn-detail btn btn-primary" {{on "click"
-                this.onRelocationBtnClick0}}>Reloc.</button>
+        <div class="relocation-btn-cont  col-2 p-0 pr-3">
+            <button type="button" data-id=0 class="btn-reloc btn btn-primary" {{on "click"
+                this.onRelocationBtnClick0}}><i class="fas fa-external-link-alt" aria-hidden="true"></i></button>
 
         </div>
         <div class="col-3 relocation-frame">
@@ -14,12 +14,7 @@
                 <input type="hidden" id="relocationFrame0" value={{this.relocation0.id}}/>
             {{/if}}
         </div>
-
-        <div class="col-3 p-0 pr-3">
-            <button type="button" data-id=1 class="btn-detail btn btn-primary" {{on "click"
-                this.onRelocationBtnClick1}}>Reloc.</button>
-
-        </div>
+        <div class="col-2"></div>
         <div class="col-3 relocation-frame">
             {{#if this.relocation1}}
                 <Frame @frame={{this.relocation1}}  />
@@ -27,5 +22,11 @@
                 <input type="hidden" id="relocationFrame1" value={{this.relocation1.id}} />
             {{/if}}
         </div>
+        <div class="relocation-btn-cont right col-2 p-0 pr-3">
+            <button type="button" data-id=1 class="btn-reloc btn btn-primary" {{on "click"
+                this.onRelocationBtnClick1}}><i class="fas fa-external-link-alt" aria-hidden="true"></i></button>
+
+        </div>
+        
     </div>
 </div>
