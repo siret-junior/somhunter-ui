@@ -79,6 +79,7 @@ span {
 
 .btn {
     border-radius: 0;
+    
     &.btn-primary {
         background-color: lighten(map-get($map: $theme-colors, $key: "primary"), 0%);
         border: 1px solid lighten(map-get($map: $theme-colors, $key: "white"), 0%);
@@ -590,7 +591,8 @@ div.canvas-wrapper:nth-child(2) {
     font-size: 0;
 
     .btn {
-        width: calc(50% - 4px);
+        width: calc(33% - 4px);
+        height: 100%;
         border-radius: 0;
         margin: 2px;
     }

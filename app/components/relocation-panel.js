@@ -9,7 +9,7 @@ export default class RelocationPanelComponent extends Component {
     /* Member methods */
     constructor() {
         super(...arguments);
-        
+
         this.actionManager.registerEventHook(
             EVENTS.SET_RELOCATION,
             this.onSetRelocation.bind(this)
@@ -32,8 +32,10 @@ export default class RelocationPanelComponent extends Component {
     onReload() {
         let rel0 = this.args.model.userContext.search.relocation[0];
         let rel1 = this.args.model.userContext.search.relocation[1];
-        this.relocation0 = rel0 == undefined || rel0.id == undefined ? undefined : rel0;
-        this.relocation1 = rel1 == undefined || rel1.id == undefined ? undefined : rel1;
+        this.relocation0 =
+            rel0 == undefined || rel0.id == undefined ? undefined : rel0;
+        this.relocation1 =
+            rel1 == undefined || rel1.id == undefined ? undefined : rel1;
     }
 
     @action

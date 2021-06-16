@@ -27,6 +27,11 @@ export default class QueryCanvasComponent extends Component {
         this.index = this.args.index;
         this.initActive = this.index == 0 ? true : false;
         this.canvasElemId = ELEM_IDS.CANVAS_QUERY_PREFIX + this.index;
+
+        this.actionManager.registerEventHook(
+            EVENTS.RELOAD_USER_CONTEXT,
+            this.onReload.bind(this)
+        );
     }
 
     didUpdateAttrs(elem, [updatedStructure]) {}
@@ -38,13 +43,21 @@ export default class QueryCanvasComponent extends Component {
         draggableAndResizable(elements, par);
     }
 
+    onReload() {
+        const canvases = document.querySelectorAll(".collage-canvas");
+        canvases.forEach((x) => {
+            // TODO
+            //x.innerHTML = "";
+        });
+    }
+
     @action
     onClickQueryCanvas(queryIdx, e) {
         const el = e.currentTarget;
 
         const canvases = document.querySelectorAll(".collage-canvas");
         canvases.forEach((x) => {
-            x.parentElement.classList.remove("active")
+            x.parentElement.classList.remove("active");
             x.classList.remove("paste-active");
         });
         el.classList.add("paste-active");
