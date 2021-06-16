@@ -523,17 +523,23 @@ export default class ActionManagerService extends Service {
 
         /* FORMAT: 
         resData = {
-            frameId: 1153572,
-            isLiked: true,
-            status: 200
+            frameId: 1153572
         } */
         try {
             const resData = await this.coreApi.post(url, reqData);
-            this.actionManager.triggerEvent(
-                EVENTS.DO_PUSH_NOTIF,
-                `Correct: '${resData.result}'`,
-                resData.result ? "success" : "error"
-            );
+            if (resData) {
+                this.actionManager.triggerEvent(
+                    EVENTS.DO_PUSH_NOTIF,
+                    `Correct: '${resData.result}'`,
+                    resData.result ? "success" : "error"
+                );
+            } else {
+                this.actionManager.triggerEvent(
+                    EVENTS.DO_PUSH_NOTIF,
+                    `Submitting '${frameId}' failed. You are probably not logged in!`,
+                    "error"
+                );
+            }
         } catch (e) {
             // <!>
             this.actionManager.triggerEvent(
@@ -541,6 +547,40 @@ export default class ActionManagerService extends Service {
                 `Submitting '${frameId}' failed.`,
                 "error"
             );
+            throw e;
+        }
+    }
+
+    async login() {
+        const url = this.dataLoader.getEndpoint("login_to_eval_server");
+        const reqData = {};
+        try {
+            const resData = await this.coreApi.post(url, reqData);
+            alert(
+                `Logout to eval server ${
+                    resData.result ? "completed" : "failed"
+                }.`
+            );
+        } catch (e) {
+            // <!>
+            alert(`Login to eval server failed`);
+            throw e;
+        }
+    }
+
+    async logout() {
+        const url = this.dataLoader.getEndpoint("logout_from_eval_server");
+        const reqData = {};
+        try {
+            const resData = await this.coreApi.post(url, reqData);
+            alert(
+                `Logout from eval server ${
+                    resData.result ? "completed" : "failed"
+                }.`
+            );
+        } catch (e) {
+            // <!>
+            alert(`Logout from eval server failed`);
             throw e;
         }
     }

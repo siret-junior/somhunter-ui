@@ -34,6 +34,16 @@ export default class SettingsWindowComponent extends Component {
         this.windowVisible = false;
     }
 
+    @action
+    login() {
+        this.actionManager.login();
+    }
+
+    @action
+    logout() {
+        this.actionManager.logout();
+    }
+
     /* Member variables */
     @service actionManager;
     @tracked coreSettings;
