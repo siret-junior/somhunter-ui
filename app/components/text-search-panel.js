@@ -14,6 +14,7 @@ export default class TextSearchPanelComponent extends Component {
             EVENTS.GLOBAL_TAB_KEY_DOWN,
             this.switchInput
         );
+
     }
 
     @action

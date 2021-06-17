@@ -17,6 +17,8 @@ function draggableAndResizable(elements, containment) {
         containment: containment,
         aspectRatio: false,
     });
+
+    
 }
 
 function deleteElementByUid(uid) {
@@ -36,6 +38,8 @@ export default class CanvasQueryPanelComponent extends Component {
         this.collage_canvases = $(".collage-canvas");
 
         this.texts = [[], []];
+
+        this.features = this.dataLoader.getConfigUi().features;
     }
 
     didUpdateAttrs(elem, [updatedStructure]) {
@@ -75,4 +79,5 @@ export default class CanvasQueryPanelComponent extends Component {
 
     /* Member variables */
     @service actionManager;
+    @service dataLoader;
 }

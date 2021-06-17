@@ -69,7 +69,11 @@ export function subCurrWord(str, currIdx, word) {
 }
 
 export function getTextQueryInput(idx) {
-    return document.getElementById(`textQueryInput${idx}`).value;
+    const inp = document.getElementById(`textQueryInput${idx}`);
+    if (!inp) {
+        return "";
+    }
+    return inp.value;
 }
 
 export function getRelocationInput(idx) {
@@ -125,6 +129,11 @@ function get_raw_img(img) {
 }
 
 function collectCanvasQueries(queryCanvasEl) {
+
+    if (!queryCanvasEl) {
+        return [];
+    }
+
     const maxImageWidth = 224;
     const subqueriesElems = queryCanvasEl.querySelectorAll(
         `.${ELEM_CLASSES.CANVAS_QUERY_CONT}`

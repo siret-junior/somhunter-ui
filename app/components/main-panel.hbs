@@ -3,19 +3,30 @@
 
 <TopButtonsPanel />
 
-<TextSearchPanel @model={{@model}} />
+{{#if this.features.allow_plain_text_quey}}
+    <TextSearchPanel @model={{@model}} />
+{{/if}}
 
-<RelocationPanel @model={{@model}} />
+{{#if this.features.allow_relocation}}
+    <RelocationPanel @model={{@model}} />
+{{/if}}
 
-<CanvasQueryPanel @model={{@model}} />
+{{#if this.features.allow_canvas_query}}
+    <CanvasQueryPanel @model={{@model}} />
+{{/if}}
 
-<LikesPanel @frames={{@model.userContext.search.likedFrames}} />
+{{#if this.features.show_likes_panel}}
+    <LikesPanel @frames={{@model.userContext.search.likedFrames}} />
+{{/if}}
 
 <MainButtonsPanel @model={{@model}}/>
 
-<BookmarksPanel @frames={{@model.userContext.bookmarkedFrames}} />
+{{#if this.features.show_bookmarks_panel}}
+    <BookmarksPanel @frames={{@model.userContext.bookmarkedFrames}} />
+{{/if}}
 
-<HistoryPanel @model={{@model}} />
-
+{{#if this.features.allow_history_switch}}
+    <HistoryPanel @model={{@model}} />
+{{/if}}
 
 <BottomButtonsPanel @model={{@model}} />

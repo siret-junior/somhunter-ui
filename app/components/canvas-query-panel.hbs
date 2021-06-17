@@ -10,9 +10,12 @@
             
             <QueryCanvas @onRemoveItem={{this.onRemoveItem}} @index=0 @texts={{this.texts.[0]}} @model={{@model}} />
             <div class="query-canvas-connector-cont">
+                {{#if this.features.allow_canvas_query_text}}
                 <a
                     {{on "click" this.onClickAddTextBtn}}
                      class="btn btn-success add-collage-text-query">+</a>
+
+                {{/if}}
                 <span class="canvas text-divider"><i class="fa fa-arrow-right" aria-hidden="true"></i></span>
             </div>
 
@@ -20,7 +23,8 @@
 
         </div>
     </div>
-
+    
+{{#if this.features.allow_canvas_query_bitmap}}
     <script>
         let collage_temporal_queries;
         let collage_canvases;
@@ -95,4 +99,6 @@
         });
     
     </script>
+
+     {{/if}}
 </section>
