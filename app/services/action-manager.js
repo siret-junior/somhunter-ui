@@ -180,6 +180,8 @@ export default class ActionManagerService extends Service {
                             EVENTS.DO_PUSH_NOTIF,
                             "Search reset!"
                         );
+
+                        this.triggerEvent(EVENTS.AFTER_RESET_SEARCH);
                     },
                     () =>
                         this.actionManager.triggerEvent(

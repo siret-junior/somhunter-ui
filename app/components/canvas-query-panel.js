@@ -40,6 +40,16 @@ export default class CanvasQueryPanelComponent extends Component {
         this.texts = [[], []];
 
         this.features = this.dataLoader.getConfigUi().features;
+
+        this.actionManager.registerEventHook(
+            EVENTS.AFTER_RESET_SEARCH,
+            () => {
+
+                this.texts = [[], []];
+                document.querySelectorAll(".canvas-query").forEach( x => x.remove() );
+            }
+
+        );
     }
 
     didUpdateAttrs(elem, [updatedStructure]) {
