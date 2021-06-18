@@ -280,7 +280,7 @@ div.canvas-wrapper:nth-child(2) {
     z-index: 1001;
     .text-suggestions-item {
         padding: 0.3rem 1rem 0.3rem 1rem;
-
+        color: #fff;
         &.selected {
             background: rgba(map-get($theme-colors, "secondary"), 0.6);
         }
