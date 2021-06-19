@@ -300,6 +300,13 @@ export default class ActionManagerService extends Service {
             utils.resetMainGridScroll();
         }
 
+        this.actionManager.triggerEvent(
+            EVENTS.BLOCK_WITH_NOTIFICATION,
+            "Fetching the display...",
+            "...",
+            60000
+        );
+
         const dispType = this.dataLoader.getConfigStrings().display_types.nearest_neighbours;
 
         this.coreApi.fetchTopDispFrames(
@@ -308,10 +315,14 @@ export default class ActionManagerService extends Service {
             frameId,
             null,
             () => {
+                this.actionManager.triggerEvent(EVENTS.UNBLOCK_WITH_NOTIFICATION);
                 this.triggerEvent(EVENTS.NAME_VIEW_CHANGE);
                 cbSucc();
             },
-            () => cbFail()
+            () => {
+                this.actionManager.triggerEvent(EVENTS.UNBLOCK_WITH_NOTIFICATION);
+                cbFail();
+                }
         );
     }
 
@@ -346,27 +357,55 @@ export default class ActionManagerService extends Service {
             ? types.top_scored_context
             : types.top_scored;
 
+        this.actionManager.triggerEvent(
+            EVENTS.BLOCK_WITH_NOTIFICATION,
+            "Fetching the display...",
+            "...",
+            60000
+        );
+
         this.coreApi.fetchTopDispFrames(
             dispType,
             pageIdx,
             0,
             null,
             () => {
+                this.actionManager.triggerEvent(EVENTS.UNBLOCK_WITH_NOTIFICATION);
+
                 this.triggerEvent(EVENTS.NAME_VIEW_CHANGE);
                 cbSucc();
             },
-            () => cbFail()
+            () => {
+                cbFail();
+                this.actionManager.triggerEvent(EVENTS.UNBLOCK_WITH_NOTIFICATION);
+
+            }
         );
+
+        
     }
 
     gotoSomView(cbSucc = () => null, cbFail = () => null) {
         const dispType = this.dataLoader.getConfigStrings().display_types.SOM;
+
+        
+        this.actionManager.triggerEvent(
+            EVENTS.BLOCK_WITH_NOTIFICATION,
+            "Fetching the display...",
+            "...",
+            60000
+        );
+
         this.coreApi.fetchSomViewFrames(
             () => {
+                this.actionManager.triggerEvent(EVENTS.UNBLOCK_WITH_NOTIFICATION);
                 this.triggerEvent(EVENTS.NAME_VIEW_CHANGE);
                 cbSucc();
             },
-            () => cbFail()
+            () =>  {
+                this.actionManager.triggerEvent(EVENTS.UNBLOCK_WITH_NOTIFICATION);
+                cbFail();
+            }
         );
     }
 
@@ -391,6 +430,7 @@ export default class ActionManagerService extends Service {
         let filters = utils.getFiltersInput();
         let canvasQuery = utils.getCanvasQueryInput();
 
+        LOG.W("...")
         // POST data
         const reqData = {
             srcSearchCtxId: srcSearchCtxId,
