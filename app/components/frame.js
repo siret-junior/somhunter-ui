@@ -44,10 +44,15 @@ export default class FrameComponent extends Component {
 
     @action
     onClickFrame(e) {
-        if (this.args.onClick !== undefined)
-            this.args.onClick(this.args.frame);
-        else
-            this.actionManager.likeFrame(this.args.frame);
+        if (e.altKey) {
+            this.actionManager.submitFrame(this.args.frame);
+        } else {
+            if (this.args.onClick !== undefined) {
+                this.args.onClick(this.args.frame);
+            } else {
+                this.actionManager.likeFrame(this.args.frame);
+            }
+        }
         e.stopPropagation(); // Prevent the bubbling
     }
 
