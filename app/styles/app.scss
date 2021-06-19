@@ -135,6 +135,9 @@ span {
     background-position: center;
     background-repeat: no-repeat;
 
+    &.empty {
+        pointer-events: none;
+    }
     &.liked {
         &:before {
             content: "";
