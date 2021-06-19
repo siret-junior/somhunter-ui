@@ -166,6 +166,13 @@ export default class ActionManagerService extends Service {
     }
 
     resetSearch() {
+        this.actionManager.triggerEvent(
+            EVENTS.BLOCK_WITH_NOTIFICATION,
+            "Resetting the session!",
+            "...",
+            12000
+        );
+
         const reqUrl = this.dataLoader.getEndpoint("search_reset");
         // << Core API >>
         this.coreApi
@@ -181,15 +188,19 @@ export default class ActionManagerService extends Service {
                             EVENTS.DO_PUSH_NOTIF,
                             "Search reset!"
                         );
+                        this.actionManager.triggerEvent(EVENTS.UNBLOCK_WITH_NOTIFICATION);
 
                         this.triggerEvent(EVENTS.AFTER_RESET_SEARCH);
                     },
-                    () =>
+                    () =>{
                         this.actionManager.triggerEvent(
                             EVENTS.DO_PUSH_NOTIF,
                             "Reset search failed!",
                             "error"
-                        )
+                        );
+                        this.actionManager.triggerEvent(EVENTS.UNBLOCK_WITH_NOTIFICATION);
+                    
+                    }
                 );
             })
             .catch((e) => {
@@ -199,6 +210,7 @@ export default class ActionManagerService extends Service {
                     "Reset search failed!",
                     "error"
                 );
+                this.actionManager.triggerEvent(EVENTS.UNBLOCK_WITH_NOTIFICATION);
             });
     }
 
