@@ -27,3 +27,4 @@
 
 config/environment.js
 run.sh
+package-lock.json
