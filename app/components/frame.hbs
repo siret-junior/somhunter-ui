@@ -4,17 +4,19 @@
     {{on "wheel" this.onWheel}}
     {{on "click" this.onClickFrame}}
 >
-    <div class="frame-overlay"data-id={{@frame.id}} >
-        <button type="button" class="btn-bookmark btn btn-warning"
-            data-id={{@frame.id}} {{on "click" this.onBookmarkBtnClick}}><i class="fa fa-star" aria-hidden="true"></i></button>            
+    {{#if this.isFrameDefined}}
+        <div class="frame-overlay"data-id={{@frame.id}} >
+            <button type="button" class="btn-bookmark btn btn-warning"
+                data-id={{@frame.id}} {{on "click" this.onBookmarkBtnClick}}><i class="fa fa-star" aria-hidden="true"></i></button>            
 
-        <button type="button" class="btn-submit btn btn-success"
-            data-id={{@frame.id}} {{on "click" this.onSubmitBtnClick}}><i class="fa fa-check" aria-hidden="true"></i></button>            
+            <button type="button" class="btn-submit btn btn-success"
+                data-id={{@frame.id}} {{on "click" this.onSubmitBtnClick}}><i class="fa fa-check" aria-hidden="true"></i></button>            
 
-        <button type="button" data-id={{@frame.id}} class="btn-detail btn btn-primary"
-            {{on "click" this.onDetailBtnClick}}>Detail</button>            
+            <button type="button" data-id={{@frame.id}} class="btn-detail btn btn-primary"
+                {{on "click" this.onDetailBtnClick}}>Detail</button>            
 
-        <button type="button" data-id={{@frame.id}} class="btn-knn btn btn-primary"
-            {{on "click" this.onKnnBtnClick}}>k-NN</button>            
-    </div>    
+            <button type="button" data-id={{@frame.id}} class="btn-knn btn btn-primary"
+                {{on "click" this.onKnnBtnClick}}>k-NN</button>            
+        </div>  
+    {{/if}}  
 </div>

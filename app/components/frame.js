@@ -13,12 +13,14 @@ export default class FrameComponent extends Component {
     /* Member methods */
     constructor() {
         super(...arguments);
+        this.isFrameDefined = this.args.frame.id !== null;
     }
 
     @action
     refresh() {
         LOG.D("Doing the `main-grid.js` component controller refresh!");
         this.modelReload();
+        this.isFrameDefined = this.args.frame.id !== null;
     }
 
     @action
@@ -81,6 +83,7 @@ export default class FrameComponent extends Component {
 
     /* Member variables */
     @service actionManager;
+    isFrameDefined = true;
 
     thumbsUrlPrefix = ENV.dataServerUrl + "/thumbs/";
 }
