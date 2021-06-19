@@ -102,8 +102,8 @@ export function getFiltersInput() {
     const lowerCheckbox = document.getElementById("datasetPart0");
     const upperCheckbox = document.getElementById("datasetPart1");
 
-    const part0 = (lowerCheckbox ? lowerCheckbox.checked : false);
-    const part1 = (upperCheckbox ? upperCheckbox.checked : false);
+    const part0 = (lowerCheckbox ? lowerCheckbox.checked : true);
+    const part1 = (upperCheckbox ? upperCheckbox.checked : true);
 
     LOG.W(`Dataset filters: ${part0}, ${part1}`);
 
