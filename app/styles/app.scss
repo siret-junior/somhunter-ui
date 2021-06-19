@@ -571,7 +571,7 @@ div.canvas-wrapper:nth-child(2) {
             left: 50%;
             transform: translate(-50%, -50%);
             font-size: 1rem;
-            color: theme-color-level($color-name: "green", $level: 0);
+            color: theme-color-level($color-name: "white", $level: 0);
             pointer-events: none;
             //display: none;
         }
@@ -919,5 +919,29 @@ div.canvas-wrapper:nth-child(2) {
         img {
             width: 100%;
         }
+    }
+}
+
+.meta-data-cont {
+    color: #fff;
+    background: rgba(#000, 0.8);
+    position: absolute;
+    left: 0;
+    top: 0;
+    padding: 3px 4px;
+    line-height: 1.2;
+
+    .video-ID {
+        font-weight: 900;
+    }
+
+    .shot-ID {
+        color: darken(#fff, 20%);
+        font-weight: 500;
+    }
+
+    .frame-ID {
+        color: darken(#fff, 40%);
+        font-weight: 100;
     }
 }

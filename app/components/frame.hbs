@@ -7,6 +7,11 @@
 >
     
         <div class="frame-overlay"data-id={{@frame.id}} >
+            <span class="meta-data-cont">
+                <span class="video-ID">{{@frame.vId}}</span>|
+                <span class="shot-ID">{{@frame.sId}}</span>|
+                <span class="frame-ID">{{@frame.id}}</span>
+            </span>
             <button type="button" class="btn-bookmark btn btn-warning"
                 data-id={{@frame.id}} {{on "click" this.onBookmarkBtnClick}}><i class="fa fa-star" aria-hidden="true"></i></button>            
 
