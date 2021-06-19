@@ -13,14 +13,14 @@ export default class FrameComponent extends Component {
     /* Member methods */
     constructor() {
         super(...arguments);
-        this.isFrameDefined = this.args.frame.id !== null;
+        this.isFrameDefined = this.args.frame?.id !== null;
     }
 
-    @action
+    @action 
     refresh() {
         LOG.D("Doing the `main-grid.js` component controller refresh!");
         this.modelReload();
-        this.isFrameDefined = this.args.frame.id !== null;
+        this.isFrameDefined = this.args.frame?.id !== null;
     }
 
     @action
