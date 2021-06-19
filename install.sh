@@ -5,5 +5,6 @@ printf "\tInstalling 'somhunter-ui'...\n"
 
 npm install
 #npm install -g ember-cli
+npx ember build
 
 printf "\tDone installing 'somhunter-ui'...\n"
