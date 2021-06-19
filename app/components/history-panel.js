@@ -19,7 +19,7 @@ export default class HistoryPanelComponent extends Component {
     @action
     didUpdateAttrs(elem, [x]) {
         this.currentSearchId = x.userContext.search.id;
-        this.historyItems = x.userContext.history;
+        this.historyItems = x.userContext.history.reverse();
     }
 
     @action
@@ -33,7 +33,7 @@ export default class HistoryPanelComponent extends Component {
         this.actionManager.switchSearchContext(hId);
     }
 
-    @tracked historyItems = this.args.model.userContext.history;
+    @tracked historyItems = this.args.model.userContext.history.reverse();
     @tracked currentSearchId = this.args.model.userContext.search.id;
 
     /* Member variables */

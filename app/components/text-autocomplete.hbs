@@ -20,6 +20,12 @@
             {{on "click" (fn this.setChosenWord s.wordString) }}
           >
             {{s.wordString}}
+
+              <ul class="keyword-example-frames-list">
+                {{#each s.exampleFrames as |frameSrc|}}
+                    <li class="example-frame"><img src="{{this.thumbsUrlPrefix}}{{frameSrc}}"></li>
+                    {{/each}}
+                </ul>
             </li>      
         {{/each}}
     </ul>

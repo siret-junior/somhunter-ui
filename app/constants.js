@@ -16,6 +16,8 @@ export const EVENTS = {
     HIDE_DETAIL: "hideDetail",
     LOAD_DETAIL: "loadDetail",
 
+    HIDE_AUTOCOMPLETE: "hideAutocomplte",
+
     SHOW_RELOCATION: "showRelocation",
     HIDE_RELOCATION: "hideRelocation",
     LOAD_RELOCATION: "loadRelocation",

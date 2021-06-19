@@ -84,12 +84,35 @@ export function getRelocationInput(idx) {
     return res;
 }
 
+export function throttle (callback, limit) {
+    var waiting = false;                      // Initially, we're not waiting
+    return function () {                      // We return a throttled function
+        if (!waiting) {                       // If we're not waiting
+            callback.apply(this, arguments);  // Execute users function
+            waiting = true;                   // Prevent future invocations
+            setTimeout(function () {          // After a period of time
+                waiting = false;              // And allow future invocations
+            }, limit);
+        }
+    }
+}
+
 export function getFiltersInput() {
+
+    const lowerCheckbox = document.getElementById("datasetPart0");
+    const upperCheckbox = document.getElementById("datasetPart1");
+
+    const part0 = (lowerCheckbox ? lowerCheckbox.checked : false);
+    const part1 = (upperCheckbox ? upperCheckbox.checked : false);
+
+    LOG.W(`Dataset filters: ${part0}, ${part1}`);
+
     // \todo Undummy
     return {
         weekdays: [true, true, true, true, true, true, true],
         hoursFrom: 0,
         hoursTo: 24,
+        datasetFilter: [part0 , part1]
     };
     /*
     const filtersContEl = document.getElementById("queryFilters");
@@ -202,6 +225,6 @@ export function getCanvasQueryInput() {
     if (cq0.length != 0) res.push(cq0);
     if (cq1.length != 0) res.push(cq1);
 
-    LOG.D("canvasQuery: ", res);
+    //LOG.D("canvasQuery: ", res);
     return res;
 }

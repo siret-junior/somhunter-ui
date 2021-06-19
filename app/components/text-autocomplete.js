@@ -23,6 +23,11 @@ export default class TextAutocompleteComponent extends Component {
             EVENTS.GLOBAL_ESC_KEY_DOWN,
             this.hideAutocompleteWindow
         );
+
+        this.actionManager.registerEventHook(
+            EVENTS.HIDE_AUTOCOMPLETE,
+            this.hideAutocompleteWindow
+        );
     }
 
     @action
@@ -84,6 +89,7 @@ export default class TextAutocompleteComponent extends Component {
         this.actionManager.getTextAutocompleteSuggestions(
             currValue,
             (suggs) => {
+                this.actionManager.triggerEvent(EVENTS.HIDE_AUTOCOMPLETE);
                 this.suggestions = suggs;
             },
             (e) => {
@@ -106,7 +112,7 @@ export default class TextAutocompleteComponent extends Component {
 
     /* Member variables */
     @service actionManager;
-
+    thumbsUrlPrefix = ENV.dataServerUrl + "/thumbs/";
     @tracked suggestions = [];
     @tracked inputValue = this.args.value
         ? this.args.value

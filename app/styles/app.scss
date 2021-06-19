@@ -27,7 +27,7 @@ $theme-colors: (
 body {
     overflow: hidden;
     background-color: map-get($map: $theme-colors, $key: "primary");
-    font-family: "Roboto", sans-serif;
+    font-family: sans-serif;
 }
 * {
     box-sizing: border-box;
@@ -72,14 +72,9 @@ span {
     max-width: calc(100% - #{$left-panel-min-width});
 }
 
-.panel-title {
-    color: #fff;
-    text-align: center;
-}
-
 .btn {
     border-radius: 0;
-    
+
     &.btn-primary {
         background-color: lighten(map-get($map: $theme-colors, $key: "primary"), 0%);
         border: 1px solid lighten(map-get($map: $theme-colors, $key: "white"), 0%);
@@ -271,21 +266,26 @@ div.canvas-wrapper:nth-child(2) {
     min-width: 300px;
     margin: 0;
     padding: 0;
-    background: map-get($theme-colors, "fourth");
+    background: darken(map-get($theme-colors, "fourth"), 80%);
     list-style: none;
     position: absolute;
     left: 0;
     top: 100%;
-    width: 100%;
+    width: max-content;
+
     z-index: 1001;
     .text-suggestions-item {
-        padding: 0.3rem 1rem 0.3rem 1rem;
+        padding: 0rem 1rem 0.3rem 1rem;
         color: #fff;
+        font-size: 1.3rem;
+        font-weight: 600;
+        line-height: 1.4;
+
         &.selected {
-            background: rgba(map-get($theme-colors, "secondary"), 0.6);
+            background: rgba(map-get($theme-colors, "warning"), 1) !important;
         }
         &:hover {
-            background: rgba(map-get($theme-colors, "secondary"), 0.3);
+            background: rgba(map-get($theme-colors, "warning"), 0.7);
             cursor: pointer;
         }
     }
@@ -515,6 +515,7 @@ div.canvas-wrapper:nth-child(2) {
         left: 0;
     }
     &.top {
+        font-size: 0;
         .btn {
             width: calc(50% - 2px);
         }
@@ -523,11 +524,12 @@ div.canvas-wrapper:nth-child(2) {
 
 .history-list {
     list-style: none;
-    display: block;
     margin: 0;
     padding: 0;
-    max-height: 10rem;
+    max-height: 130px;
     overflow: auto;
+    display: inline-flex;
+    flex-wrap: wrap;
 
     .history-item {
         width: calc(20% - 0.2rem);
@@ -550,6 +552,7 @@ div.canvas-wrapper:nth-child(2) {
                 opacity: 1 !important;
             }
         }
+
         img {
             display: block;
             width: 100%;
@@ -561,19 +564,19 @@ div.canvas-wrapper:nth-child(2) {
             }
         }
         .title {
-            position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            font-size: 2rem;
+            font-size: 1rem;
             color: theme-color-level($color-name: "green", $level: 0);
             pointer-events: none;
-            display: none;
+            //display: none;
         }
         .time {
-            display: block;
+            display: none;
             color: theme-color-level($color-name: "white", $level: 0);
-            font-size: 0.8rem;
+            font-size: 0.6rem;
+            padding: 0;
             width: 100%;
             text-align: center;
         }
@@ -592,53 +595,52 @@ div.canvas-wrapper:nth-child(2) {
 
     .btn {
         width: calc(33% - 4px);
+        line-height: 0.8;
         height: 100%;
         border-radius: 0;
         margin: 2px;
     }
 }
 
-.panel-title {
+.inline-title-cont {
+    align-items: center;
+    display: flex;
+}
+
+.inline-title {
     font-size: 1.2rem;
+    padding: 0;
+    font-weight: 600;
+    margin: 0;
+    text-transform: uppercase;
+    color: map-get($map: $theme-colors, $key: "fourth");
+
+    &:after {
+        content: ":";
+    }
+}
+
+.panel-title {
+    color: map-get($map: $theme-colors, $key: "fourth");
+    text-align: center;
+    font-size: 1.4rem;
     font-weight: 600;
     text-transform: uppercase;
-    text-align: center;
-    padding: 0.7em 0em 0em 0em;
+    padding: 0.2em 0em 0em 0em;
     &.visible {
         display: block;
     }
 
-    //&:before,
-    // &:after {
-    //     border: 1px solid rgba(map-get($theme-colors, "white"), 0.7);
-    //     content: "";
-    //     position: relative;
-    //     display: block;
-    //     width: 80%;
-    //     margin: 0 auto;
-    // }
-
-    // &:before {
-    //     width: 80%;
-    //     border: 2px solid rgba(map-get($theme-colors, "fifth"), 0.7);
-    //     top: -0.2rem;
-    // }
-
+    &:before,
     &:after {
-        width: 95%;
-        border: 1px solid rgba(map-get($theme-colors, "white"), 0.9);
-        bottom: -0.2rem;
+        position: relative;
+        height: 100%;
+        content: " -- ";
     }
-    &.small {
-        font-size: 1.2rem;
-        text-align: left;
-        padding: 17px 0 18px 0;
-        margin: 0;
 
-        &:before,
-        &:after {
-            display: none;
-        }
+    &.small:before,
+    &.small:after {
+        content: "";
     }
 }
 
@@ -853,15 +855,11 @@ div.canvas-wrapper:nth-child(2) {
     display: none;
 }
 
-.btn-reloc {
-    
-}
-
 .relocation-panel {
     height: 0;
 }
 
-.relocation-btn-cont  {
+.relocation-btn-cont {
     text-align: left;
     padding: 0 !important;
     margin: 0 !important;
@@ -873,4 +871,50 @@ div.canvas-wrapper:nth-child(2) {
 
 .relocation-frame .frame-overlay {
     display: none !important;
+}
+
+.filters-panel {
+    padding: 0.7rem 0 0.1rem 0;
+
+    .inline-title-cont {
+        padding-left: 1.1rem;
+    }
+}
+
+.dataset-filters-cont {
+    label {
+        color: map-get($map: $theme-colors, $key: "fourth");
+        padding: 0;
+        margin: 0;
+        display: block;
+    }
+}
+
+.bookmarks-panel {
+    margin-top: 1rem;
+}
+
+.form-control {
+    &.mdb-autocomplete {
+        height: auto;
+        padding: 0.3rem 0.5rem;
+    }
+}
+
+.frame-overlay .btn.btn-primary {
+    border: none !important;
+}
+
+.keyword-example-frames-list {
+    list-style-type: none;
+    font-size: 0;
+    margin: 0;
+    padding: 0;
+    .example-frame {
+        display: inline-flex;
+        max-width: 100px;
+        img {
+            width: 100%;
+        }
+    }
 }

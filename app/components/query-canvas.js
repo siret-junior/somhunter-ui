@@ -37,7 +37,6 @@ export default class QueryCanvasComponent extends Component {
     didUpdateAttrs(elem, [updatedStructure]) {}
 
     didInsert(elem) {
-        console.log(".....");
         const elements = $(elem);
         const par = elements.parent();
         draggableAndResizable(elements, par);

@@ -55,6 +55,7 @@ export default class ActionManagerService extends Service {
         const prevPivotId = this.dataLoader.getReplayPivotId();
 
         if (frameId !== prevPivotId) {
+            LOG.D("!!");
             this.fetchReplayFrames(frameId, yNorm);
             return;
         }
@@ -360,8 +361,6 @@ export default class ActionManagerService extends Service {
     async rescore(isSave) {
         const srcSearchCtxId = this.dataLoader.userContext.search.id;
 
-        LOG.W("isSave", isSave)
-
         // Take a screenshot
         let screenData = "";
         // // Does this screen still lack the screenshot
@@ -419,7 +418,6 @@ export default class ActionManagerService extends Service {
             );
 
             const url = this.dataLoader.getEndpoint("search_rescore");
-            LOG.W(url);
 
             // << Core API >>
             const res = await this.coreApi.post(
