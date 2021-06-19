@@ -308,7 +308,7 @@ export default class ActionManagerService extends Service {
         cbSucc = () => null,
         cbFail = () => null
     ) {
-        LOG.D("pageIdx: ", pageIdx);
+
         this.coreApi.fetchTopDispFrames(
             dispType,
             pageIdx,

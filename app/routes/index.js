@@ -20,6 +20,9 @@ export default class IndexRoute extends Route {
             EVENTS.RELOAD_USER_CONTEXT,
             this.forceRefresh
         );
+
+        this.actionManager.registerEventHook(EVENTS.NAME_VIEW_CHANGE, () => { this.actionManager.triggerEvent(EVENTS.GLOBAL_ESC_KEY_DOWN); }
+        );
     }
 
     model() {
