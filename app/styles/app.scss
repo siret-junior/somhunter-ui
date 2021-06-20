@@ -950,3 +950,18 @@ div.canvas-wrapper:nth-child(2) {
 #mainGrid .meta-data-cont {
     display: block;
 }
+
+
+.zoom-window-modal {
+    display: none;
+
+    &.visible {
+        display: block;
+    }
+}
+
+.btn-zoom {
+    position: absolute;
+    left: 0;
+    top: 20%;
+}

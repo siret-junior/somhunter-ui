@@ -22,6 +22,9 @@ export const EVENTS = {
     HIDE_RELOCATION: "hideRelocation",
     LOAD_RELOCATION: "loadRelocation",
 
+    SHOW_ZOOM: "showZoom",
+    HIDE_ZOOM: "hideZoom",
+
     SHOW_REPLAY: "showReplay",
     HIDE_REPLAY: "hideReplay",
     LOAD_REPLAY: "loadReplay",

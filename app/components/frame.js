@@ -18,7 +18,6 @@ export default class FrameComponent extends Component {
 
     @action 
     refresh() {
-        LOG.D("Doing the `main-grid.js` component controller refresh!");
         this.modelReload();
         this.isFrameDefined = this.args.frame?.id !== null;
     }
@@ -45,9 +44,18 @@ export default class FrameComponent extends Component {
     }
 
     @action
+    onZoomBtnClick(src, e) {
+
+        this.actionManager.triggerEvent(EVENTS.SHOW_ZOOM, src);
+        e.stopPropagation(); // Prevent the bubbling
+    }
+
+    @action
     onClickFrame(e) {
         if (e.altKey) {
             this.actionManager.submitFrame(this.args.frame);
+        } else if(e.shiftKey) {
+            this.onZoomBtnClick(e.currentTarget.dataset.src, e);
         } else {
             if (this.args.onClick !== undefined) {
                 this.args.onClick(this.args.frame);
@@ -69,6 +77,8 @@ export default class FrameComponent extends Component {
         this.actionManager.gotoKnnView(Number(e.target.dataset.id), 0);
         e.stopPropagation(); // Prevent the bubbling
     }
+
+    
 
     @action
     onSubmitBtnClick(e) {
