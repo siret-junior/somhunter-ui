@@ -8,7 +8,9 @@
 
         <div id="collageTemporalQueries">
             
-            <QueryCanvas @onRemoveItem={{this.onRemoveItem}} @index=0 @texts={{this.texts.[0]}} @model={{@model}} />
+            <QueryCanvas 
+                @onClickAddTextBtnTot={{this.onClickAddTextBtnTot}}
+                @onRemoveItem={{this.onRemoveItem}} @index=0 @texts={{this.texts.[0]}} @model={{@model}} />
             <div class="query-canvas-connector-cont">
                 {{#if this.features.allow_canvas_query_text}}
                 <a
@@ -19,7 +21,9 @@
                 <span class="canvas text-divider"><i class="fa fa-arrow-right" aria-hidden="true"></i></span>
             </div>
 
-            <QueryCanvas @onRemoveItem={{this.onRemoveItem}} @index=1 @texts={{this.texts.[1]}} @model={{@model}} />
+            <QueryCanvas 
+                @onClickAddTextBtnTot={{this.onClickAddTextBtnTot}}
+                @onRemoveItem={{this.onRemoveItem}} @index=1 @texts={{this.texts.[1]}} @model={{@model}} />
 
         </div>
     </div>

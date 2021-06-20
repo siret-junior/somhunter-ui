@@ -4,7 +4,7 @@
         id={{this.canvasElemId}} 
         class="collage-canvas" 
         {{did-update this.didUpdateAttrs @texts}}
-        
+        {{on "click" @onClickAddTextBtnTot}}
         data-id={{@index}}
         {{on "click" (fn this.onClickQueryCanvas @index)}}>
         
@@ -17,7 +17,8 @@
                     text
                     ui-widget-content"
                     {{did-insert this.didInsert}}
-
+                    style="height: 60px;width:100px; left: calc(50% - 50px); top: calc(50% - 30px);"
+                    
                     
                 >
                     <span class="delete" 

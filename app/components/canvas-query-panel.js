@@ -68,7 +68,18 @@ export default class CanvasQueryPanelComponent extends Component {
         this.texts[canvasId] = this.texts[canvasId].filter((x) => x.id != ID);
         deleteElementByUid(ID);
     }
+    
 
+    @action
+    onClickAddTextBtnTot(e) {
+        
+        // IF Shift
+        if (e.shiftKey) {
+            
+            this.onClickAddTextBtn(e);
+        }
+        
+    }
     @action
     onClickAddTextBtn(e) {
         const active_canvasEl = document.querySelector(".paste-active");
