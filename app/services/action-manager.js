@@ -191,6 +191,7 @@ export default class ActionManagerService extends Service {
                         this.actionManager.triggerEvent(EVENTS.UNBLOCK_WITH_NOTIFICATION);
 
                         this.triggerEvent(EVENTS.AFTER_RESET_SEARCH);
+                        this.dataLoader.setLastQuery("");
                     },
                     () =>{
                         this.actionManager.triggerEvent(
