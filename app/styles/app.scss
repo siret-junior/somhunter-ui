@@ -923,6 +923,7 @@ div.canvas-wrapper:nth-child(2) {
 }
 
 .meta-data-cont {
+    display: none;
     color: #fff;
     background: rgba(#000, 0.8);
     position: absolute;
@@ -944,4 +945,8 @@ div.canvas-wrapper:nth-child(2) {
         color: darken(#fff, 40%);
         font-weight: 100;
     }
+}
+
+#mainGrid .meta-data-cont {
+    display: block;
 }
