@@ -705,7 +705,7 @@ div.canvas-wrapper:nth-child(2) {
     height: 18px;
     line-height: 7px;
     transition: 0.2s ease-in-out;
-    z-index: 100;
+    z-index: 99;
     &:hover,
     &:active {
         opacity: 1;
