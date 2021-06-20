@@ -55,7 +55,6 @@ export default class ActionManagerService extends Service {
         const prevPivotId = this.dataLoader.getReplayPivotId();
 
         if (frameId !== prevPivotId) {
-            LOG.D("!!");
             this.fetchReplayFrames(frameId, yNorm);
             return;
         }
@@ -633,6 +632,28 @@ export default class ActionManagerService extends Service {
         } catch (e) {
             // <!>
             alert(`Logout from eval server failed`);
+            throw e;
+        }
+    }
+
+
+    async logTextQueryChange(query) {
+       
+        const url = this.dataLoader.getEndpoint("log_text_query_change");
+
+        const reqData = {
+            query: query
+        };
+
+        try {
+            this.coreApi.get(url, reqData);
+        } catch (e) {
+            // <!>
+            this.actionManager.triggerEvent(
+                EVENTS.DO_PUSH_NOTIF,
+                `Logging text query change failed`,
+                "error"
+            );
             throw e;
         }
     }

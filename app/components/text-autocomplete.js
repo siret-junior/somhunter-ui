@@ -78,6 +78,10 @@ export default class TextAutocompleteComponent extends Component {
     @action
     updateInputValue(e) {
         this.inputValue = e.target.value;
+
+        const wholeText = utils.getTextQueryInput(0) + " >> " + utils.getTextQueryInput(1);
+        this.actionManager.logTextQueryChange(wholeText);
+
         this.cursorIdx = e.target.selectionStart;
 
         const currValue = getCurrSubString(this.inputValue, this.cursorIdx);
@@ -85,6 +89,7 @@ export default class TextAutocompleteComponent extends Component {
         if (currValue == "") {
             return;
         }
+
 
         clearTimeout(this.autocompleteTimeout);
         this.autocompleteTimeout = setTimeout(
