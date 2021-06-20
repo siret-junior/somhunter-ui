@@ -123,6 +123,16 @@ export default class TextAutocompleteComponent extends Component {
         );
         this.inputValue = newInputValue;
         this.cursorIdx = newCursorIndex;
+
+        let wholeText = "";
+        if (this.args.id == 0) {
+            wholeText = newInputValue + " >> " + utils.getTextQueryInput(1);
+        } else {
+            wholeText = utils.getTextQueryInput(0) + " >> " + newInputValue;
+        }
+        LOG.W(wholeText);
+        this.actionManager.logTextQueryChange(wholeText);
+
         this.hideAutocompleteWindow();
     }
 
