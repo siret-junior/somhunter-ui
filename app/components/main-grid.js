@@ -18,6 +18,10 @@ export default class MainGridComponent extends Component {
             this.modelReload()
         );
 
+        this.actionManager.registerEventHook(EVENTS.RESET_PAGING, () =>
+            this.resetPaging()
+        );
+
         this.actionManager.registerEventHook(EVENTS.CLEAR_MAIN_GRID, () =>
             this.clearGrid()
         );
@@ -25,10 +29,14 @@ export default class MainGridComponent extends Component {
         this.modelReload();
     }
 
+    resetPaging() {
+        this.currentPage = 0;
+        this.prevScrollLogPosition = 0;
+    }
+
     modelReload() {
         this.frames = this.dataLoader.mainDisplayFrames();
         this.viewType = this.dataLoader.mainDisplayType();
-        this.prevScrollLogPosition = 0;
     }
     clearGrid() {
         this.frames = [];

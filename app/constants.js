@@ -12,6 +12,8 @@
 export const EVENTS = {
     NAME_VIEW_CHANGE: "viewChange",
 
+    RESET_PAGING: "resetPaging",
+
     SHOW_DETAIL: "showDetail",
     HIDE_DETAIL: "hideDetail",
     LOAD_DETAIL: "loadDetail",

@@ -298,6 +298,7 @@ export default class ActionManagerService extends Service {
         this.triggerEvent(EVENTS.CLEAR_MAIN_GRID);
         if (pageIdx == 0) {
             utils.resetMainGridScroll();
+            this.triggerEvent(EVENTS.RESET_PAGING);
         }
 
         this.actionManager.triggerEvent(
@@ -352,6 +353,10 @@ export default class ActionManagerService extends Service {
         cbSucc = () => null,
         cbFail = () => null
     ) {
+        if (pageIdx == 0) {
+            this.triggerEvent(EVENTS.RESET_PAGING);
+        }
+
         const types = this.dataLoader.getConfigStrings().display_types;
         const dispType = withContext
             ? types.top_scored_context
@@ -388,6 +393,7 @@ export default class ActionManagerService extends Service {
     gotoSomView(cbSucc = () => null, cbFail = () => null) {
         const dispType = this.dataLoader.getConfigStrings().display_types.SOM;
 
+        this.triggerEvent(EVENTS.RESET_PAGING);
         
         this.actionManager.triggerEvent(
             EVENTS.BLOCK_WITH_NOTIFICATION,
