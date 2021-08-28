@@ -72,5 +72,8 @@
   },
   "ember": {
     "edition": "octane"
+  },
+  "dependencies": {
+    "http-server-spa-with-auth": "^1.0.7"
   }
 }
