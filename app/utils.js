@@ -1,5 +1,5 @@
 import { EVENTS, ELEM_IDS, ELEM_CLASSES } from "./constants";
-import LOG from "./logger";
+import LOG, { W } from "./logger";
 
 export function resetMainGridScroll() {
     const el = document.getElementById(ELEM_IDS.MAIN_GRID);
@@ -84,7 +84,7 @@ export function getRelocationInput(idx) {
     return res;
 }
 
-export function throttle (callback, limit) {
+export function throttle(callback, limit) {
     var waiting = false;                      // Initially, we're not waiting
     return function () {                      // We return a throttled function
         if (!waiting) {                       // If we're not waiting
@@ -99,6 +99,7 @@ export function throttle (callback, limit) {
 
 export function getFiltersInput() {
 
+    // Read dataset filter
     const lowerCheckbox = document.getElementById("datasetPart0");
     const upperCheckbox = document.getElementById("datasetPart1");
 
@@ -107,38 +108,38 @@ export function getFiltersInput() {
 
     LOG.W(`Dataset filters: ${part0}, ${part1}`);
 
-    // \todo Undummy
-    return {
-        weekdays: [true, true, true, true, true, true, true],
-        hoursFrom: 0,
-        hoursTo: 24,
-        datasetFilter: [part0 , part1]
-    };
-    /*
-    const filtersContEl = document.getElementById("queryFilters");
-
-    const weekdaysEl = document.getElementById("queryFiltersWeekdays");
-
+    // Read LSC filter
+    // Read weekdays
     let weekdays = [];
-    weekdaysEl.childNodes.forEach((x) => {
-        const v = x.querySelector(".form-check-input");
+    for (let weekday = 0; i < 7; i++) {
 
-        if (v) weekdays.push(v.checked);
-    });
+        const weekdayCheckbox = document.getElementById("weekday".concat(weekday));
 
-    const hoursFrom = Number(
-        document.getElementById(config.ui.htmlElIds.queryFiltersHourFrom).value
-    );
-    const hoursTo = Number(
-        document.getElementById(config.ui.htmlElIds.queryFiltersHourTo).value
-    );
+        weekdays.push(weekdayCheckbox ? weekdayCheckbox.checked : true);
+    }
+
+    // Read hours interval
+    const hoursFromTextbox = document.getElementById("hoursFrom");
+    const hoursToTextbox = document.getElementById("hoursTo");
+
+    const hoursFrom = ((hoursFromTextbox || hoursFromTextbox.value != "") ? hoursFromTextbox.value : 0);
+    const hoursTo = ((hoursToTextbox || hoursToTextbox.value != "") ? hoursToTextbox.value : 24);
+
+    // Read years interval
+    const yearsFromTextbox = document.getElementById("yearsFrom");
+    const yearsToTextbox = document.getElementById("yearsTo");
+
+    const yearsFrom = ((yearsFromTextbox || yearsFromTextbox.value != "") ? yearsFromTextbox.value : 0);
+    const yearsTo = ((yearsToTextbox || yearsToTextbox.value != "") ? yearsToTextbox.value : 24);
 
     return {
-        weekdays,
-        hoursFrom,
-        hoursTo,
+        weekdays: weekdays,
+        hoursFrom: hoursFrom,
+        hoursTo: hoursFrom,
+        datasetFilter: [part0, part1],
+        yearsFrom: yearsFrom,
+        yearsTo: yearsTo
     };
-    */
 }
 
 function get_raw_img(img) {
@@ -171,9 +172,9 @@ function collectCanvasQueries(queryCanvasEl) {
                 subqueryEl.offsetLeft / queryCanvasEl.clientWidth,
                 subqueryEl.offsetTop / queryCanvasEl.clientHeight,
                 (subqueryEl.offsetLeft + subqueryEl.clientWidth) /
-                    queryCanvasEl.clientWidth,
+                queryCanvasEl.clientWidth,
                 (subqueryEl.offsetTop + subqueryEl.clientHeight) /
-                    queryCanvasEl.clientHeight,
+                queryCanvasEl.clientHeight,
             ],
         };
 

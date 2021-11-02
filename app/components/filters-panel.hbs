@@ -31,8 +31,8 @@
                         <div class="row">
                             {{#each weekdays as |day index|}}
                             <div>
-                                <label for="weekday-{{index}}">{{day}}</label>
-                                <input id="weekday-{{index}}" type="checkbox" checked />
+                                <label for="weekday{{index}}">{{day}}</label>
+                                <input id="weekday{{index}}" type="checkbox" checked />
                             </div>
                             {{/each}}
                         </div>
@@ -45,13 +45,13 @@
                     <div class="lsc-filters-cont">
                         <div class="row">
                             <div>
-                                <input class="lsc-filters-hours" id="hours-from" type="number" value="0" min="0" max="24">
+                                <input class="lsc-filters-hours" id="hoursFrom" type="number" value="0" min="0" max="24">
                             </div>
                             <div>
                                 <p>-</p>
                             </div>
                             <div>
-                                <input class="lsc-filters-hours" id="hours-to" type="number" value="24" min="0" max="24">
+                                <input class="lsc-filters-hours" id="hoursTo" type="number" value="24" min="0" max="24">
                             </div>
                         </div>
                     </div>
@@ -63,13 +63,13 @@
                     <div class="lsc-filters-cont">
                         <div class="row">
                             <div>
-                                <input class="lsc-filters-years" id="years-from" type="number" value="2000" min="2000" max="2030">
+                                <input class="lsc-filters-years" id="yearsFrom" type="number" value="2000" min="2000" max="2030">
                             </div>
                             <div>
                                 <p>-</p>
                             </div>
                             <div>
-                                <input class="lsc-filters-years" id="years-to" type="number" value="2021" min="2000" max="2030">
+                                <input class="lsc-filters-years" id="yearsTo" type="number" value="2021" min="2000" max="2030">
                             </div>
                         </div>
                     </div>
