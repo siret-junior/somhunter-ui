@@ -892,6 +892,18 @@ div.canvas-wrapper:nth-child(2) {
         display: block;
     }
 }
+.lsc-filters-cont {
+    label {
+        color: map-get($map: $theme-colors, $key: "fourth");
+        display: block;
+        margin-bottom: 0;
+        text-align: center;
+    }
+    input {
+        margin-right: 0.2rem;
+        margin-left: 0.2rem;
+    }
+}
 
 .bookmarks-panel {
     margin-top: 1rem;
