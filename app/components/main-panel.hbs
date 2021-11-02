@@ -3,9 +3,7 @@
 
 <TopButtonsPanel />
 
-{{#if this.features.show_filters_panel}}
-    <FiltersPanel @model={{@model}} />
-{{/if}}
+<FiltersPanel @model={{@model}} />
 
 {{#if this.features.allow_plain_text_quey}}
     <TextSearchPanel @model={{@model}} />
