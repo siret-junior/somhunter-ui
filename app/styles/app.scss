@@ -178,6 +178,10 @@ span {
         }
     }
 
+    &.seen {
+        opacity: 0.5;
+    }
+
     .frame-overlay {
         border: 4px solid transparent;
 

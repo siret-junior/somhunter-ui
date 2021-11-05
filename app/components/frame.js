@@ -14,9 +14,21 @@ export default class FrameComponent extends Component {
     constructor() {
         super(...arguments);
         this.isFrameDefined = this.args.frame?.id !== null;
+        this.fade =
+            this.args.frame?.videoSeen !== null
+                ? this.args.frame.videoSeen
+                : false;
+        if (
+            this.args.forceVisible !== undefined &&
+            this.args.forceVisible !== null &&
+            this.args.forceVisible
+        ) {
+            this.fade = false;
+        }
+        console.log("this.fade=" + this.fade);
     }
 
-    @action 
+    @action
     refresh() {
         this.modelReload();
         this.isFrameDefined = this.args.frame?.id !== null;
@@ -35,7 +47,7 @@ export default class FrameComponent extends Component {
         }
     }
 
-    afterLikeFrameHandler() {}
+    afterLikeFrameHandler() { }
 
     @action
     onBookmarkBtnClick(e) {
@@ -54,7 +66,7 @@ export default class FrameComponent extends Component {
     onClickFrame(e) {
         if (e.altKey) {
             this.actionManager.submitFrame(this.args.frame);
-        } else if(e.shiftKey) {
+        } else if (e.shiftKey) {
             this.onZoomBtnClick(e.currentTarget.dataset.src, e);
         } else {
             if (this.args.onClick !== undefined) {
@@ -78,7 +90,7 @@ export default class FrameComponent extends Component {
         e.stopPropagation(); // Prevent the bubbling
     }
 
-    
+
 
     @action
     onSubmitBtnClick(e) {
@@ -94,6 +106,7 @@ export default class FrameComponent extends Component {
     /* Member variables */
     @service actionManager;
     isFrameDefined = true;
+    fade = true;
 
     thumbsUrlPrefix = ENV.dataServerUrl + "/thumbs/";
 }

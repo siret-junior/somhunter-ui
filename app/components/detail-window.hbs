@@ -14,6 +14,7 @@
                     {{#each this.displayedFrames as |frame|}}
                         <Frame 
                             @frame={{frame}} 
+                            @forceVisible={{true}}
                         />
                     {{/each}}
                 {{/if}}
@@ -30,7 +31,6 @@
             #{{this.ELEM_IDS.DETAIL_WINDOW}} .frame {
                 width: {{this.cssFrameWidth}} !important;
                 height: {{this.cssFrameHeight}} !important;
-                
             }
             /* So button sizes scale propperly. */
             #{{this.ELEM_IDS.DETAIL_WINDOW}} .frame * { 

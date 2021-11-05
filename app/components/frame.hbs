@@ -1,5 +1,5 @@
 {{#if this.isFrameDefined}}
-<div class="frame col-2 {{if @frame.highlighted "highlighted"}} {{if @frame.liked "liked"}}"  
+<div class="frame col-2 {{if @frame.highlighted "highlighted"}} {{if @frame.liked "liked"}} {{if this.fade "seen"}}"  
     style={{thumb this.thumbsUrlPrefix @frame.src}} 
     data-id={{@frame.id}}
     {{on "wheel" this.onWheel}}

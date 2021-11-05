@@ -13,7 +13,7 @@
 
                     {{#each this.items as |item|}}
                         {{#if item.src }}
-                            <Frame @frame={{item}} />    
+                            <Frame @frame={{item}} @forceVisible={{true}}/>    
                         {{/if}}
                     {{/each}}                    
 

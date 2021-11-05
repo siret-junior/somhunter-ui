@@ -8,7 +8,7 @@
 
             {{#if this.displayedFrames}}
                 {{#each this.displayedFrames as |frame|}}
-                <Frame @frame={{frame}} />
+                <Frame @frame={{frame}} @forceVisible={{true}} />
                 {{/each}}
             {{/if}}
 

@@ -250,7 +250,15 @@ export default class ActionManagerService extends Service {
         cbSucc = () => null,
         cbFail = () => null
     ) {
-        const dispType = this.dataLoader.getConfigStrings().display_types.detail;
+        const dispType =
+            this.dataLoader.getConfigStrings().display_types.detail;
+        const videoId = document
+            .querySelectorAll(`.frame[data-id="${frameId}"]`)[0]
+            .dataset.src.slice(0, 5);
+
+        document
+            .querySelectorAll(`.frame[data-src^="${videoId}"]`)
+            .forEach((x) => x.classList.add("seen"));
 
         this.coreApi.fetchDetailFrames(
             dispType,
