@@ -122,23 +122,34 @@ export function getFiltersInput() {
     const hoursFromTextbox = document.getElementById("hoursFrom");
     const hoursToTextbox = document.getElementById("hoursTo");
 
-    const hoursFrom = ((hoursFromTextbox || hoursFromTextbox.value != "") ? hoursFromTextbox.value : 0);
-    const hoursTo = ((hoursToTextbox || hoursToTextbox.value != "") ? hoursToTextbox.value : 24);
+    const hoursFromError = (!hoursFromTextbox || hoursFromTextbox.value == "" || hoursFromTextbox.validity.rangeUnderflow || hoursFromTextbox.validity.rangeOverflow)
+    const hoursToError = (!hoursToTextbox || hoursToTextbox.value == "" || hoursToTextbox.validity.rangeUnderflow || hoursToTextbox.validity.rangeOverflow)
+    
+    const hoursFrom = (!hoursFromError ? hoursFromTextbox.value : 0);
+    const hoursTo = (!hoursToError ? hoursToTextbox.value : 24);
 
     // Read years interval
     const yearsFromTextbox = document.getElementById("yearsFrom");
     const yearsToTextbox = document.getElementById("yearsTo");
 
-    const yearsFrom = ((yearsFromTextbox || yearsFromTextbox.value != "") ? yearsFromTextbox.value : 2000);
-    const yearsTo = ((yearsToTextbox || yearsToTextbox.value != "") ? yearsToTextbox.value : 2030);
+    const yearsFromError = (!yearsFromTextbox || yearsFromTextbox.value == "" || yearsFromTextbox.validity.rangeUnderflow || yearsFromTextbox.validity.rangeOverflow)
+    const yearsToError = (!yearsToTextbox || yearsToTextbox.value == "" || yearsToTextbox.validity.rangeUnderflow || yearsToTextbox.validity.rangeOverflow)
+    
+    const yearsFrom = (!yearsFromError ? yearsFromTextbox.value : 2000);
+    const yearsTo = (!yearsToError ? yearsToTextbox.value : 2100);
 
+    const error = hoursFromError || hoursToError || yearsFromError || yearsToError;
+    
     return {
-        weekdays: weekdays,
-        hoursFrom: Number(hoursFrom),
-        hoursTo: Number(hoursTo),
-        datasetFilter: [part0, part1],
-        yearsFrom: Number(yearsFrom),
-        yearsTo: Number(yearsTo)
+        error: error,
+        filters: {
+            weekdays: weekdays,
+            hoursFrom: Number(hoursFrom),
+            hoursTo: Number(hoursTo),
+            datasetFilter: [part0, part1],
+            yearsFrom: Number(yearsFrom),
+            yearsTo: Number(yearsTo)
+        }
     };
 }
 
