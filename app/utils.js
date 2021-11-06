@@ -111,7 +111,7 @@ export function getFiltersInput() {
     // Read LSC filter
     // Read weekdays
     let weekdays = [];
-    for (let weekday = 0; i < 7; i++) {
+    for (let weekday = 0; weekday < 7; weekday++) {
 
         const weekdayCheckbox = document.getElementById("weekday".concat(weekday));
 
@@ -129,16 +129,16 @@ export function getFiltersInput() {
     const yearsFromTextbox = document.getElementById("yearsFrom");
     const yearsToTextbox = document.getElementById("yearsTo");
 
-    const yearsFrom = ((yearsFromTextbox || yearsFromTextbox.value != "") ? yearsFromTextbox.value : 0);
-    const yearsTo = ((yearsToTextbox || yearsToTextbox.value != "") ? yearsToTextbox.value : 24);
+    const yearsFrom = ((yearsFromTextbox || yearsFromTextbox.value != "") ? yearsFromTextbox.value : 2000);
+    const yearsTo = ((yearsToTextbox || yearsToTextbox.value != "") ? yearsToTextbox.value : 2030);
 
     return {
         weekdays: weekdays,
-        hoursFrom: hoursFrom,
-        hoursTo: hoursFrom,
+        hoursFrom: Number(hoursFrom),
+        hoursTo: Number(hoursTo),
         datasetFilter: [part0, part1],
-        yearsFrom: yearsFrom,
-        yearsTo: yearsTo
+        yearsFrom: Number(yearsFrom),
+        yearsTo: Number(yearsTo)
     };
 }
 
