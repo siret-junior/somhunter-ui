@@ -423,7 +423,7 @@ export default class ActionManagerService extends Service {
         );
     }
 
-    async rescore(isSave) {
+    async rescore(isSave, isSecondary) {
         const srcSearchCtxId = this.dataLoader.userContext.search.id;
 
         // Take a screenshot
@@ -456,7 +456,8 @@ export default class ActionManagerService extends Service {
             filters,
             canvas_query: canvasQuery,
             is_save: (isSave ? true : false),
-            query_dir: "/somedir/"
+            query_dir: "/somedir/",
+            isSecondary: (isSecondary ? true : false)
         };
 
         const likedFrames = this.dataLoader.getLikedFrames();
