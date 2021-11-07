@@ -531,8 +531,7 @@ div.canvas-wrapper:nth-child(2) {
 
 .rescore-btns-container {
     display: flex;
-    max-width: 800px;
-    max-height: 400px;
+    max-width: 400px;
 }
 
 .clip-button-container {
@@ -550,8 +549,6 @@ div.canvas-wrapper:nth-child(2) {
     height: 30px;
     font-size: 18px !important;
     color: #fff;
-    padding-bottom: 5px !important;
-    vertical-align: middle;
 }
 
 .clip-button-absolute:hover{
