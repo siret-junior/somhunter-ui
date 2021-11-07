@@ -441,8 +441,20 @@ export default class ActionManagerService extends Service {
         let query1 = utils.getTextQueryInput(1);
         let relocation0 = utils.getRelocationInput(0);
         let relocation1 = utils.getRelocationInput(1);
-        let filters = utils.getFiltersInput();
+        let filtersInput = utils.getFiltersInput();
         let canvasQuery = utils.getCanvasQueryInput();
+        let filters = filtersInput.filters
+        
+        // TODO: No warning notification is getting displayed... why?
+        if(filtersInput.error)
+        {
+            this.actionManager.triggerEvent(
+                EVENTS.DO_PUSH_NOTIF,
+                "You provided invalid input in LSC filter - results might not be accurate!",
+                "warning",
+                5000
+            );
+        }
 
         LOG.W("...")
         // POST data
