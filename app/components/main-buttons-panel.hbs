@@ -2,11 +2,21 @@
 
     <div class="row">
         <div class="rescore-btns-const col-12 p-0">
-            <button class="btn-rescore btn-primary btn" type="button" {{on "click" this.onClickRescoreTopScoredBtn}}>Rescore<br/>Top Scored</button>
-            <button class="btn-rescore btn-primary btn" type="button" {{on "click" this.onClickRescoreTopScoredContextBtn}}>Rescore<br/>Top Scored
-                Context</button>
-            <button class="btn-rescore btn-primary btn" type="button" {{on "click" this.onClickRescoreSomScoredBtn}}>Rescore<br/>SOM </button>
-
+            <div class="rescore-btns-container">
+                <button class="btn-rescore btn-primary btn" type="button" {{on "click" this.onClickRescoreTopScoredBtn}}>Rescore<br/>Top Scored</button>
+                <div class="clip-button-container">
+                    <button class="clip-button-absolute" id="topScoredClip" {{on "click" this.onClickRescoreTopScoredBtn}}>C</button>
+                </div>
+                <button class="btn-rescore btn-primary btn" type="button" {{on "click" this.onClickRescoreTopScoredContextBtn}}>Rescore<br/>Top Scored
+                    Context</button>
+                <div class="clip-button-container">
+                    <button class="clip-button-absolute" id="topScoredContextClip" {{on "click" this.onClickRescoreTopScoredContextBtn}}>C</button>
+                </div>
+                <button class="btn-rescore btn-primary btn" type="button" {{on "click" this.onClickRescoreSomScoredBtn}}>Rescore<br/>SOM </button>
+                <div class="clip-button-container">
+                    <button class="clip-button-absolute" id="somClip" {{on "click" this.onClickRescoreSomScoredBtn}}>C</button>
+                </div>
+            </div>
         {{#if this.collectorMode}}
             <hr />
             <button class="large special btn-rescore btn-secondary btn" type="button" {{on "click" this.onClickSave}}>Save query</button>

@@ -529,6 +529,32 @@ div.canvas-wrapper:nth-child(2) {
     }
 }
 
+.rescore-btns-container {
+    display: flex;
+    max-width: 400px;
+}
+
+.clip-button-container {
+    max-width: 0px;
+    position: relative;
+}
+
+.clip-button-absolute {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    border: 2px solid green;
+    background-color: darkolivegreen;
+    width: 20px;
+    height: 30px;
+    font-size: 18px !important;
+    color: #fff;
+}
+
+.clip-button-absolute:hover{
+    background-color: darkseagreen;
+}
+
 .history-list {
     list-style: none;
     margin: 0;
@@ -603,9 +629,14 @@ div.canvas-wrapper:nth-child(2) {
     .btn {
         width: calc(33% - 4px);
         line-height: 0.8;
-        height: 100%;
         border-radius: 0;
         margin: 2px;
+    }
+}
+
+.change-view-btns {
+    .btn {
+        height: 100%;
     }
 }
 
