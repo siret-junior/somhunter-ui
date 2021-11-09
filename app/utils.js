@@ -16,6 +16,7 @@ export function hashQuery(q) {
         canvas_query: q.canvas_query,
         relocation0: q.relocation0,
         relocation1: q.relocation1,
+        isSecondary: q.isSecondary,
     };
     return JSON.stringify(queryClean);
 }
