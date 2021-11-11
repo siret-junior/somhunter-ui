@@ -686,6 +686,27 @@ export default class ActionManagerService extends Service {
         }
     }
 
+    async logCanvasQueryChange() {
+        LOG.D("Triggering /log/canvas_query_change")
+        const url = this.dataLoader.getEndpoint("log_canvas_query_change");
+
+        const reqData = {
+            
+        };
+
+        try {
+            this.coreApi.get(url, reqData);
+        } catch (e) {
+            // <!>
+            this.actionManager.triggerEvent(
+                EVENTS.DO_PUSH_NOTIF,
+                `Logging canvas query change failed`,
+                "error"
+            );
+            throw e;
+        }
+    }
+
     async logScroll(delta, scrollArea) {
         if (!delta) {
             LOG.W("Wrong scroll delta " + delta);
