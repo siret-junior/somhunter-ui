@@ -1,4 +1,5 @@
 import Component from "@glimmer/component";
+import { tracked } from "@glimmer/tracking";
 
 import { action } from "@ember/object";
 
@@ -24,6 +25,29 @@ export default class FrameComponent extends Component {
             this.args.forceVisible
         ) {
             this.fade = false;
+        }
+        switch(this.args.frame.weekday){
+            case 0:
+                this.weekday = "Monday";
+                break;
+            case 1:
+                this.weekday = "Tuesday";
+                break;
+            case 2:
+                this.weekday = "Wednesday";
+                break;
+            case 3:
+                this.weekday = "Thursday";
+                break;
+            case 4:
+                this.weekday = "Friday";
+                break;
+            case 5:
+                this.weekday = "Saturday";
+                break;
+            case 6:
+                this.weekday = "Sunday";
+                break;
         }
         console.log("this.fade=" + this.fade);
     }
@@ -107,6 +131,7 @@ export default class FrameComponent extends Component {
     @service actionManager;
     isFrameDefined = true;
     fade = true;
+    @tracked weekday = "";
 
     thumbsUrlPrefix = ENV.dataServerUrl + "/thumbs/";
 }

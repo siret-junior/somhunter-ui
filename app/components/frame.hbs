@@ -5,6 +5,7 @@
     {{on "wheel" this.onWheel}}
     {{on "click" this.onClickFrame}}
     data-src={{@frame.src}}
+    title="hour: {{@frame.hour}}&#013;weekday: {{this.weekday}}&#013;year: {{@frame.year}}&#013;LscId: {{@frame.lscId}}"
 >
     
         <div class="frame-overlay"data-id={{@frame.id}} >
