@@ -103,7 +103,7 @@ export default class MainButtonsPanelComponent extends Component {
 
     @action
     async onClickRescoreTopScoredBtn(e) {
-        const isSecondary = ((e.target.id && e.target.id == "topScoredClip") ? true : false)
+        const isSecondary = ((e?.target.id && e?.target.id == "topScoredClip") ? true : false)
 
         await this.actionManager.rescore(false, isSecondary);
         this.actionManager.gotoTopScoredView(0);

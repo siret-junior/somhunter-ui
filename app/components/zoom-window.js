@@ -59,7 +59,7 @@ export default class ZoomWindowComponent extends Component {
     @tracked windowVisible = false;
     @tracked frameSrc = null;
 
-    framesUrlPrefix = ENV.dataServerUrl + "/thumbs/";
+    framesUrlPrefix = ENV.dataServerUrl + "/frames/";
 }
 
 

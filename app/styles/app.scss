@@ -354,9 +354,9 @@ div.canvas-wrapper:nth-child(2) {
 }
 
 .custom-modal-window {
-    position: absolute;
-    width: max-content;
-    height: max-content;
+    position: absolute !important;
+    width: max-content !important;
+    height: max-content !important;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
@@ -412,7 +412,7 @@ div.canvas-wrapper:nth-child(2) {
 }
 
 .toast {
-    opacity: 1;
+    opacity: 1 !important;
 
     &.success {
         background-color: map-get($map: $theme-colors, $key: "success");
@@ -917,6 +917,9 @@ div.canvas-wrapper:nth-child(2) {
     .inline-title-cont {
         padding-left: 1.1rem;
     }
+    p {
+        margin: 0;
+    }
 }
 
 .dataset-filters-cont {
@@ -937,14 +940,17 @@ div.canvas-wrapper:nth-child(2) {
     input {
         margin-right: 0.2rem;
         margin-left: 0.2rem;
+        max-height: 20px;
     }
     .lsc-filters-hours {
-        width: 3.5rem;
+        width: 4rem;
     } 
     .lsc-filters-years {
         width: 4rem;
     }
+
 }
+
 
 .bookmarks-panel {
     margin-top: 1rem;
