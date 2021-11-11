@@ -38,6 +38,7 @@ export default class CanvasQueryPanelComponent extends Component {
         this.collage_canvases = $(".collage-canvas");
 
         this.texts = [[], []];
+        this.actCnt = 0;
 
         this.features = this.dataLoader.getConfigUi().features;
 
@@ -56,20 +57,24 @@ export default class CanvasQueryPanelComponent extends Component {
         // On attrupate
     }
 
-    didInsertWrapper(elem, [updatedStructure]) {
+    didInsertWrapper = (elem, [updatedStructure]) => {
         const canvases = document.querySelectorAll(".collage-canvas");
         canvases.forEach((x) => x.classList.remove("paste-active"));
 
         canvases[0].classList.add("paste-active");
+        if (this.actCnt > 0) {
+            this.actionManager.logCanvasQueryChange();
+        }
+        ++this.actCnt;
     }
 
     @action
     onRemoveItem(ID, canvasId, e) {
         this.texts[canvasId] = this.texts[canvasId].filter((x) => x.id != ID);
         deleteElementByUid(ID);
+        this.actionManager.logCanvasQueryChange();
     }
     
-
     @action
     onClickAddTextBtnTot(e) {
         
@@ -78,6 +83,7 @@ export default class CanvasQueryPanelComponent extends Component {
             
             this.onClickAddTextBtn(e);
         }
+        this.actionManager.logCanvasQueryChange();
         
     }
     @action
@@ -92,6 +98,8 @@ export default class CanvasQueryPanelComponent extends Component {
 
         this.texts = [...this.texts];
         this.available_id++;
+
+        this.actionManager.logCanvasQueryChange();
     }
 
     @tracked texts;
