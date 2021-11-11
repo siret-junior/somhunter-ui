@@ -93,3 +93,10 @@ export const ELEM_CLASSES = {
 };
 
 export const GUI_STRINGS = {};
+
+export const DEFAULT_LSC_FILTER_VALUES = {
+    hoursFrom: 0,
+    hoursTo: 24,
+    yearsFrom: 2000,
+    yearsTo: 2021
+}
