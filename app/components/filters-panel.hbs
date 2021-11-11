@@ -20,12 +20,12 @@
     {{/if}}
     {{#if this.features.show_lsc_filters_panel}}
     <div class="row">
-        <div class="inline-title-cont col-6">
+        {{!-- <div class="inline-title-cont col-6">
             <h4 class="inline-title" tooltip="Specify days, hours, etc.">LSC filter</h4>
-        </div>
+        </div> --}}
         <div class="col-6">
             <div class="row">
-                <p>Days: </p>
+                {{!-- <p>Days: </p> --}}
                 <div class="col">
                     <div class="lsc-filters-cont">
                         <div class="row">
@@ -39,8 +39,10 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="col-6">
             <div class="row">
-                <p>Hours: </p>
+                <p>H: </p>
                 <div class="col">
                     <div class="lsc-filters-cont">
                         <div class="row">
@@ -58,7 +60,7 @@
                 </div>
             </div>
             <div class="row">
-                <p>Year: </p>
+                <p>Y: </p>
                 <div class="col">
                     <div class="lsc-filters-cont">
                         <div class="row">
