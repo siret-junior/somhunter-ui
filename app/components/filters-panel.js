@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import { inject as service } from "@ember/service";
-import { EVENTS } from "../constants";
+import { EVENTS, DEFAULT_LSC_FILTER_VALUES } from "../constants";
 
 
 export default class FiltersPanelComponent extends Component {
@@ -9,7 +9,9 @@ export default class FiltersPanelComponent extends Component {
         super(...arguments);
 
         this.features = this.dataLoader.getConfigUi().features;
-
+        
+        this.DEFAULT_LSC_FILTER_VALUES = DEFAULT_LSC_FILTER_VALUES;
+        
         // Reset filters after clicking on "Reset" button
         this.actionManager.registerEventHook(
             EVENTS.AFTER_RESET_SEARCH,
@@ -22,14 +24,14 @@ export default class FiltersPanelComponent extends Component {
                 const hoursFromTextbox = document.getElementById("hoursFrom");
                 const hoursToTextbox = document.getElementById("hoursTo");
 
-                hoursFromTextbox.value = 0;
-                hoursToTextbox.value = 24;
+                hoursFromTextbox.value = DEFAULT_LSC_FILTER_VALUES.hoursFrom;
+                hoursToTextbox.value = DEFAULT_LSC_FILTER_VALUES.hoursTo;
 
                 const yearsFromTextbox = document.getElementById("yearsFrom");
                 const yearsToTextbox = document.getElementById("yearsTo");
 
-                yearsFromTextbox.value = 2000;
-                yearsToTextbox.value = 2021;
+                yearsFromTextbox.value = DEFAULT_LSC_FILTER_VALUES.yearsFrom;
+                yearsToTextbox.value = DEFAULT_LSC_FILTER_VALUES.yearsTo;
             }
 
         );

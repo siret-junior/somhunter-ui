@@ -45,13 +45,13 @@
                     <div class="lsc-filters-cont">
                         <div class="row">
                             <div>
-                                <input class="lsc-filters-hours" id="hoursFrom" type="number" value="0" min="0" max="24">
+                                <input class="lsc-filters-hours" id="hoursFrom" type="number" value="{{ this.DEFAULT_LSC_FILTER_VALUES.hoursFrom }}" min="0" max="24">
                             </div>
                             <div>
                                 <p>-</p>
                             </div>
                             <div>
-                                <input class="lsc-filters-hours" id="hoursTo" type="number" value="24" min="0" max="24">
+                                <input class="lsc-filters-hours" id="hoursTo" type="number" value="{{ this.DEFAULT_LSC_FILTER_VALUES.hoursTo }}" min="0" max="24">
                             </div>
                         </div>
                     </div>
@@ -63,13 +63,13 @@
                     <div class="lsc-filters-cont">
                         <div class="row">
                             <div>
-                                <input class="lsc-filters-years" id="yearsFrom" type="number" value="2000" min="2000" max="2100">
+                                <input class="lsc-filters-years" id="yearsFrom" type="number" value="{{ this.DEFAULT_LSC_FILTER_VALUES.yearsFrom }}" min="2000" max="2100">
                             </div>
                             <div>
                                 <p>-</p>
                             </div>
                             <div>
-                                <input class="lsc-filters-years" id="yearsTo" type="number" value="2021" min="2000" max="2100">
+                                <input class="lsc-filters-years" id="yearsTo" type="number" value="{{ this.DEFAULT_LSC_FILTER_VALUES.yearsTo }}" min="2000" max="2100">
                             </div>
                         </div>
                     </div>
