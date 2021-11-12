@@ -49,7 +49,6 @@ export default class FrameComponent extends Component {
                 this.weekday = "Sunday";
                 break;
         }
-        console.log("this.fade=" + this.fade);
     }
 
     @action

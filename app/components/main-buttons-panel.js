@@ -101,27 +101,30 @@ export default class MainButtonsPanelComponent extends Component {
         this.actionManager.gotoSomView();
     }
 
+    isSecondary(e) {
+        let isSecondary = e?.target.id && e?.target.id.endsWith("SecondaryRescore");
+
+        // Switch w2vv and CLIP
+        isSecondary = !isSecondary;
+
+        return isSecondary;
+    }
+
     @action
     async onClickRescoreTopScoredBtn(e) {
-        const isSecondary = ((e?.target.id && e?.target.id == "topScoredClip") ? true : false)
-
-        await this.actionManager.rescore(false, isSecondary);
+        await this.actionManager.rescore(false, this.isSecondary(e));
         this.actionManager.gotoTopScoredView(0);
     }
 
     @action
     async onClickRescoreTopScoredContextBtn(e) {
-        const isSecondary = ((e.target.id && e.target.id == "topScoredContextClip") ? true : false)
-
-        await this.actionManager.rescore(false, isSecondary);
+        await this.actionManager.rescore(false, this.isSecondary(e));
         this.actionManager.gotoTopScoredView(0, true);
     }
 
     @action
     async onClickRescoreSomScoredBtn(e) {
-        const isSecondary = ((e.target.id && e.target.id == "somClip") ? true : false)
-
-        await this.actionManager.rescore(false, isSecondary);
+        await this.actionManager.rescore(false, this.isSecondary(e));
         this.actionManager.gotoSomView();
     }
 
