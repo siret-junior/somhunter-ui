@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { inject as service } from "@ember/service";
 import { EVENTS, DEFAULT_LSC_FILTER_VALUES } from "../constants";
-
+import { action } from "@ember/object";
 
 export default class FiltersPanelComponent extends Component {
     weekdays = ["M", "T", "W", "T", "F", "S", "S"];
@@ -9,17 +9,14 @@ export default class FiltersPanelComponent extends Component {
         super(...arguments);
 
         this.features = this.dataLoader.getConfigUi().features;
-        
+
         this.DEFAULT_LSC_FILTER_VALUES = DEFAULT_LSC_FILTER_VALUES;
-        
+
         // Reset filters after clicking on "Reset" button
         this.actionManager.registerEventHook(
             EVENTS.AFTER_RESET_SEARCH,
             () => {
-                for (let weekday = 0; weekday < 7; weekday++) {
-                    const weekdayCheckbox = document.getElementById("weekday".concat(weekday));
-                    weekdayCheckbox.checked = true;
-                }
+                this.setAllDays(true);
 
                 const hoursFromTextbox = document.getElementById("hoursFrom");
                 const hoursToTextbox = document.getElementById("hoursTo");
@@ -35,6 +32,24 @@ export default class FiltersPanelComponent extends Component {
             }
 
         );
+    }
+
+    setAllDays(value) {
+        if (value === null || value === undefined) return;
+        for (let weekday = 0; weekday < 7; weekday++) {
+            const weekdayCheckbox = document.getElementById("weekday".concat(weekday));
+            weekdayCheckbox.checked = value;
+        }
+    }
+
+    @action
+    onClickSelectAll(e) {
+        this.setAllDays(true);
+    }
+
+    @action
+    onClickUnselectAll(e) {
+        this.setAllDays(false);
     }
 
     /* Member variables */
