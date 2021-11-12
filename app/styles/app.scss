@@ -1023,6 +1023,7 @@ div.canvas-wrapper:nth-child(2) {
 
     &.visible {
         display: block;
+        z-index: 300;
     }
 }
 
