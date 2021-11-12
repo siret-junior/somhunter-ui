@@ -370,6 +370,13 @@ div.canvas-wrapper:nth-child(2) {
     background-color: map-get($theme-colors, "third");
 }
 
+.custom-modal-window-close {
+    position: absolute;
+    right: -3%;
+    top: -3%;
+    z-index: 1000;
+}
+
 .slider-row {
     display: table;
     font-size: 0;

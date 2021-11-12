@@ -1,6 +1,9 @@
 
 
 <div class="custom-modal-window zoom-window-modal container-fluid col-12 {{if this.windowVisible "visible"}}">
+    <div class="custom-modal-window-close btn" {{on "click" this.hideRelocationWindow}}>
+        <i class="far fa-window-close"></i>
+    </div>
     <div class="row">
 
         <div class="zoom-cont col-12">
