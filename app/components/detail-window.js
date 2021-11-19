@@ -165,6 +165,9 @@ export default class DetailWindowComponent extends Component {
 
     @action
     hideDetailWindow() {
+        clearTimeout(this.upTimeoutHandle);
+        clearTimeout(this.downTimeoutHandle);
+
         this.windowVisible = false;
 
         this.displayedFrom = 0;
@@ -175,8 +178,7 @@ export default class DetailWindowComponent extends Component {
         this.allFrames = undefined;
         this.displayedFrames = undefined;
 
-        clearTimeout(this.upTimeoutHandle);
-        clearTimeout(this.downTimeoutHandle);
+        
     }
 
     @action
@@ -207,7 +209,7 @@ export default class DetailWindowComponent extends Component {
     downTimeoutHandle = null;
 
     postLoadChunkSize = 2;
-    postLoadTimeout = 100;
+    postLoadTimeout = 300;
 
     ELEM_IDS = ELEM_IDS;
 
