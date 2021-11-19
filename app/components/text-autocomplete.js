@@ -54,6 +54,7 @@ export default class TextAutocompleteComponent extends Component {
                 break;
 
             case 13: // enter
+                break;
                 if (this.suggestions.length <= 0) return;
 
                 this.setChosenWord(this.suggestions[this.selIdx].wordString);
