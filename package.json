@@ -1,11 +1,18 @@
 {
   "name": "somhunter-ui",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "private": true,
-  "description": "Small description for somhunter-ui goes here",
-  "repository": "",
-  "license": "MIT",
-  "author": "",
+  "description": "Ember.js GUI for SOMHunter Video Search Tool.",
+  "author": "František Mejzlík <frankmejzlik@gmail.com>",
+  "contributors": [
+    "Mirek Kratochvil <exa.exa@gmail.com>",
+    "Patrik Veselý <prtrikvesely@gmail.com>"
+  ],
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/siret-junior/somhunter-ui"
+  },
+  "license": "GPL-2.0-only",
   "directories": {
     "doc": "doc",
     "test": "tests"
