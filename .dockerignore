@@ -1,0 +1,6 @@
+_local
+node_modules/
+build/
+dist/
+*.tmp
+*.log

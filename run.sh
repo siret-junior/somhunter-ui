@@ -7,6 +7,6 @@ echo "Running 'somhunter-ui'..."
 #npx ember serve       #<< DEV
 
 #npx ember build      #<< PRODUCTION
-#serve -p 9000 ./dist #<< PRODUCTION
+npx serve -p 8080 ./dist #<< PRODUCTION
 
-http-server-spa-with-auth ./dist index.html 8080 x som hunter
+#http-server-spa-with-auth ./dist index.html 8080 x som hunter
