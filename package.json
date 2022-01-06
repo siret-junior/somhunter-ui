@@ -9,8 +9,8 @@
     "Patrik Veselý <prtrikvesely@gmail.com>"
   ],
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/siret-junior/somhunter-ui"
+    "type": "git",
+    "url": "https://github.com/siret-junior/somhunter-ui"
   },
   "license": "GPL-2.0-only",
   "directories": {
