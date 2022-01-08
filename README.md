@@ -1,52 +1,37 @@
-# somhunter-ui
+# SOMHunter UI
 
-This README outlines the details of collaborating on this Ember application.
-A short introduction of this app could easily go here.
+User interface to control the [SOMHunter](https://github.com/siret-junior/somhunter) tool. 
 
-## Prerequisites
+It's imlemented as a web application therefore it may run on remote machine and end users can use it just as any other web application.
 
+## **Build & Run with Docker (recommended)**
+```sh
+# Build the container
+sudo docker build -t somhunter-data-server .
+# Install the app
+sudo docker run -ti --rm -v $(dirname $PWD):/somhunter somhunter-ui:latest sh install.sh
+# Run it on the port 8080
+sudo docker run -ti --rm -v $(dirname $PWD):/somhunter -p 8080:8080 somhunter-ui:latest sh run.sh
+```
+
+## **Build & Run**
+### Prerequisites
 You will need the following things properly installed on your computer.
 
 * [Git](https://git-scm.com/)
 * [Node.js](https://nodejs.org/) (with npm)
 * [Ember CLI](https://ember-cli.com/)
 
-## Installation
 
-* `git clone <repository-url>` this repository
-* `cd somhunter-ui`
-* `npm install`
-
-## Running / Development
-
-* `ember serve`
-* Visit your app at [http://localhost:4200](http://localhost:4200).
-* Visit your tests at [http://localhost:4200/tests](http://localhost:4200/tests).
-
-### Code Generators
-
-Make use of the many generators for code, try `ember help generate` for more details
-
-### Running Tests
-
-* `ember test`
-* `ember test --server`
-
-### Linting
-
-* `npm run lint:hbs`
-* `npm run lint:js`
-* `npm run lint:js -- --fix`
-
-### Building
-
-* `ember build` (development)
-* `ember build --environment production` (production)
-
-### Deploying
-More [HERE](https://cli.emberjs.com/release/basic-use/deploying/).
+```sh
+sh instal.sh
+sh run.sh
 ```
-ember build --environment production
+
+### For development
+```sh
+# This launches the app in debug mode with livereload feature
+ember serve
 ```
 
 ## Further Reading / Useful Links
