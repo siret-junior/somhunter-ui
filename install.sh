@@ -4,7 +4,7 @@ cd ${ABSOLUTE_PATH}
 printf "\tInstalling 'somhunter-ui'...\n"
 
 npx browserslist@latest --update-db > /dev/null
-npm install > /dev/null
-npx ember build > /dev/null
+npm install --loglevel=error > /dev/null
+npx ember build 2>&1 > /dev/null
 
 printf "\tDone installing 'somhunter-ui'...\n"
