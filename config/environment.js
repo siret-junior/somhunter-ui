@@ -3,7 +3,9 @@
 const config_core = require("../../somhunter-core/config/config-core.json");
 
 
+const core_port_hn = config_core.core.API.hostname;
 const core_port = config_core.core.API.port;
+const data_server_port_hn = config_core.data_server.API.hostname;
 const data_server_port = config_core.data_server.API.port;
 
 module.exports = function (environment) {
@@ -13,9 +15,9 @@ module.exports = function (environment) {
         rootURL: "/",
         locationType: "auto",
 
-        coreUrl: `http://127.0.0.1:${core_port}`,
+        coreUrl: `${core_port_hn}:${core_port}`,
         settingsEndpoint: "/config", //< This is the first request we do, without the config UI cannot function
-        dataServerUrl: `http://127.0.0.1:${data_server_port}`, // non-HTTPS
+        dataServerUrl: `${data_server_port_hn}:${data_server_port}`, // non-HTTPS
 
         logLevel: 4, // 0 => nothing, 1 => +Errors, 2=> +Info, 3 => +Warnings, 4 => +Debug
 
