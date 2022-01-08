@@ -5,6 +5,6 @@ printf "\tInstalling 'somhunter-ui'...\n"
 
 npx browserslist@latest --update-db > /dev/null
 npm install --loglevel=error > /dev/null
-npx ember build 2>&1 > /dev/null
+2>/dev/null 1>/dev/null npx ember build
 
 printf "\tDone installing 'somhunter-ui'...\n"
