@@ -16,7 +16,7 @@ module.exports = function (environment) {
         locationType: "auto",
 
         coreUrl: `${core_port_hn}:${core_port}`,
-        settingsEndpoint: "/config", //< This is the first request we do, without the config UI cannot function
+        settingsEndpoint: `${coreUrl}/config`, //< This is the first request we do, without the config UI cannot function
         dataServerUrl: `${data_server_port_hn}:${data_server_port}`, // non-HTTPS
 
         logLevel: 4, // 0 => nothing, 1 => +Errors, 2=> +Info, 3 => +Warnings, 4 => +Debug
