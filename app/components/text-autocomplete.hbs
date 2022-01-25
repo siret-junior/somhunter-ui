@@ -10,7 +10,7 @@
     value={{this.inputValue}} 
     selectionStart={{this.cursorIdx}}
     {{did-update this.didUpdateAttrs @model}}
-    {{on "input" this.updateInputValue}}
+    {{!-- {{on "input" this.updateInputValue}} --}}
   />
 
   {{#if this.suggestions}}
