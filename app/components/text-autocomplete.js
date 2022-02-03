@@ -112,27 +112,27 @@ export default class TextAutocompleteComponent extends Component {
         }
 
 
-        clearTimeout(this.autocompleteTimeout);
-        this.autocompleteTimeout = setTimeout(
-            function (parent, value) {
-                parent.actionManager.getTextAutocompleteSuggestions(
-                    value,
-                    (suggs) => {
-                        LOG.D("Triggering show autocomplete");
-                        parent.actionManager.triggerEvent(
-                            EVENTS.HIDE_AUTOCOMPLETE
-                        );
-                        parent.suggestions = suggs;
-                    },
-                    (e) => {
-                        alert(e.message);
-                    }
-                );
-            },
-            200,
-            this,
-            currValue
-        );
+        // clearTimeout(this.autocompleteTimeout);
+        // this.autocompleteTimeout = setTimeout(
+        //     function (parent, value) {
+        //         parent.actionManager.getTextAutocompleteSuggestions(
+        //             value,
+        //             (suggs) => {
+        //                 LOG.D("Triggering show autocomplete");
+        //                 parent.actionManager.triggerEvent(
+        //                     EVENTS.HIDE_AUTOCOMPLETE
+        //                 );
+        //                 parent.suggestions = suggs;
+        //             },
+        //             (e) => {
+        //                 alert(e.message);
+        //             }
+        //         );
+        //     },
+        //     200,
+        //     this,
+        //     currValue
+        // );
     }
 
     @action
